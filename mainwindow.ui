@@ -41,7 +41,33 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
    <layout class="QGridLayout" name="windowLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <item row="1" column="2">
      <spacer name="contentVerticalSpacer">
       <property name="orientation">
@@ -57,6 +83,15 @@
     </item>
     <item row="3" column="0" colspan="3">
      <widget class="QWidget" name="player" native="true">
+      <property name="styleSheet">
+       <string notr="true">* {
+	border-top: 1px solid #EAEAEA;
+}
+
+QPushButton {
+	border-radius: 50%;
+}</string>
+      </property>
       <layout class="QGridLayout" name="playerLayout">
        <property name="bottomMargin">
         <number>1</number>
@@ -130,6 +165,12 @@
        </item>
        <item row="1" column="15" rowspan="2">
         <widget class="QPushButton" name="randomOrderButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip">
           <string>Включить режим перемешивания</string>
          </property>
@@ -148,7 +189,7 @@
        <item row="1" column="9">
         <widget class="QPushButton" name="favouriteTrackButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -178,7 +219,7 @@
        <item row="1" column="10">
         <widget class="QPushButton" name="doNotRecommendButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -200,6 +241,12 @@
        </item>
        <item row="1" column="16" rowspan="2">
         <widget class="QPushButton" name="volumeButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -240,6 +287,12 @@
        </item>
        <item row="1" column="14" rowspan="2">
         <widget class="QPushButton" name="repeatButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip">
           <string>Повторять все треки</string>
          </property>
@@ -283,6 +336,12 @@
        </item>
        <item row="1" column="17" rowspan="2">
         <widget class="QPushButton" name="settingsButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip">
           <string>Аудио</string>
          </property>
@@ -298,7 +357,7 @@
        <item row="1" column="8">
         <widget class="QPushButton" name="addToPlaylistButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -359,9 +418,32 @@
     </item>
     <item row="0" column="0" rowspan="2">
      <widget class="QWidget" name="drawer" native="true">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">* {
+	border-right: 1px solid #EAEAEA;
+	text-align: left;
+}
+
+QPushButton:hover {
+	color: #EF5466;
+}</string>
+      </property>
       <layout class="QGridLayout" name="drawerLayout">
        <item row="3" column="0" colspan="2">
         <widget class="QPushButton" name="podcastsNavButton">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">padding-left: 1.5rem;</string>
+         </property>
          <property name="text">
           <string>Подкасты</string>
          </property>
@@ -406,6 +488,21 @@
        </item>
        <item row="2" column="0" colspan="2">
         <widget class="QPushButton" name="musicNavButton">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">padding-left: 1.5rem;
+
+QPushButton {
+}
+
+QPushButton:hover {
+	color: #EF5466;
+}</string>
+         </property>
          <property name="text">
           <string>Музыка</string>
          </property>
@@ -420,6 +517,14 @@
        </item>
        <item row="5" column="0" colspan="2">
         <widget class="QPushButton" name="favouriteNavButton">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">padding-left: 1.5rem;</string>
+         </property>
          <property name="text">
           <string>Избранное</string>
          </property>
@@ -444,6 +549,14 @@
        </item>
        <item row="4" column="0" colspan="2">
         <widget class="QPushButton" name="exploreNavButton">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">padding-left: 1.5rem;</string>
+         </property>
          <property name="text">
           <string>Исследуйте</string>
          </property>
@@ -496,6 +609,11 @@
            <height>32</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -528,6 +646,9 @@
     </item>
     <item row="0" column="1" colspan="2">
      <widget class="QWidget" name="navbar" native="true">
+      <property name="styleSheet">
+       <string notr="true">border-bottom: 1px solid #EAEAEA;</string>
+      </property>
       <layout class="QHBoxLayout" name="navbarLayout">
        <item>
         <widget class="QPushButton" name="searchButton">
@@ -553,12 +674,15 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit">
+        <widget class="QLineEdit" name="searchLineEdit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="placeholderText">
           <string>Поиск</string>
@@ -568,7 +692,7 @@
        <item>
         <widget class="QPushButton" name="clearSearchButton">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="text">
           <string/>
@@ -605,7 +729,7 @@
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/bell.svg</normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/bell.svg</iconset>
+           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/bell.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/bell.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -613,13 +737,13 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="userButton">
          <property name="text">
           <string/>
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/user.svg</normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/user.svg</iconset>
+           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/user.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/user.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -655,7 +779,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
   <include location="resources.qrc"/>

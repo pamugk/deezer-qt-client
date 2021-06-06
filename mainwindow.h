@@ -15,6 +15,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_searchLineEdit_editingFinished();
+
+    void on_searchLineEdit_textChanged(const QString &arg1);
+
+    void on_clearSearchButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
