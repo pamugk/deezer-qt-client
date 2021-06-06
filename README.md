@@ -1,0 +1,1 @@
+deezer-qt-client
