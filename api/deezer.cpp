@@ -1,6 +1,13 @@
 #include "deezer.h"
 
-Deezer::Deezer()
-{
+namespace api {
+    Deezer::Deezer()
+    {
+        networkManager = new QNetworkAccessManager();
+    }
 
+    Deezer::~Deezer()
+    {
+        delete networkManager;
+    }
 }

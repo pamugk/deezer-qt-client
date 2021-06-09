@@ -1,6 +1,8 @@
 #include "chart.h"
 
-Chart::Chart()
-{
+namespace api {
+    Chart::Chart()
+    {
 
+    }
 }

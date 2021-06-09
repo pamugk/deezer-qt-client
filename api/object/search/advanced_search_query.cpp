@@ -1,6 +1,9 @@
 #include "advanced_search_query.h"
 
-AdvancedSearchQuery::AdvancedSearchQuery()
+namespace api
 {
-
+    QString AdvancedSearchQuery::toString()
+    {
+        return "";
+    }
 }
