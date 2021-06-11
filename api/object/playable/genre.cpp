@@ -1,6 +1,9 @@
 #include "genre.h"
 
-Genre::Genre()
+namespace api
 {
+    Genre::Genre()
+    {
 
+    }
 }

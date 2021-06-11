@@ -1,6 +1,9 @@
 #include "offer.h"
 
-Offer::Offer()
+namespace api
 {
+    Offer::Offer()
+    {
 
+    }
 }

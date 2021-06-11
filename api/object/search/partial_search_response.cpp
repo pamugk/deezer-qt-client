@@ -1,6 +1,10 @@
 #include "partial_search_response.h"
 
-PartialSearchResponse::PartialSearchResponse()
+namespace api
 {
+    template<typename T>
+    PartialSearchResponse<T>::PartialSearchResponse()
+    {
 
+    }
 }

@@ -9,11 +9,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->clearSearchButton->setHidden(true);
     ui->notificationsButton->setHidden(true);
     ui->userButton->setHidden(true);
+
+    deezerApiInstance = new api::Deezer();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete deezerApiInstance;
 }
 
 

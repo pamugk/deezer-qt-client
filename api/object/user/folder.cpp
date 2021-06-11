@@ -1,6 +1,9 @@
 #include "folder.h"
 
-Folder::Folder()
+namespace api
 {
+    Folder::Folder()
+    {
 
+    }
 }

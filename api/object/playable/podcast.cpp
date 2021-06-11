@@ -1,6 +1,9 @@
 #include "podcast.h"
 
-Podcast::Podcast()
+namespace api
 {
+    Podcast::Podcast()
+    {
 
+    }
 }

@@ -1,6 +1,9 @@
 #include "user.h"
 
-User::User()
+namespace api
 {
+    User::User()
+    {
 
+    }
 }

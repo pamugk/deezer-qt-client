@@ -1,6 +1,9 @@
 #include "playlist.h"
 
-Playlist::Playlist()
+namespace api
 {
+    Playlist::Playlist()
+    {
 
+    }
 }

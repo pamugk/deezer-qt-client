@@ -1,6 +1,9 @@
 #include "options.h"
 
-Options::Options()
+namespace api
 {
+    Options::Options()
+    {
 
+    }
 }

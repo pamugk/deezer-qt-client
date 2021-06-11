@@ -1,6 +1,9 @@
 #include "radio.h"
 
-Radio::Radio()
+namespace api
 {
+    Radio::Radio()
+    {
 
+    }
 }

@@ -1,6 +1,9 @@
 #include "track.h"
 
-Track::Track()
+namespace api
 {
+    Track::Track()
+    {
 
+    }
 }

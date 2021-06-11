@@ -1,6 +1,9 @@
 #include "infos.h"
 
-Infos::Infos()
+namespace api
 {
+    Infos::Infos()
+    {
 
+    }
 }

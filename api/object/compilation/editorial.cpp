@@ -1,6 +1,7 @@
 #include "editorial.h"
 
-namespace api {
+namespace api
+{
     Editorial::Editorial()
     {
 

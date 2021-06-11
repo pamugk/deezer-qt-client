@@ -1,6 +1,9 @@
 #include "artist.h"
 
-Artist::Artist()
+namespace api
 {
+    Artist::Artist()
+    {
 
+    }
 }
