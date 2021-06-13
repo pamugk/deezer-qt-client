@@ -38,7 +38,6 @@ set(PROJECT_SOURCES
         api/deezer.cpp
         api/deezer.h
 
-        api/util/serialization.cpp
         api/util/serialization.h
 
         api/object/compilation/chart.cpp
@@ -64,7 +63,6 @@ set(PROJECT_SOURCES
 
         api/object/search/advanced_search_query.cpp
         api/object/search/advanced_search_query.h
-        api/object/search/partial_search_response.cpp
         api/object/search/partial_search_response.h
         api/object/search/shared.h
 

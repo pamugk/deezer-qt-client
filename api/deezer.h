@@ -485,28 +485,6 @@ namespace api
         QNetworkRequest buildPartialRequest(const QString &urlStr, int index, int limit);
         QNetworkRequest buildSearchRequest(const QString &urlStr, const QString &query, int index, int limit, bool strict, api::SearchOrder order);
     };
-
-    const QString Deezer::DEEZER_API_HOST = "https://api.deezer.com";
-
-    const QString Deezer::ALBUM = "album";
-    const QString Deezer::ARTIST = "artist";
-    const QString Deezer::CHART = "chart";
-    const QString Deezer::EDITORIAL = "editorial";
-    const QString Deezer::GENRE = "genre";
-    const QString Deezer::PLAYLIST = "playlist";
-    const QString Deezer::RADIO = "radio";
-    const QString Deezer::SEARCH = "search";
-    const QString Deezer::TRACK = "track";
-    const QString Deezer::USER = "user";
-
-    const QString Deezer::ALBUMS = "albums";
-    const QString Deezer::ARTISTS = "artists";
-    const QString Deezer::CHARTS = "charts";
-    const QString Deezer::FANS = "fans";
-    const QString Deezer::PLAYLISTS = "playlists";
-    const QString Deezer::RADIOS = "radios";
-    const QString Deezer::RECOMMENDATIONS = "recommendations";
-    const QString Deezer::TRACKS = "tracks";
 }
 
 #endif // DEEZER_H
