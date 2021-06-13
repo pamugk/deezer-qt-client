@@ -7,12 +7,12 @@ namespace api {
     /*!
      * \brief A podcast object
      */
-    class Podcast
+    struct Podcast
     {
         /*!
          * \brief The podcast's Deezer id
          */
-        long id;
+        int id;
         /*!
          * \brief The podcast's title
          */
@@ -69,7 +69,7 @@ namespace api {
          * \brief The position of the podcasts in the charts
          */
         int position;
-    public:
+
         Podcast();
     };
 }

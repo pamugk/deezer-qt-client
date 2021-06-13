@@ -1,6 +1,8 @@
 #ifndef DEEZER_H
 #define DEEZER_H
 
+#include "util/serialization.h"
+
 #include "object/compilation/chart.h"
 #include "object/compilation/editorial.h"
 
@@ -27,6 +29,7 @@
 #include <QVector>
 
 #include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork>
 
 namespace api
 {
@@ -38,30 +41,32 @@ namespace api
         Deezer();
         virtual ~Deezer();
 
-        Album* getAlbum(long id);
+        Album getAlbum(int id);
 
         /*!
          * \brief Return a list of album's fans
          * \param Album id
+         * \param Index of results page
+         * \param Max page size
          * \return
          */
-        PartialSearchResponse<User>* getAlbumFans(long id);
+        PartialSearchResponse<User> getAlbumFans(int id, int index, int limit);
 
         /*!
          * \brief Return a list of album's tracks
          * \param Album id
          * \return
          */
-        QVector<Track>* getAlbumTracks(long id);
+        QVector<Track> getAlbumTracks(int id);
 
-        Artist getArtist(long id);
+        Artist getArtist(int id);
 
         /*!
          * \brief Get the top 5 tracks of an artist
          * \param Artist id
          * \return
          */
-        QVector<Track>* getArtistTop(long id);
+        QVector<Track> getArtistTop(int id);
 
         /*!
          * \brief Return a list of artist's albums
@@ -70,14 +75,16 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Album>* getArtistAlbums(long id, int index, int limit);
+        PartialSearchResponse<Album> getArtistAlbums(int id, int index, int limit);
 
         /*!
          * \brief Return a list of artist's fans
          * \param Artist id
+         * \param Index of results page
+         * \param Max page size
          * \return
          */
-        PartialSearchResponse<User>* getArtistFans(long id);
+        PartialSearchResponse<User> getArtistFans(int id, int index, int limit);
 
         /*!
          * \brief Return a list of related artists
@@ -86,7 +93,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Artist>* getArtistRelated(long id, int index, int limit);
+        PartialSearchResponse<Artist> getArtistRelated(int id, int index, int limit);
 
         /*!
          * \brief Return a list of artist's playlists
@@ -95,7 +102,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Playlist>* getArtistPlaylists(long id, int index, int limit);
+        PartialSearchResponse<Playlist> getArtistPlaylists(int id, int index, int limit);
 
         Chart getChart();
 
@@ -106,7 +113,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Track>* getChartAlbums(long id, int index, int limit);
+        PartialSearchResponse<Album> getChartAlbums(int id, int index, int limit);
 
         /*!
          * \brief Returns the Top artists
@@ -115,7 +122,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Artist>* getChartArtists(long id, int index, int limit);
+        PartialSearchResponse<Artist> getChartArtists(int id, int index, int limit);
 
         /*!
          * \brief Returns the Top playlists
@@ -124,7 +131,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Playlist>* getChartPlaylists(long id, int index, int limit);
+        PartialSearchResponse<Playlist> getChartPlaylists(int id, int index, int limit);
 
         /*!
          * \brief Returns the Top podcasts
@@ -133,14 +140,27 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Podcast>* getChartPodcasts(long id, int index, int limit);
+        PartialSearchResponse<Podcast> getChartPodcasts(int id, int index, int limit);
+
+        /*!
+         * \brief Returns the Top tracks
+         * \param Chart id
+         * \param Index of results page
+         * \param Max page size
+         * \return
+         */
+        PartialSearchResponse<Track> getChartTracks(int id, int index, int limit);
+
+        PartialSearchResponse<Editorial> getEditorial();
+
+        Editorial getEditorial(int id);
 
         /*!
          * \brief This method returns four lists : Top track, Top album, Top artist and Top playlist
          * \param Editorial id
          * \return
          */
-        Chart* getEditorialCharts(long id);
+        Chart getEditorialCharts(int id);
 
         /*!
          * \brief This method returns the new releases per genre for the current country
@@ -149,31 +169,38 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Album>* getEditorialReleases(long id, int index, int limit);
+        PartialSearchResponse<Album> getEditorialReleases(int id, int index, int limit);
 
-        Genre getGenre(long id);
+        /*!
+         * \brief Return a list of albums selected every week by the Deezer Team
+         * \param Editorial id
+         * \return
+         */
+        QVector<Album> getEditorialSelection(int id);
+
+        Genre getGenre(int id);
 
         /*!
          * \brief Returns all artists for a genre
          * \param Genre id
          * \return
          */
-        QVector<Artist>* getGenreArtists(long id);
+        QVector<Artist> getGenreArtists(int id);
 
         /*!
          * \brief Returns all radios for a genre
          * \param Genre id
          * \return
          */
-        QVector<Radio>* getGenreRadios(long id);
+        QVector<Radio> getGenreRadios(int id);
 
         /*!
-         * \brief Return a list of playlist's fans
+         * \brief Get the information about the API in the current country
          * \return
          */
         Infos getInfos();
 
-        Playlist* getPlaylist(long id);
+        Playlist getPlaylist(int id);
 
         /*!
          * \brief Return a list of playlist's fans
@@ -182,31 +209,31 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<User>* getPlaylistFans(long id, int index, int limit);
+        PartialSearchResponse<User> getPlaylistFans(int id, int index, int limit);
 
         /*!
          * \brief Return a list of playlist's recommendation tracks
          * \param Playlist id
          * \return
          */
-        QVector<Track>* getPlaylistRadio(long id);
+        QVector<Track> getPlaylistRadio(int id);
 
         /*!
          * \brief Return a list of playlist's tracks
          * \param Playlist id
          * \return
          */
-        QVector<Track>* getPlaylistTracks(long id);
+        QVector<Track> getPlaylistTracks(int id);
 
-        Radio getRadio();
+        QVector<Radio> getRadio();
 
-        Radio getRadio(long id);
+        Radio getRadio(int id);
 
         /*!
          * \brief Returns a list of radio splitted by genre
          * \return
          */
-        QVector<Genre>* getRadioGenres();
+        QVector<Genre> getRadioGenres();
 
         /*!
          * \brief Return the top radios (default to 25 radios)
@@ -214,14 +241,14 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Radio>* getRadioTop(int index ,int limit);
+        PartialSearchResponse<Radio> getRadioTop(int index ,int limit);
 
         /*!
          * \brief Get first 40 tracks in the radio
          * \param Radio id
          * \return
          */
-        QVector<Track> getRadioTracks(long id);
+        QVector<Track> getRadioTracks(int id);
 
         /*!
          * \brief Returns a list of personal radio splitted by genre (as MIX in website)
@@ -229,19 +256,11 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Radio>* getRadioLists(int index, int limit);
+        PartialSearchResponse<Radio> getRadioLists(int index, int limit);
 
-        Track* getTrack(long id);
+        Track getTrack(int id);
 
-        User* getUser(long id);
-
-        /*!
-         * \param User id
-         * \param Index of results page
-         * \param Max page size
-         * \return
-         */
-        PartialSearchResponse<Album>* getUserChartsAlbums(long id, int index, int limit);
+        User getUser(int id);
 
         /*!
          * \param User id
@@ -249,7 +268,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Playlist>* getUserChartsPlaylists(long id, int index, int limit);
+        PartialSearchResponse<Album> getUserChartsAlbums(int id, int index, int limit);
 
         /*!
          * \param User id
@@ -257,41 +276,49 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Track>* getUserChartsTracks(long id, int index, int limit);
+        PartialSearchResponse<Playlist> getUserChartsPlaylists(int id, int index, int limit);
+
+        /*!
+         * \param User id
+         * \param Index of results page
+         * \param Max page size
+         * \return
+         */
+        PartialSearchResponse<Track> getUserChartsTracks(int id, int index, int limit);
 
         /*!
          * \brief Return a list of user's favorite albums
          * \param User id
          * \return
          */
-        PartialSearchResponse<Album>* getUserFavoriteAlbums(long id);
+        PartialSearchResponse<Album> getUserFavoriteAlbums(int id);
 
         /*!
          * \brief Return a list of user's favorite artists
          * \param User id
          * \return
          */
-        PartialSearchResponse<Artist>* getUserFavoriteArtists(long id);
+        PartialSearchResponse<Artist> getUserFavoriteArtists(int id);
 
         /*!
          * \brief Return a list of user's favorite Radios
          * \param User id
          * \return
          */
-        PartialSearchResponse<Radio>* getUserFavoriteRadios(long id);
+        PartialSearchResponse<Radio> getUserFavoriteRadios(int id);
 
         /*!
          * \brief Return a list of user's favorite tracks
          * \param User id
          * \return
          */
-        PartialSearchResponse<Track>* getUserFavoriteTracks(long id);
+        PartialSearchResponse<Track> getUserFavoriteTracks(int id);
 
         /*!
          * \brief Return a list of user's Folder
          * \return
          */
-        QVector<Folder>* getUserFolders();
+        QVector<Folder> getUserFolders();
 
         /*!
          * \brief Return a list of user's followings
@@ -300,7 +327,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<User>* getUserFollowings(long id, int index, int limit);
+        PartialSearchResponse<User> getUserFollowings(int id, int index, int limit);
 
         /*!
          * \brief Return a list of user's followers
@@ -309,9 +336,9 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<User>* getUserFollowers(long id, int index, int limit);
+        PartialSearchResponse<User> getUserFollowers(int id, int index, int limit);
 
-        QVector<Track>* getUserFlow(long id);
+        QVector<Track> getUserFlow(int id);
 
         /*!
          * \brief Returns a list of the recently played tracks
@@ -320,19 +347,19 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Track>* getUserHistory(long id, int index, int limit);
+        PartialSearchResponse<Track> getUserHistory(int id, int index, int limit);
 
         /*!
          * \brief Alias of /options
          * \return
          */
-        Options* getUserOptions();
+        Options getUserOptions();
 
         /*!
          * \brief Return the user's Permissions granted to the application
          * \return
          */
-        QVector<QString>* getUserPermissions();
+        QVector<QString> getUserPermissions();
 
         /*!
          * \brief Return a list of user's personal song
@@ -341,7 +368,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Track>* getUserPersonalSongs(long id, int index, int limit);
+        PartialSearchResponse<Track> getUserPersonalSongs(int id, int index, int limit);
 
         /*!
          * \brief Return a list of user's public Playlist.
@@ -351,7 +378,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Playlist>* getUserPlaylists(long id, int index, int limit);
+        PartialSearchResponse<Playlist> getUserPlaylists(int id, int index, int limit);
 
         /*!
          * \brief Return a list of albums recommendations
@@ -360,7 +387,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Album>* getUserRecommendedAlbums(long id, int index, int limit);
+        PartialSearchResponse<Album> getUserRecommendedAlbums(int id, int index, int limit);
 
         /*!
          * \brief Return a list of artists recommendations
@@ -369,7 +396,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Artist>* getUserRecommendedArtists(long id, int index, int limit);
+        PartialSearchResponse<Artist> getUserRecommendedArtists(int id, int index, int limit);
 
         /*!
          * \brief Return a list of playlists recommendations
@@ -378,7 +405,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Playlist>* getUserRecommendedPlaylists(long id, int index, int limit);
+        PartialSearchResponse<Playlist> getUserRecommendedPlaylists(int id, int index, int limit);
 
         /*!
          * \brief Return a list of radios recommendations
@@ -387,7 +414,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Radio>* getUserRecommendedRadios(long id, int index, int limit);
+        PartialSearchResponse<Radio> getUserRecommendedRadios(int id, int index, int limit);
 
         /*!
          * \brief Return a list of released albums recommendations
@@ -396,7 +423,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Album>* getUserRecommendedReleases(long id, int index, int limit);
+        PartialSearchResponse<Album> getUserRecommendedReleases(int id, int index, int limit);
 
         /*!
          * \brief Return a list of tracks recommendations
@@ -405,35 +432,81 @@ namespace api
          * \param Max page size
          * \return
          */
-        PartialSearchResponse<Track>* getUserRecommendedTracks(long id, int index, int limit);
+        PartialSearchResponse<Track> getUserRecommendedTracks(int id, int index, int limit);
 
-        PartialSearchResponse<Track>* search(QString& query, int index, int limit, bool strict,
+        PartialSearchResponse<Track> search(QString& query, int index, int limit, bool strict,
                                             SearchOrder order);
 
-        PartialSearchResponse<Track>* search(AdvancedSearchQuery query, int index, int limit, bool strict,
+        PartialSearchResponse<Track> search(AdvancedSearchQuery query, int index, int limit, bool strict,
                                             SearchOrder order);
 
-        PartialSearchResponse<Album>* searchAlbums(QString& query, int index, int limit, bool strict,
+        PartialSearchResponse<Album> searchAlbums(QString& query, int index, int limit, bool strict,
                                                   SearchOrder order);
 
-        PartialSearchResponse<Artist>* searchArtists(QString& query, int index, int limit, bool strict,
+        PartialSearchResponse<Artist> searchArtists(QString& query, int index, int limit, bool strict,
                                                   SearchOrder order);
 
-        PartialSearchResponse<Playlist>* searchPlaylists(QString& query, int index, int limit, bool strict,
+        PartialSearchResponse<Playlist> searchPlaylists(QString& query, int index, int limit, bool strict,
                                                   SearchOrder order);
 
-        PartialSearchResponse<Radio>* searchRadio(QString& query, int index, int limit, bool strict,
+        PartialSearchResponse<Radio> searchRadio(QString& query, int index, int limit, bool strict,
                                                   SearchOrder order);
 
-        PartialSearchResponse<Track>* searchTracks(QString& query, int index, int limit, bool strict,
+        PartialSearchResponse<Track> searchTracks(QString& query, int index, int limit, bool strict,
                                                   SearchOrder order);
 
-        PartialSearchResponse<User>* searchUsers(QString& query, int index, int limit, bool strict,
+        PartialSearchResponse<User> searchUsers(QString& query, int index, int limit, bool strict,
                                                   SearchOrder order);
     private:
-        const char DEEZER_API_HOST[23] = "https://api.deezer.com";
+        static const QString DEEZER_API_HOST;
+
+        static const QString ALBUM;
+        static const QString ARTIST;
+        static const QString CHART;
+        static const QString EDITORIAL;
+        static const QString GENRE;
+        static const QString PLAYLIST;
+        static const QString RADIO;
+        static const QString SEARCH;
+        static const QString TRACK;
+        static const QString USER;
+
+        static const QString ALBUMS;
+        static const QString ARTISTS;
+        static const QString CHARTS;
+        static const QString FANS;
+        static const QString PLAYLISTS;
+        static const QString RADIOS;
+        static const QString RECOMMENDATIONS;
+        static const QString TRACKS;
+
         QNetworkAccessManager* networkManager;
+
+        QNetworkRequest buildPartialRequest(const QString &urlStr, int index, int limit);
+        QNetworkRequest buildSearchRequest(const QString &urlStr, const QString &query, int index, int limit, bool strict, api::SearchOrder order);
     };
+
+    const QString Deezer::DEEZER_API_HOST = "https://api.deezer.com";
+
+    const QString Deezer::ALBUM = "album";
+    const QString Deezer::ARTIST = "artist";
+    const QString Deezer::CHART = "chart";
+    const QString Deezer::EDITORIAL = "editorial";
+    const QString Deezer::GENRE = "genre";
+    const QString Deezer::PLAYLIST = "playlist";
+    const QString Deezer::RADIO = "radio";
+    const QString Deezer::SEARCH = "search";
+    const QString Deezer::TRACK = "track";
+    const QString Deezer::USER = "user";
+
+    const QString Deezer::ALBUMS = "albums";
+    const QString Deezer::ARTISTS = "artists";
+    const QString Deezer::CHARTS = "charts";
+    const QString Deezer::FANS = "fans";
+    const QString Deezer::PLAYLISTS = "playlists";
+    const QString Deezer::RADIOS = "radios";
+    const QString Deezer::RECOMMENDATIONS = "recommendations";
+    const QString Deezer::TRACKS = "tracks";
 }
 
 #endif // DEEZER_H

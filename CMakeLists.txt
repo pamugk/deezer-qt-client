@@ -38,6 +38,9 @@ set(PROJECT_SOURCES
         api/deezer.cpp
         api/deezer.h
 
+        api/util/serialization.cpp
+        api/util/serialization.h
+
         api/object/compilation/chart.cpp
         api/object/compilation/chart.h
         api/object/compilation/editorial.cpp
@@ -76,8 +79,6 @@ set(PROJECT_SOURCES
         api/object/user/folder.h
         api/object/user/user.cpp
         api/object/user/user.h
-
-        api/object/util/serializable.h
 
         resources.qrc
         ${TS_FILES}

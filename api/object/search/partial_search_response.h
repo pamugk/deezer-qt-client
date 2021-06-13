@@ -14,10 +14,15 @@ namespace api {
         QString next;
 
     public:
-        PartialSearchResponse();
+        PartialSearchResponse(QVector<T> data, int total, QString prev, QString next);
+        virtual ~PartialSearchResponse();
 
         bool hasPrev();
         bool hasNext();
+        QVector<T> getData() const;
+        int getTotal() const;
+        QString getPrev() const;
+        QString getNext() const;
     };
 }
 

@@ -14,12 +14,12 @@ namespace api {
     /*!
      * An album object
      */
-    class Album
+    struct Album
     {
         /*!
          * \brief The Deezer album id
          */
-        long id;
+        int id;
         /*!
          * \brief The album title
          */
@@ -64,7 +64,7 @@ namespace api {
          * \brief The album's first genre id (You should use the genre list instead).
          * NB : -1 for not found
          */
-        long genreId;
+        int genreId;
         /*!
          * \brief List of genre object
          */
@@ -78,6 +78,10 @@ namespace api {
          * \brief The album's duration (seconds)
          */
         int duration;
+        /*!
+         * \brief The number of album's Fans
+         */
+        int fanCount;
         /*!
           * \brief The album's rate
           */
@@ -98,7 +102,7 @@ namespace api {
         /*!
           * \brief Return an alternative album object if the current album is not available
           */
-        Album* alternative;
+        Album *alternative;
 
         /*!
          * \brief API Link to the tracklist of this album
@@ -129,14 +133,14 @@ namespace api {
         /*!
          * \brief Artist object
          */
-        Artist artist;
+        Artist* artist;
         /*!
          * \brief List of track
          */
         QVector<Track> tracks;
 
-    public:
         Album();
+        virtual ~Album();
     };
 }
 

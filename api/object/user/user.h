@@ -20,12 +20,12 @@ namespace api {
     /*!
      * \brief A user object
      */
-    class User
+    struct User
     {
         /*!
          * \brief The user's Deezer ID
          */
-        long id;
+        int id;
         /*!
          * \brief The user's Deezer nickname
          */
@@ -113,7 +113,6 @@ namespace api {
          */
         QString tracklist;
 
-    public:
         User();
     };
 }

@@ -2,8 +2,14 @@
 
 namespace api
 {
-    Genre::Genre()
-    {
+    Genre::Genre():
+        id(-1),
+        name(QString()),
 
-    }
+        picture(QString()),
+        pictureSmall(QString()),
+        pictureMedium(QString()),
+        pictureBig(QString()),
+        pictureXl(QString())
+    { }
 }

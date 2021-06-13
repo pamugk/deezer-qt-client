@@ -7,12 +7,12 @@ namespace api {
     /*!
      * \brief An artist object
      */
-    class Artist
+    struct Artist
     {
         /*!
          * \brief The artist's Deezer id
          */
-        long id;
+        int id;
         /*!
          * \brief The artist's name
          */
@@ -65,7 +65,6 @@ namespace api {
          */
         QString tracklist;
 
-    public:
         Artist();
     };
 }

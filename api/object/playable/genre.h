@@ -7,12 +7,12 @@ namespace api {
     /*!
      * \brief A genre object
      */
-    class Genre
+    struct Genre
     {
         /*!
          * \brief The genre's Deezer id
          */
-        long id;
+        int id;
         /*!
          * \brief The genre's name
          */
@@ -39,7 +39,6 @@ namespace api {
          */
         QString pictureXl;
 
-    public:
         Genre();
     };
 }

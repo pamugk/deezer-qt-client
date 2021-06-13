@@ -11,12 +11,12 @@ namespace api {
     /*!
      * \brief A playlist object
      */
-    class Playlist
+    struct Playlist
     {
         /*!
          * \brief The playlist's Deezer id
          */
-        long id;
+        int id;
         /*!
          * \brief The playlist's title
          */
@@ -103,9 +103,8 @@ namespace api {
          */
         QVector<Track> tracks;
 
-
-    public:
         Playlist();
+        ~Playlist();
     };
 }
 

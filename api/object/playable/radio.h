@@ -7,12 +7,12 @@ namespace api {
     /*!
      * \brief A radio object
      */
-    class Radio
+    struct Radio
     {
         /*!
          * \brief The radio deezer ID
          */
-        long id;
+        int id;
         /*!
          * \brief The radio title
          */
@@ -53,7 +53,6 @@ namespace api {
          */
         QString tracklist;
 
-    public:
         Radio();
     };
 }

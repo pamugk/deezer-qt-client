@@ -14,12 +14,12 @@ namespace api {
     /*!
      * \brief A track object
      */
-    class Track
+    struct Track
     {
         /*!
          * \brief The track's Deezer id
          */
-        long id;
+        int id;
         /*!
          * \brief If the track is readable in the player for the current user
          */
@@ -121,8 +121,8 @@ namespace api {
          */
         Album* album;
 
-    public:
         Track();
+        ~Track();
     };
 }
 
