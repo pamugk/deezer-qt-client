@@ -78,7 +78,15 @@ set(PROJECT_SOURCES
         api/object/user/user.cpp
         api/object/user/user.h
 
+        pages/searchpage.h
+        pages/searchpage.cpp
+        pages/searchpage.ui
+
         resources.qrc
+
+        widgets/albumcard.h
+        widgets/albumcard.cpp
+        widgets/albumcard.ui
         ${TS_FILES}
 )
 
