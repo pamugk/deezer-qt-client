@@ -3,6 +3,7 @@
 
 #include "../api/deezer.h"
 
+#include <QDebug>
 #include <QTabWidget>
 
 namespace Ui {
@@ -14,14 +15,19 @@ class SearchPage : public QTabWidget
     Q_OBJECT
 
 public:
-    explicit SearchPage(QWidget *parent = nullptr);
+    explicit SearchPage(api::Deezer *, QWidget *parent = nullptr);
     ~SearchPage();
 
-    void setDeezerApiInstance(api::Deezer *);
+public slots:
+
+    void search(QString);
 
 private:
+    bool hasUndergoingSearch;
     Ui::SearchPage *ui;
     api::Deezer *deezerApiInstance;
+
+    void clear();
 };
 
 #endif // SEARCHPAGE_H

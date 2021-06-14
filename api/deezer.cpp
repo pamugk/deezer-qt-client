@@ -38,8 +38,8 @@ namespace api {
     {
         QUrlQuery urlParams;
 
-        urlParams.addQueryItem("index", QString(index));
-        urlParams.addQueryItem("limit", QString(limit));
+        urlParams.addQueryItem("index", QString::number(index));
+        urlParams.addQueryItem("limit", QString::number(limit));
 
         QUrl url(urlStr);
         url.setQuery(urlParams);
@@ -53,8 +53,8 @@ namespace api {
 
         urlParams.addQueryItem("q", query);
         urlParams.addQueryItem("strict", strict ? "on" : "off");
-        urlParams.addQueryItem("index", QString(index));
-        urlParams.addQueryItem("limit", QString(limit));
+        urlParams.addQueryItem("index", QString::number(index));
+        urlParams.addQueryItem("limit", QString::number(limit));
 
         if (order != SearchOrder::NONE)
         {
@@ -69,7 +69,7 @@ namespace api {
 
     Album Deezer::getAlbum(int id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString(id));
+        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id));
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -84,7 +84,7 @@ namespace api {
 
     PartialSearchResponse<User> Deezer::getAlbumFans(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString(id), Deezer::FANS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id), Deezer::FANS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -96,7 +96,7 @@ namespace api {
 
     QVector<Track> Deezer::getAlbumTracks(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString(id), Deezer::TRACKS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id), Deezer::TRACKS);
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -109,7 +109,7 @@ namespace api {
 
     Artist Deezer::getArtist(int id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString(id));
+        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id));
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -124,7 +124,7 @@ namespace api {
 
     QVector<Track> Deezer::getArtistTop(int id)
     {
-        const QString url = QString("%1/%2/%3/top").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString(id));
+        const QString url = QString("%1/%2/%3/top").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id));
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -137,7 +137,7 @@ namespace api {
 
     PartialSearchResponse<Album> Deezer::getArtistAlbums(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString(id), Deezer::ALBUMS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id), Deezer::ALBUMS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -149,7 +149,7 @@ namespace api {
 
     PartialSearchResponse<User> Deezer::getArtistFans(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString(id), Deezer::FANS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id), Deezer::FANS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -173,7 +173,7 @@ namespace api {
 
     PartialSearchResponse<Playlist> Deezer::getArtistPlaylists(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString(id), Deezer::PLAYLISTS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id), Deezer::PLAYLISTS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -185,7 +185,7 @@ namespace api {
 
     PartialSearchResponse<Album> Deezer::getChartAlbums(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString(id), Deezer::ALBUMS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::ALBUMS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -197,7 +197,7 @@ namespace api {
 
     PartialSearchResponse<Artist> Deezer::getChartArtists(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString(id), Deezer::ARTISTS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::ARTISTS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -209,7 +209,7 @@ namespace api {
 
     PartialSearchResponse<Playlist> Deezer::getChartPlaylists(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString(id), Deezer::PLAYLISTS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::PLAYLISTS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -221,7 +221,7 @@ namespace api {
 
     PartialSearchResponse<Podcast> Deezer::getChartPodcasts(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/podcasts").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString(id));
+        const QString url = QString("%1/%2/%3/podcasts").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id));
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -233,7 +233,7 @@ namespace api {
 
     PartialSearchResponse<Track> Deezer::getChartTracks(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString(id), Deezer::TRACKS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::TRACKS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -245,13 +245,13 @@ namespace api {
 
     Chart Deezer::getEditorialCharts(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::EDITORIAL, QString(id), Deezer::CHARTS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::EDITORIAL, QString::number(id), Deezer::CHARTS);
         return Chart();
     }
 
     PartialSearchResponse<Album> Deezer::getEditorialReleases(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/releases").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString(id));
+        const QString url = QString("%1/%2/%3/releases").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id));
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -263,7 +263,7 @@ namespace api {
 
     QVector<Album> Deezer::getEditorialSelection(int id)
     {
-        const QString url = QString("%1/%2/%3/selection").arg(Deezer::DEEZER_API_HOST, Deezer::EDITORIAL, QString(id));
+        const QString url = QString("%1/%2/%3/selection").arg(Deezer::DEEZER_API_HOST, Deezer::EDITORIAL, QString::number(id));
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -276,7 +276,7 @@ namespace api {
 
     Genre Deezer::getGenre(int id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString(id));
+        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id));
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -291,7 +291,7 @@ namespace api {
 
     QVector<Artist> Deezer::getGenreArtists(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString(id), Deezer::ARTISTS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id), Deezer::ARTISTS);
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -304,7 +304,7 @@ namespace api {
 
     QVector<Radio> Deezer::getGenreRadios(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString(id), Deezer::RADIOS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id), Deezer::RADIOS);
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -323,7 +323,7 @@ namespace api {
 
     Playlist Deezer::getPlaylist(int id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString(id));
+        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id));
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -338,7 +338,7 @@ namespace api {
 
     PartialSearchResponse<User> Deezer::getPlaylistFans(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString(id), Deezer::FANS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::FANS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -350,7 +350,7 @@ namespace api {
 
     QVector<Track> Deezer::getPlaylistRadio(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString(id), Deezer::TRACKS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::TRACKS);
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -363,7 +363,7 @@ namespace api {
 
     QVector<Track> Deezer::getPlaylistTracks(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString(id), Deezer::RADIO);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::RADIO);
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -389,7 +389,7 @@ namespace api {
 
     Radio Deezer::getRadio(int id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO, QString(id));
+        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO, QString::number(id));
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -429,7 +429,7 @@ namespace api {
 
     QVector<Track> Deezer::getRadioTracks(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO, QString(id), Deezer::TRACKS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO, QString::number(id), Deezer::TRACKS);
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -454,7 +454,7 @@ namespace api {
 
     Track Deezer::getTrack(int id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::TRACK, QString(id));
+        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::TRACK, QString::number(id));
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -469,7 +469,7 @@ namespace api {
 
     User Deezer::getUser(int id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id));
+        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -484,7 +484,7 @@ namespace api {
 
     PartialSearchResponse<Album> Deezer::getUserChartsAlbums(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::CHARTS, Deezer::ALBUMS);
+        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::CHARTS, Deezer::ALBUMS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -496,7 +496,7 @@ namespace api {
 
     PartialSearchResponse<Playlist> Deezer::getUserChartsPlaylists(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::CHARTS, Deezer::PLAYLISTS);
+        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::CHARTS, Deezer::PLAYLISTS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -508,7 +508,7 @@ namespace api {
 
     PartialSearchResponse<Track> Deezer::getUserChartsTracks(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::CHARTS, Deezer::TRACKS);
+        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::CHARTS, Deezer::TRACKS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -520,7 +520,7 @@ namespace api {
 
     PartialSearchResponse<Album> Deezer::getUserFavoriteAlbums(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::ALBUMS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::ALBUMS);
         QNetworkRequest request = buildPartialRequest(url, 0, 25);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -532,7 +532,7 @@ namespace api {
 
     PartialSearchResponse<Artist> Deezer::getUserFavoriteArtists(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::ARTISTS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::ARTISTS);
         QNetworkRequest request = buildPartialRequest(url, 0, 25);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -544,7 +544,7 @@ namespace api {
 
     PartialSearchResponse<Radio> Deezer::getUserFavoriteRadios(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::RADIOS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RADIOS);
         QNetworkRequest request = buildPartialRequest(url, 0, 25);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -556,7 +556,7 @@ namespace api {
 
     PartialSearchResponse<Track> Deezer::getUserFavoriteTracks(int id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::TRACKS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::TRACKS);
         QNetworkRequest request = buildPartialRequest(url, 0, 25);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -573,7 +573,7 @@ namespace api {
     }
     PartialSearchResponse<User> Deezer::getUserFollowings(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/followings").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id));
+        const QString url = QString("%1/%2/%3/followings").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -585,7 +585,7 @@ namespace api {
 
     PartialSearchResponse<User> Deezer::getUserFollowers(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/followers").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id));
+        const QString url = QString("%1/%2/%3/followers").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -597,7 +597,7 @@ namespace api {
 
     QVector<Track> Deezer::getUserFlow(int id)
     {
-        const QString url = QString("%1/%2/%3/flow").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id));
+        const QString url = QString("%1/%2/%3/flow").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
         QNetworkRequest request(url);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -610,7 +610,7 @@ namespace api {
 
     PartialSearchResponse<Track> Deezer::getUserHistory(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/history").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id));
+        const QString url = QString("%1/%2/%3/history").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -651,7 +651,7 @@ namespace api {
 
     PartialSearchResponse<Track> Deezer::getUserPersonalSongs(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/personal_songs").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id));
+        const QString url = QString("%1/%2/%3/personal_songs").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -663,7 +663,7 @@ namespace api {
 
     PartialSearchResponse<Playlist> Deezer::getUserPlaylists(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::PLAYLISTS);
+        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::PLAYLISTS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -675,7 +675,7 @@ namespace api {
 
     PartialSearchResponse<Album> Deezer::getUserRecommendedAlbums(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::RECOMMENDATIONS, Deezer::ALBUMS);
+        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::ALBUMS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -687,7 +687,7 @@ namespace api {
 
     PartialSearchResponse<Artist> Deezer::getUserRecommendedArtists(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::RECOMMENDATIONS, Deezer::ARTISTS);
+        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::ARTISTS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -699,7 +699,7 @@ namespace api {
 
     PartialSearchResponse<Playlist> Deezer::getUserRecommendedPlaylists(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::RECOMMENDATIONS, Deezer::PLAYLISTS);
+        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::PLAYLISTS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -711,7 +711,7 @@ namespace api {
 
     PartialSearchResponse<Radio> Deezer::getUserRecommendedRadios(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::RECOMMENDATIONS, Deezer::RADIOS);
+        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::RADIOS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -723,7 +723,7 @@ namespace api {
 
     PartialSearchResponse<Album> Deezer::getUserRecommendedReleases(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4/releases").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::RECOMMENDATIONS);
+        const QString url = QString("%1/%2/%3/%4/releases").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -735,7 +735,7 @@ namespace api {
 
     PartialSearchResponse<Track> Deezer::getUserRecommendedTracks(int id, int index, int limit)
     {
-        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString(id), Deezer::RECOMMENDATIONS, Deezer::TRACKS);
+        const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::TRACKS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
 
         QNetworkReply *reply = networkManager->get(request);
@@ -751,6 +751,11 @@ namespace api {
         QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
 
         QNetworkReply *reply = networkManager->get(request);
+
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
         QJsonParseError error;
         QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
         reply->deleteLater();
@@ -763,6 +768,11 @@ namespace api {
         QNetworkRequest request = buildSearchRequest(url, query.toString(), index, limit, strict, order);
 
         QNetworkReply *reply = networkManager->get(request);
+
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
         QJsonParseError error;
         QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
         reply->deleteLater();
@@ -775,6 +785,11 @@ namespace api {
         QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
 
         QNetworkReply *reply = networkManager->get(request);
+
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
         QJsonParseError error;
         QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
         reply->deleteLater();
@@ -787,6 +802,11 @@ namespace api {
         QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
 
         QNetworkReply *reply = networkManager->get(request);
+
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
         QJsonParseError error;
         QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
         reply->deleteLater();
@@ -799,6 +819,11 @@ namespace api {
         QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
 
         QNetworkReply *reply = networkManager->get(request);
+
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
         QJsonParseError error;
         QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
         reply->deleteLater();
@@ -811,6 +836,11 @@ namespace api {
         QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
 
         QNetworkReply *reply = networkManager->get(request);
+
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
         QJsonParseError error;
         QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
         reply->deleteLater();
@@ -823,6 +853,11 @@ namespace api {
         QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
 
         QNetworkReply *reply = networkManager->get(request);
+
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
         QJsonParseError error;
         QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
         reply->deleteLater();
@@ -835,6 +870,11 @@ namespace api {
         QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
 
         QNetworkReply *reply = networkManager->get(request);
+
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
         QJsonParseError error;
         QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
         reply->deleteLater();

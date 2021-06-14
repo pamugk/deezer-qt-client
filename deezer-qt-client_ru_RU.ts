@@ -107,94 +107,92 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="61"/>
-        <location filename="pages/searchpage.ui" line="115"/>
+        <location filename="pages/searchpage.ui" line="56"/>
         <source>Треки</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="100"/>
-        <location filename="pages/searchpage.ui" line="139"/>
+        <location filename="pages/searchpage.ui" line="80"/>
         <source>Альбомы</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="128"/>
+        <location filename="pages/searchpage.ui" line="69"/>
         <source>Треков: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="152"/>
+        <location filename="pages/searchpage.ui" line="93"/>
         <source>Альбомов: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="188"/>
+        <location filename="pages/searchpage.ui" line="129"/>
         <source>Плейлисты</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="201"/>
+        <location filename="pages/searchpage.ui" line="142"/>
         <source>Плейлистов: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="237"/>
+        <location filename="pages/searchpage.ui" line="178"/>
         <source>Исполнители</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="250"/>
+        <location filename="pages/searchpage.ui" line="191"/>
         <source>Исполнителей: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="286"/>
+        <location filename="pages/searchpage.ui" line="227"/>
         <source>Профили</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="299"/>
+        <location filename="pages/searchpage.ui" line="240"/>
         <source>Профилей:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="335"/>
+        <location filename="pages/searchpage.ui" line="276"/>
         <source>Каналы</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="348"/>
+        <location filename="pages/searchpage.ui" line="289"/>
         <source>Каналов: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="384"/>
+        <location filename="pages/searchpage.ui" line="325"/>
         <source>Подкасты</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="397"/>
+        <location filename="pages/searchpage.ui" line="338"/>
         <source>Подкастов: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="433"/>
+        <location filename="pages/searchpage.ui" line="374"/>
         <source>Выпуски</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="446"/>
+        <location filename="pages/searchpage.ui" line="387"/>
         <source>Выпусков:  </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="482"/>
+        <location filename="pages/searchpage.ui" line="423"/>
         <source>Миксы</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="495"/>
+        <location filename="pages/searchpage.ui" line="436"/>
         <source>Миксов: </source>
         <translation type="unfinished"></translation>
     </message>

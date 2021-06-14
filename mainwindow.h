@@ -26,6 +26,8 @@ private slots:
 
     void on_searchLineEdit_editingFinished();
 
+    void on_searchButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     SearchPage *searchPage;
