@@ -67,6 +67,11 @@ namespace api {
         return QNetworkRequest(url);
     }
 
+    QNetworkReply* Deezer::getAnything(QUrl &url)
+    {
+        return networkManager->get(QNetworkRequest(url));
+    }
+
     Album Deezer::getAlbum(int id)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id));

@@ -6,6 +6,7 @@
 #include "pages/searchpage.h"
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,7 +30,9 @@ private slots:
     void on_searchButton_clicked();
 
 private:
+    QSystemTrayIcon *trayIcon;
     Ui::MainWindow *ui;
+
     SearchPage *searchPage;
     api::Deezer* deezerApiInstance;
 };

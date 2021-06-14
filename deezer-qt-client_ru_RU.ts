@@ -4,8 +4,23 @@
 <context>
     <name>AlbumCard</name>
     <message>
-        <location filename="widgets/albumcard.ui" line="16"/>
+        <location filename="widgets/albumcard.ui" line="25"/>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="widgets/albumcard.ui" line="56"/>
+        <source>Альбом</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="widgets/albumcard.ui" line="69"/>
+        <source>от %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="widgets/albumcard.ui" line="89"/>
+        <source>EXPLICIT</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

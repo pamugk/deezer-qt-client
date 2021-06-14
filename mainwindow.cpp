@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+QSystemTrayIcon *createTrayIcon();
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -11,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->notificationsButton->setHidden(true);
     ui->userButton->setHidden(true);
 
+    trayIcon = createTrayIcon();
+
     deezerApiInstance = new api::Deezer();
 
     searchPage = new SearchPage(deezerApiInstance, ui->centralwidget);
@@ -20,6 +24,12 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+
+    if (trayIcon != nullptr)
+    {
+        delete trayIcon;
+    }
+
     delete deezerApiInstance;
 }
 
@@ -45,4 +55,17 @@ void MainWindow::on_clearSearchButton_clicked()
 void MainWindow::on_searchButton_clicked()
 {
     searchPage->search(ui->searchLineEdit->text());
+}
+
+QSystemTrayIcon *createTrayIcon()
+{
+    QSystemTrayIcon *trayIcon = nullptr;
+    /*if (QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        QIcon trayIconIcon;
+        trayIconIcon.addFile(QString::fromUtf8(":/assets/deezer/logotype/SVG/EQ.svg"));
+        trayIcon = new QSystemTrayIcon(trayIconIcon);
+        trayIcon->show();
+    }*/
+    return trayIcon;
 }

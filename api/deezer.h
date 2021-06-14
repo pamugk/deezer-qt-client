@@ -41,6 +41,8 @@ namespace api
         Deezer();
         virtual ~Deezer();
 
+        QNetworkReply* getAnything(QUrl&);
+
         Album getAlbum(int id);
 
         /*!
