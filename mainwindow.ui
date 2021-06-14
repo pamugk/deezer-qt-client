@@ -32,7 +32,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/deezer/logotype/assets/deezer/logotype/SVG/EQ.svg</normaloff>:/deezer/logotype/assets/deezer/logotype/SVG/EQ.svg</iconset>
+    <normaloff>:/assets/deezer/logotype/SVG/EQ.svg</normaloff>:/assets/deezer/logotype/SVG/EQ.svg</iconset>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
@@ -49,7 +49,7 @@
    <property name="styleSheet">
     <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
-   <layout class="QGridLayout" name="windowLayout" columnstretch="0,0,0" columnminimumwidth="0,0,0">
+   <layout class="QGridLayout" name="windowLayout" columnstretch="0,0" columnminimumwidth="0,0">
     <property name="sizeConstraint">
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
@@ -158,7 +158,7 @@ QPushButton:hover {
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="resources.qrc">:/deezer/logotype/assets/deezer/logotype/SVG/Deezer_Logo_RVB_Black.svg</pixmap>
+          <pixmap resource="resources.qrc">:/assets/deezer/logotype/SVG/Deezer_Logo_RVB_Black.svg</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -189,7 +189,7 @@ QPushButton:hover {
           <string>Избранное</string>
          </property>
          <property name="icon">
-          <iconset resource="resources.qrc">
+          <iconset>
            <normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/heart.svg</normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/heart.svg</iconset>
          </property>
          <property name="flat">
@@ -221,7 +221,7 @@ QPushButton:hover {
           <string>Исследуйте</string>
          </property>
          <property name="icon">
-          <iconset resource="resources.qrc">
+          <iconset>
            <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/th-large.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/th-large.svg</iconset>
          </property>
          <property name="flat">
@@ -243,7 +243,7 @@ QPushButton:hover {
           <string>Подкасты</string>
          </property>
          <property name="icon">
-          <iconset resource="resources.qrc">
+          <iconset>
            <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/microphone-alt.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/microphone-alt.svg</iconset>
          </property>
          <property name="flat">
@@ -272,7 +272,7 @@ QPushButton:hover {
           <string>Музыка</string>
          </property>
          <property name="icon">
-          <iconset resource="resources.qrc">
+          <iconset>
            <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/music.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/music.svg</iconset>
          </property>
          <property name="flat">
@@ -321,7 +321,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/step-backward.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/step-backward.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/solid/step-backward.svg</normaloff>:/assets/fontawesome/svgs/solid/step-backward.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -347,7 +347,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/plus.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/plus.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/solid/plus.svg</normaloff>:/assets/fontawesome/svgs/solid/plus.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -367,7 +367,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/sliders-h.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/sliders-h.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/solid/sliders-h.svg</normaloff>:/assets/fontawesome/svgs/solid/sliders-h.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -390,7 +390,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/redo-alt.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/redo-alt.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/solid/redo-alt.svg</normaloff>:/assets/fontawesome/svgs/solid/redo-alt.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -423,7 +423,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/volume-up.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/volume-up.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/solid/volume-up.svg</normaloff>:/assets/fontawesome/svgs/solid/volume-up.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -446,7 +446,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/random.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/random.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/solid/random.svg</normaloff>:/assets/fontawesome/svgs/solid/random.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -469,7 +469,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/angry.svg</normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/angry.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/regular/angry.svg</normaloff>:/assets/fontawesome/svgs/regular/angry.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -489,7 +489,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/step-forward.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/step-forward.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/solid/step-forward.svg</normaloff>:/assets/fontawesome/svgs/solid/step-forward.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -542,7 +542,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/play.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/play.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/solid/play.svg</normaloff>:/assets/fontawesome/svgs/solid/play.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -578,7 +578,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/heart.svg</normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/heart.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/regular/heart.svg</normaloff>:/assets/fontawesome/svgs/regular/heart.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -631,7 +631,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/search.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/search.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/solid/search.svg</normaloff>:/assets/fontawesome/svgs/solid/search.svg</iconset>
          </property>
          <property name="checkable">
           <bool>false</bool>
@@ -675,7 +675,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/times-circle.svg</normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/times-circle.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/regular/times-circle.svg</normaloff>:/assets/fontawesome/svgs/regular/times-circle.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -705,7 +705,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/bell.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/bell.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/regular/bell.svg</normaloff>:/assets/fontawesome/svgs/regular/bell.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -719,7 +719,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/user.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/user.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/regular/user.svg</normaloff>:/assets/fontawesome/svgs/regular/user.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -733,7 +733,7 @@ QPushButton {
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/sign-in-alt.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/sign-in-alt.svg</iconset>
+           <normaloff>:/assets/fontawesome/svgs/solid/sign-in-alt.svg</normaloff>:/assets/fontawesome/svgs/solid/sign-in-alt.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
