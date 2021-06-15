@@ -71,6 +71,7 @@ namespace api {
         int position;
 
         Podcast();
+        Podcast (const Podcast &) = default;
     };
 }
 

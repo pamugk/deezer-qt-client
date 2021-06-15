@@ -4,6 +4,7 @@
 #include "track.h"
 #include "../user/user.h"
 
+#include <QSharedPointer>
 #include <QString>
 #include <QVector>
 
@@ -97,14 +98,14 @@ namespace api {
         /*!
          * \brief User object containing : id, name
          */
-        User* creator;
+        QSharedPointer<User> creator;
         /*!
          * \brief List of track
          */
         QVector<Track> tracks;
 
         Playlist();
-        ~Playlist();
+        Playlist (const Playlist &) = default;
     };
 }
 

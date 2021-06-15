@@ -87,6 +87,10 @@ set(PROJECT_SOURCES
         widgets/albumcard.h
         widgets/albumcard.cpp
         widgets/albumcard.ui
+        widgets/flow.h
+        widgets/flow.cpp
+        widgets/flow.ui
+
         ${TS_FILES}
 )
 

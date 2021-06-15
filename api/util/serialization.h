@@ -139,7 +139,7 @@ namespace api
             if (jsonObj.contains("alternative"))
             {
                 QJsonObject alternativeJson = jsonObj["alternative"].toObject();
-                albumOut.alternative = new Album();
+                albumOut.alternative = QSharedPointer<Album>(new Album());
                 deserializeAlbum(alternativeJson, *albumOut.alternative);
             }
 
@@ -173,7 +173,7 @@ namespace api
             if (jsonObj.contains("artist"))
             {
                 QJsonObject artistJson = jsonObj["artist"].toObject();
-                albumOut.artist = new Artist();
+                albumOut.artist = QSharedPointer<Artist>(new Artist());
                 deserializeArtist(artistJson, *albumOut.artist);
             }
             if (jsonObj.contains("tracks"))
@@ -361,7 +361,7 @@ namespace api
             if (jsonObj.contains("creator"))
             {
                 QJsonObject userJson = jsonObj["creator"].toObject();
-                playlistOut.creator = new User();
+                playlistOut.creator = QSharedPointer<User>(new User());
                 deserializeUser(userJson, *playlistOut.creator);
             }
             if (jsonObj.contains("tracks"))
@@ -586,20 +586,20 @@ namespace api
             if (jsonObj.contains("alternative"))
             {
                 QJsonObject alternativeJson = jsonObj["alternative"].toObject();
-                trackOut.alternative = new Track();
+                trackOut.alternative = QSharedPointer<Track>(new Track());
                 deserializeTrack(alternativeJson, *trackOut.alternative);
             }
 
             if (jsonObj.contains("artist"))
             {
                 QJsonObject artistJson = jsonObj["artist"].toObject();
-                trackOut.artist = new Artist();
+                trackOut.artist = QSharedPointer<Artist>(new Artist());
                 deserializeArtist(artistJson, *trackOut.artist);
             }
             if (jsonObj.contains("album"))
             {
                 QJsonObject albumJson = jsonObj["album"].toObject();
-                trackOut.album = new Album();
+                trackOut.album = QSharedPointer<Album>(new Album());
                 deserializeAlbum(albumJson, *trackOut.album);
             }
         }
@@ -727,11 +727,10 @@ namespace api
         {
             QJsonArray jsonData = jsonObj["data"].toArray();
             PartialSearchResponse<Artist> response = deserializePartialResponse<Artist>(jsonObj, jsonData);
-            QVector<Artist> data = response.getData();
             for (int i = 0; i < jsonData.size(); i++)
             {
                 QJsonObject artistObj = jsonData[i].toObject();
-                deserializeArtist(artistObj, data[i]);
+                deserializeArtist(artistObj, response.getData()[i]);
             }
             return response;
         }
@@ -740,11 +739,10 @@ namespace api
         {
             QJsonArray jsonData = jsonObj["data"].toArray();
             PartialSearchResponse<Playlist> response = deserializePartialResponse<Playlist>(jsonObj, jsonData);
-            QVector<Playlist> data = response.getData();
             for (int i = 0; i < jsonData.size(); i++)
             {
                 QJsonObject playlistObj = jsonData[i].toObject();
-                deserializePlaylist(playlistObj, data[i]);
+                deserializePlaylist(playlistObj, response.getData()[i]);
 
             }
             return response;

@@ -1,7 +1,7 @@
 #include "albumcard.h"
 #include "ui_albumcard.h"
 
-AlbumCard::AlbumCard(api::Deezer apiInstance, api::Album &album, QWidget *parent) :
+AlbumCard::AlbumCard(api::Deezer *apiInstance, api::Album &album, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AlbumCard)
 {
@@ -9,11 +9,11 @@ AlbumCard::AlbumCard(api::Deezer apiInstance, api::Album &album, QWidget *parent
 
     ui->titleLabel->setText(album.title);
 
-    if (album.artist != nullptr)
+    if (album.artist.isNull())
     {
-        ui->artistLabel->setText(ui->artistLabel->text().arg(album.artist->name));
-    } else {
         ui->artistLabel->hide();
+    } else {
+        ui->artistLabel->setText(ui->artistLabel->text().arg(album.artist->name));
     }
 
     if (!album.explicitLyrics)
@@ -26,7 +26,7 @@ AlbumCard::AlbumCard(api::Deezer apiInstance, api::Album &album, QWidget *parent
     if (!album.coverMedium.isEmpty())
     {
         QUrl coverUrl(album.coverMedium);
-        QNetworkReply *coverReply = apiInstance.getAnything(coverUrl);
+        QNetworkReply *coverReply = apiInstance->getAnything(coverUrl);
         connect(coverReply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error) { coverReply->deleteLater(); });
         connect(coverReply, &QNetworkReply::finished, [=]
         {

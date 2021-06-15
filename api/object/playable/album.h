@@ -7,6 +7,7 @@
 #include "track.h"
 
 #include <QDate>
+#include <QSharedPointer>
 #include <QString>
 #include <QVector>
 
@@ -102,7 +103,7 @@ namespace api {
         /*!
           * \brief Return an alternative album object if the current album is not available
           */
-        Album *alternative;
+        QSharedPointer<Album> alternative;
 
         /*!
          * \brief API Link to the tracklist of this album
@@ -133,14 +134,14 @@ namespace api {
         /*!
          * \brief Artist object
          */
-        Artist* artist;
+        QSharedPointer<Artist> artist;
         /*!
          * \brief List of track
          */
         QVector<Track> tracks;
 
         Album();
-        virtual ~Album();
+        Album (const Album &) = default;
     };
 }
 

@@ -30,12 +30,4 @@ namespace api
         creator(nullptr),
         tracks(QVector<Track>())
     {}
-
-    Playlist::~Playlist()
-    {
-        if (creator != nullptr)
-        {
-            delete creator;
-        }
-    }
 }

@@ -54,6 +54,7 @@ namespace api {
         QString tracklist;
 
         Radio();
+        Radio (const Radio &) = default;
     };
 }
 

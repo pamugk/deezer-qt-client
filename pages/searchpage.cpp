@@ -8,6 +8,10 @@ SearchPage::SearchPage(api::Deezer * deezerApiInstance, QWidget *parent) :
 {
     hasUndergoingSearch = false;
     ui->setupUi(this);
+
+    albums = new Flow(deezerApiInstance, ui->albumTab);
+    ui->albumTabLayout->addWidget(albums);
+
     clear();
 }
 
@@ -31,7 +35,7 @@ void SearchPage::search(QString request)
     if (trackPrefetch.getTotal() > 0)
     {
         addTab(ui->trackTab, QString("Треки"));
-        ui->overviewContents->layout()->addWidget(new QLabel("Треки", ui->overviewContents));
+        ui->overviewContentsLayout->addWidget(new QLabel("Треки", ui->overviewContents));
         ui->trackLabel->setText(QString("Треков: %1").arg(QString::number(trackPrefetch.getTotal())));
     }
 
@@ -39,15 +43,19 @@ void SearchPage::search(QString request)
     if (albumPrefetch.getTotal() > 0)
     {
         addTab(ui->albumTab, QString("Альбомы"));
-        ui->overviewContents->layout()->addWidget(new QLabel("Альбомы", ui->overviewContents));
+        ui->overviewContentsLayout->addWidget(new QLabel("Альбомы", ui->overviewContents));
         ui->albumLabel->setText(QString("Альбомов: %1").arg(QString::number(albumPrefetch.getTotal())));
+
+        api::PartialSearchResponse<api::Album> albumsResponse = deezerApiInstance->searchAlbums(request, 0, 20);
+        QVector<api::Album> albumsData = albumsResponse.getData();
+        albums->addContents(albumsData);
     }
 
     api::PartialSearchResponse<api::Artist> artistPrefetch = deezerApiInstance->searchArtists(request, 0, 5);
     if (artistPrefetch.getTotal() > 0)
     {
         addTab(ui->artistTab, QString("Исполнители"));
-        ui->overviewContents->layout()->addWidget(new QLabel("Исполнители", ui->overviewContents));
+        ui->overviewContentsLayout->addWidget(new QLabel("Исполнители", ui->overviewContents));
         ui->artistLabel->setText(QString("Исполнителей: %1").arg(QString::number(artistPrefetch.getTotal())));
     }
 
@@ -55,7 +63,7 @@ void SearchPage::search(QString request)
     if (playlistPrefetch.getTotal() > 0)
     {
         addTab(ui->playlistTab, QString("Плейлисты"));
-        ui->overviewContents->layout()->addWidget(new QLabel("Плейлисты", ui->overviewContents));
+        ui->overviewContentsLayout->addWidget(new QLabel("Плейлисты", ui->overviewContents));
         ui->playlistLabel->setText(QString("Плейлистов: %1").arg(QString::number(playlistPrefetch.getTotal())));
     }
 
@@ -63,7 +71,7 @@ void SearchPage::search(QString request)
     if (radioPrefetch.getTotal() > 0)
     {
         addTab(ui->mixTab, QString("Миксы"));
-        ui->overviewContents->layout()->addWidget(new QLabel("Миксы", ui->overviewContents));
+        ui->overviewContentsLayout->addWidget(new QLabel("Миксы", ui->overviewContents));
         ui->mixLabel->setText(QString("Миксов: %1").arg(QString::number(radioPrefetch.getTotal())));
     }
 
@@ -71,7 +79,7 @@ void SearchPage::search(QString request)
     if (userPrefetch.getTotal() > 0)
     {
         addTab(ui->userTab, QString("Профили"));
-        ui->overviewContents->layout()->addWidget(new QLabel("Профили", ui->overviewContents));
+        ui->overviewContentsLayout->addWidget(new QLabel("Профили", ui->overviewContents));
         ui->userLabel->setText(QString("Профилей: %1").arg(QString::number(userPrefetch.getTotal())));
     }
 
@@ -85,9 +93,10 @@ void SearchPage::clear()
         removeTab(1);
     }
 
-    QLayoutItem* item = nullptr;
-    while ( (item = ui->overviewContents->layout()->takeAt(0)) )
+    while (QLayoutItem *item = ui->overviewContentsLayout->takeAt(0))
     {
-        item->widget()->deleteLater();
+        ui->overviewContentsLayout->removeItem(item);
     }
+
+    albums->clearAll();
 }

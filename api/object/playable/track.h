@@ -5,6 +5,7 @@
 #include "shared.h"
 
 #include <QDate>
+#include <QSharedPointer>
 #include <QString>
 #include <QVector>
 
@@ -110,19 +111,19 @@ namespace api {
         /*!
          * \brief Return an alternative readable track if the current track is not readable
          */
-        Track* alternative;
+        QSharedPointer<Track> alternative;
 
         /*!
          * \brief Artist object
          */
-        Artist* artist;
+        QSharedPointer<Artist> artist;
         /*!
          * \brief Album object
          */
-        Album* album;
+        QSharedPointer<Album> album;
 
         Track();
-        ~Track();
+        Track (const Track &) = default;
     };
 }
 

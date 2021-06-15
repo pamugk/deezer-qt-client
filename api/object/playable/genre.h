@@ -40,6 +40,7 @@ namespace api {
         QString pictureXl;
 
         Genre();
+        Genre (const Genre &) = default;
     };
 }
 

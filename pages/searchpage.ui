@@ -20,9 +20,12 @@
    <attribute name="title">
     <string>Всё</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="overviewTabLayout">
     <item>
      <widget class="QScrollArea" name="overviewScrollArea">
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
@@ -41,7 +44,7 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <layout class="QVBoxLayout" name="overviewContentsLayout">
         <property name="sizeConstraint">
          <enum>QLayout::SetMinAndMaxSize</enum>
         </property>
@@ -55,7 +58,7 @@
    <attribute name="title">
     <string>Треки</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="trackTabLayout">
     <item>
      <widget class="QLabel" name="trackLabel">
       <property name="font">
@@ -79,7 +82,7 @@
    <attribute name="title">
     <string>Альбомы</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <layout class="QVBoxLayout" name="albumTabLayout">
     <item>
      <widget class="QLabel" name="albumLabel">
       <property name="font">
@@ -94,41 +97,13 @@
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QScrollArea" name="albumScrollArea">
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="albumContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>376</width>
-         <height>229</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_8">
-        <item>
-         <layout class="QGridLayout" name="albumGrid_2"/>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QWidget" name="playlistTab">
    <attribute name="title">
     <string>Плейлисты</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QVBoxLayout" name="playlistTabLayout">
     <item>
      <widget class="QLabel" name="playlistLabel">
       <property name="font">
@@ -177,7 +152,7 @@
    <attribute name="title">
     <string>Исполнители</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout_6">
+   <layout class="QVBoxLayout" name="artistTabLayout">
     <item>
      <widget class="QLabel" name="artistLabel">
       <property name="font">
@@ -226,7 +201,7 @@
    <attribute name="title">
     <string>Профили</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout_9">
+   <layout class="QVBoxLayout" name="userTabLayout">
     <item>
      <widget class="QLabel" name="userLabel">
       <property name="font">
@@ -275,7 +250,7 @@
    <attribute name="title">
     <string>Каналы</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout_11">
+   <layout class="QVBoxLayout" name="channelTabLayout">
     <item>
      <widget class="QLabel" name="channelLabel">
       <property name="font">
@@ -324,7 +299,7 @@
    <attribute name="title">
     <string>Подкасты</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout_13">
+   <layout class="QVBoxLayout" name="podcastTabLayout">
     <item>
      <widget class="QLabel" name="podcastLabel">
       <property name="font">
@@ -373,7 +348,7 @@
    <attribute name="title">
     <string>Выпуски</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout_15">
+   <layout class="QVBoxLayout" name="episodeTabLayout">
     <item>
      <widget class="QLabel" name="episodeLabel">
       <property name="font">
@@ -422,7 +397,7 @@
    <attribute name="title">
     <string>Миксы</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout_17">
+   <layout class="QVBoxLayout" name="miaxTabLayout">
     <item>
      <widget class="QLabel" name="mixLabel">
       <property name="font">

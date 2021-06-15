@@ -3,7 +3,8 @@
 
 #include "../api/deezer.h"
 
-#include <QDebug>
+#include "../widgets/flow.h"
+
 #include <QTabWidget>
 
 namespace Ui {
@@ -25,6 +26,9 @@ public slots:
 private:
     bool hasUndergoingSearch;
     Ui::SearchPage *ui;
+
+    Flow *albums;
+
     api::Deezer *deezerApiInstance;
 
     void clear();

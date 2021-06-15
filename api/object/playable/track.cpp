@@ -35,20 +35,4 @@ namespace api
         artist(nullptr),
         album(nullptr)
     { }
-
-    Track::~Track()
-    {
-        if (alternative != nullptr)
-        {
-            delete alternative;
-        }
-        if (artist != nullptr)
-        {
-            delete artist;
-        }
-        if (album != nullptr)
-        {
-            delete album;
-        }
-    }
 }

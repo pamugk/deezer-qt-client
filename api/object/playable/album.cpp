@@ -40,16 +40,4 @@ namespace api {
             artist(nullptr),
             tracks(QVector<Track>())
     {}
-
-    Album::~Album()
-    {
-        if (alternative != nullptr)
-        {
-            delete alternative;
-        }
-        if (artist != nullptr)
-        {
-            delete artist;
-        }
-    }
 }

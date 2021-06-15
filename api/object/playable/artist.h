@@ -66,6 +66,7 @@ namespace api {
         QString tracklist;
 
         Artist();
+        Artist (const Artist &) = default;
     };
 }
 

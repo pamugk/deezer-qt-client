@@ -14,7 +14,7 @@ class AlbumCard : public QWidget
     Q_OBJECT
 
 public:
-    explicit AlbumCard(api::Deezer apiInstance, api::Album &album, QWidget *parent = nullptr);
+    explicit AlbumCard(api::Deezer *apiInstance, api::Album &album, QWidget *parent = nullptr);
     ~AlbumCard();
 
 signals:

@@ -28,7 +28,7 @@ namespace api {
             return next.isEmpty();
         }
 
-        QVector<T> getData() const
+        QVector<T> &getData()
         {
             return data;
         }
