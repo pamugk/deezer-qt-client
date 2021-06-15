@@ -69,7 +69,6 @@ namespace api {
 
     QNetworkReply* Deezer::getAnything(QUrl &url)
     {
-        qDebug() << url;
         return networkManager->get(QNetworkRequest(url));
     }
 

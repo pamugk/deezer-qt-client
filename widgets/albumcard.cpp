@@ -27,12 +27,18 @@ AlbumCard::AlbumCard(api::Deezer *apiInstance, api::Album &album, QWidget *paren
     {
         QUrl coverUrl(album.coverMedium);
         QNetworkReply *coverReply = apiInstance->getAnything(coverUrl);
-        connect(coverReply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error) { coverReply->deleteLater(); });
+        connect(coverReply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error)
+        {
+            coverReply->deleteLater();
+        });
         connect(coverReply, &QNetworkReply::finished, [=]
         {
             if (coverReply->error() == QNetworkReply::NetworkError::NoError)
             {
-                ui->coverButton->setIcon(QIcon(QPixmap::fromImage(QImage(coverReply->readAll()))));
+                auto imageBytes = coverReply->readAll();
+                auto cover = QPixmap(250, 250);
+                cover.loadFromData(imageBytes);
+                ui->coverButton->setIcon(QIcon(cover));
                 coverReply->deleteLater();
             }
         });
