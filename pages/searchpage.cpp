@@ -9,8 +9,17 @@ SearchPage::SearchPage(api::Deezer * deezerApiInstance, QWidget *parent) :
     hasUndergoingSearch = false;
     ui->setupUi(this);
 
-    albums = new Flow(deezerApiInstance, ui->albumTab);
+    albums = new AlbumFlow(deezerApiInstance, ui->albumTab);
     ui->albumTabLayout->addWidget(albums);
+
+    artists = new ArtistFlow(deezerApiInstance, ui->artistTab);
+    ui->artistTabLayout->addWidget(artists);
+
+    playlists = new PlaylistFlow(deezerApiInstance, ui->playlistTab);
+    ui->playlistTabLayout->addWidget(playlists);
+
+    users = new UserFlow(deezerApiInstance, ui->userTab);
+    ui->userTabLayout->addWidget(users);
 
     clear();
 }
@@ -57,6 +66,10 @@ void SearchPage::search(QString request)
         addTab(ui->artistTab, QString("Исполнители"));
         ui->overviewContentsLayout->addWidget(new QLabel("Исполнители", ui->overviewContents));
         ui->artistLabel->setText(QString("Исполнителей: %1").arg(QString::number(artistPrefetch.getTotal())));
+
+        api::PartialSearchResponse<api::Artist> artistsResponse = deezerApiInstance->searchArtists(request, 0, 20);
+        QVector<api::Artist> artistsData = artistsResponse.getData();
+        artists->addContents(artistsData);
     }
 
     api::PartialSearchResponse<api::Playlist> playlistPrefetch = deezerApiInstance->searchPlaylists(request, 0, 5);
@@ -65,6 +78,10 @@ void SearchPage::search(QString request)
         addTab(ui->playlistTab, QString("Плейлисты"));
         ui->overviewContentsLayout->addWidget(new QLabel("Плейлисты", ui->overviewContents));
         ui->playlistLabel->setText(QString("Плейлистов: %1").arg(QString::number(playlistPrefetch.getTotal())));
+
+        api::PartialSearchResponse<api::Playlist> playlistsResponse = deezerApiInstance->searchPlaylists(request, 0, 20);
+        QVector<api::Playlist> playlistsData = playlistsResponse.getData();
+        playlists->addContents(playlistsData);
     }
 
     api::PartialSearchResponse<api::Radio> radioPrefetch = deezerApiInstance->searchRadio(request, 0, 5);
@@ -81,6 +98,10 @@ void SearchPage::search(QString request)
         addTab(ui->userTab, QString("Профили"));
         ui->overviewContentsLayout->addWidget(new QLabel("Профили", ui->overviewContents));
         ui->userLabel->setText(QString("Профилей: %1").arg(QString::number(userPrefetch.getTotal())));
+
+        api::PartialSearchResponse<api::User> usersResponse = deezerApiInstance->searchUsers(request, 0, 20);
+        QVector<api::User> usersData = usersResponse.getData();
+        users->addContents(usersData);
     }
 
     hasUndergoingSearch = false;
@@ -99,4 +120,7 @@ void SearchPage::clear()
     }
 
     albums->clearAll();
+    artists->clearAll();
+    playlists->clearAll();
+    users->clearAll();
 }

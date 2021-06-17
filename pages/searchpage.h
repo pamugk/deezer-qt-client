@@ -3,7 +3,11 @@
 
 #include "../api/deezer.h"
 
-#include "../widgets/flow.h"
+#include "../widgets/albumflow.h"
+#include "../widgets/artistflow.h"
+#include "../widgets/playlistflow.h"
+#include "../widgets/userflow.h"
+
 
 #include <QTabWidget>
 
@@ -27,7 +31,10 @@ private:
     bool hasUndergoingSearch;
     Ui::SearchPage *ui;
 
-    Flow *albums;
+    AlbumFlow *albums;
+    ArtistFlow *artists;
+    PlaylistFlow *playlists;
+    UserFlow *users;
 
     api::Deezer *deezerApiInstance;
 

@@ -9,16 +9,16 @@
 #include <QGridLayout>
 
 namespace Ui {
-class Flow;
+class AlbumFlow;
 }
 
-class Flow : public QScrollArea
+class AlbumFlow : public QScrollArea
 {
     Q_OBJECT
 
 public:
-    explicit Flow(api::Deezer *apiInstance, QWidget *parent = nullptr);
-    ~Flow();
+    explicit AlbumFlow(api::Deezer *apiInstance, QWidget *parent = nullptr);
+    ~AlbumFlow();
     void addContents(QVector<api::Album>&);
     void clearAll();
 
@@ -27,7 +27,7 @@ signals:
 
 private:
     int lastContentIndex;
-    Ui::Flow *ui;
+    Ui::AlbumFlow *ui;
 
     api::Deezer *apiInstance;
 

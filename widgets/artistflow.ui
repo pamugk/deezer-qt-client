@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Flow</class>
- <widget class="QScrollArea" name="Flow">
+ <class>ArtistFlow</class>
+ <widget class="QScrollArea" name="ArtistFlow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -43,6 +42,4 @@
    </layout>
   </widget>
  </widget>
- <resources/>
- <connections/>
 </ui>

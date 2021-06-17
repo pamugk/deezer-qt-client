@@ -38,7 +38,8 @@ set(PROJECT_SOURCES
         api/deezer.cpp
         api/deezer.h
 
-        api/util/serialization.h
+        api/util/json_serialization.h
+        api/util/json_serialization.cpp
 
         api/object/compilation/chart.cpp
         api/object/compilation/chart.h
@@ -87,9 +88,30 @@ set(PROJECT_SOURCES
         widgets/albumcard.h
         widgets/albumcard.cpp
         widgets/albumcard.ui
-        widgets/flow.h
-        widgets/flow.cpp
-        widgets/flow.ui
+        widgets/albumflow.h
+        widgets/albumflow.cpp
+        widgets/albumflow.ui
+        widgets/artistcard.h
+        widgets/artistcard.cpp
+        widgets/artistcard.ui
+        widgets/artistflow.h
+        widgets/artistflow.cpp
+        widgets/artistflow.ui
+        widgets/playlistcard.h
+        widgets/playlistcard.cpp
+        widgets/playlistcard.ui
+        widgets/playlistflow.h
+        widgets/playlistflow.cpp
+        widgets/playlistflow.ui
+        widgets/radiocard.h
+        widgets/radiocard.cpp
+        widgets/radiocard.ui
+        widgets/usercard.h
+        widgets/usercard.cpp
+        widgets/usercard.ui
+        widgets/userflow.h
+        widgets/userflow.cpp
+        widgets/userflow.ui
 
         ${TS_FILES}
 )

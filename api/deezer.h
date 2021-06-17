@@ -1,7 +1,7 @@
 #ifndef DEEZER_H
 #define DEEZER_H
 
-#include "util/serialization.h"
+#include "util/json_serialization.h"
 
 #include "object/compilation/chart.h"
 #include "object/compilation/editorial.h"
