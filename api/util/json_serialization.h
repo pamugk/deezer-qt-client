@@ -13,9 +13,11 @@
 #include "../object/user/user.h"
 
 #include <QJsonArray>
+#include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValueRef>
 #include <QString>
+#include <QNetworkReply>
 
 namespace api
 {
@@ -45,6 +47,8 @@ namespace api
     QVector<Track> deserializeResponseTrack(QJsonObject&);
 
     QString serialize(SearchOrder);
+
+    QJsonDocument tryReadResponse(QNetworkReply*);
 
     template<typename T>
     PartialSearchResponse<T> deserializePartialResponse(QJsonObject &jsonObj, QJsonArray &jsonData)

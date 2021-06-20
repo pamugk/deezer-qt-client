@@ -24,11 +24,11 @@ public:
     ~SearchPage();
 
 public slots:
-
     void search(QString);
 
 private:
-    bool hasUndergoingSearch;
+    QString currentRequest;
+
     Ui::SearchPage *ui;
 
     AlbumFlow *albums;
@@ -39,6 +39,22 @@ private:
     api::Deezer *deezerApiInstance;
 
     void clear();
+
+    void fetchedAlbums(QNetworkReply*);
+    void fetchedArtists(QNetworkReply*);
+    void fetchedPlaylists(QNetworkReply*);
+    void fetchedRadio(QNetworkReply*);
+    void fetchedTracks(QNetworkReply*);
+    void fetchedUsers(QNetworkReply*);
+
+    void gotError(QNetworkReply*, QNetworkReply::NetworkError);
+
+    void prefetchedAlbums(QNetworkReply*);
+    void prefetchedArtists(QNetworkReply*);
+    void prefetchedPlaylists(QNetworkReply*);
+    void prefetchedRadio(QNetworkReply*);
+    void prefetchedTracks(QNetworkReply*);
+    void prefetchedUsers(QNetworkReply*);
 };
 
 #endif // SEARCHPAGE_H

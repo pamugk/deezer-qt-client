@@ -72,817 +72,445 @@ namespace api {
         return networkManager->get(QNetworkRequest(url));
     }
 
-    Album Deezer::getAlbum(int id)
+   QNetworkReply *Deezer::getAlbum(int id)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id));
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        Album response;
-        deserializeAlbum(responseJson, response);
-        return response;
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<User> Deezer::getAlbumFans(int id, int index, int limit)
+    QNetworkReply *Deezer::getAlbumFans(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id), Deezer::FANS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseUser(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    QVector<Track> Deezer::getAlbumTracks(int id)
+    QNetworkReply *Deezer::getAlbumTracks(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id), Deezer::TRACKS);
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseTrack(responseJson);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    Artist Deezer::getArtist(int id)
+    QNetworkReply *Deezer::getArtist(int id)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id));
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        Artist response;
-        deserializeArtist(responseJson, response);
-        return response;
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    QVector<Track> Deezer::getArtistTop(int id)
+    QNetworkReply *Deezer::getArtistTop(int id)
     {
         const QString url = QString("%1/%2/%3/top").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id));
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseTrack(responseJson);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Album> Deezer::getArtistAlbums(int id, int index, int limit)
+    QNetworkReply *Deezer::getArtistAlbums(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id), Deezer::ALBUMS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseAlbum(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<User> Deezer::getArtistFans(int id, int index, int limit)
+    QNetworkReply *Deezer::getArtistFans(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id), Deezer::FANS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseUser(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Artist> Deezer::getArtistRelated(int id, int index, int limit)
+    QNetworkReply *Deezer::getArtistRelated(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/related").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString(id));
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseArtist(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Playlist> Deezer::getArtistPlaylists(int id, int index, int limit)
+    QNetworkReply *Deezer::getArtistPlaylists(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id), Deezer::PLAYLISTS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponsePlaylist(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Album> Deezer::getChartAlbums(int id, int index, int limit)
+    QNetworkReply *Deezer::getChartAlbums(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::ALBUMS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseAlbum(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Artist> Deezer::getChartArtists(int id, int index, int limit)
+    QNetworkReply *Deezer::getChartArtists(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::ARTISTS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseArtist(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Playlist> Deezer::getChartPlaylists(int id, int index, int limit)
+    QNetworkReply *Deezer::getChartPlaylists(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::PLAYLISTS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponsePlaylist(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Podcast> Deezer::getChartPodcasts(int id, int index, int limit)
+    QNetworkReply *Deezer::getChartPodcasts(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/podcasts").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id));
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponsePodcast(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Track> Deezer::getChartTracks(int id, int index, int limit)
+    QNetworkReply *Deezer::getChartTracks(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::TRACKS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseTrack(responseJson);
+        return networkManager->get(request);
     }
 
-    Chart Deezer::getEditorialCharts(int id)
+    QNetworkReply *Deezer::getEditorialCharts(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::EDITORIAL, QString::number(id), Deezer::CHARTS);
-        return Chart();
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
+
     }
 
-    PartialSearchResponse<Album> Deezer::getEditorialReleases(int id, int index, int limit)
+    QNetworkReply *Deezer::getEditorialReleases(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/releases").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id));
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseAlbum(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    QVector<Album> Deezer::getEditorialSelection(int id)
+    QNetworkReply *Deezer::getEditorialSelection(int id)
     {
         const QString url = QString("%1/%2/%3/selection").arg(Deezer::DEEZER_API_HOST, Deezer::EDITORIAL, QString::number(id));
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseAlbum(responseJson);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    Genre Deezer::getGenre(int id)
+    QNetworkReply *Deezer::getGenre(int id)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id));
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        Genre response;
-        deserializeGenre(responseJson, response);
-        return response;
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    QVector<Artist> Deezer::getGenreArtists(int id)
+    QNetworkReply *Deezer::getGenreArtists(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id), Deezer::ARTISTS);
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseArtist(responseJson);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    QVector<Radio> Deezer::getGenreRadios(int id)
+    QNetworkReply *Deezer::getGenreRadios(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id), Deezer::RADIOS);
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseRadio(responseJson);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    Infos Deezer::getInfos()
+    QNetworkReply *Deezer::getInfos()
     {
         const QString url = QString("%1/infos").arg(Deezer::DEEZER_API_HOST);
-        return Infos();
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    Playlist Deezer::getPlaylist(int id)
+    QNetworkReply *Deezer::getPlaylist(int id)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id));
         QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        Playlist response;
-        deserializePlaylist(responseJson, response);
-        return response;
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<User> Deezer::getPlaylistFans(int id, int index, int limit)
+    QNetworkReply *Deezer::getPlaylistFans(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::FANS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseUser(responseJson);
+        return networkManager->get(request);
     }
 
-    QVector<Track> Deezer::getPlaylistRadio(int id)
+    QNetworkReply *Deezer::getPlaylistRadio(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::TRACKS);
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseTrack(responseJson);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    QVector<Track> Deezer::getPlaylistTracks(int id)
+    QNetworkReply *Deezer::getPlaylistTracks(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::RADIO);
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseTrack(responseJson);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    QVector<Radio> Deezer::getRadio()
+    QNetworkReply *Deezer::getRadio()
     {
         const QString url = QString("%1/%2").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO);
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseRadio(responseJson);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    Radio Deezer::getRadio(int id)
+    QNetworkReply *Deezer::getRadio(int id)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO, QString::number(id));
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        Radio response;
-        deserializeRadio(responseJson, response);
-        return response;
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    QVector<Genre> Deezer::getRadioGenres()
+    QNetworkReply *Deezer::getRadioGenres()
     {
         const QString url = QString("%1/%2/genres").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO);
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseGenre(responseJson);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Radio> Deezer::getRadioTop(int index = 0, int limit = 25)
+    QNetworkReply *Deezer::getRadioTop(int index = 0, int limit = 25)
     {
         const QString url = QString("%1/%2/top").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseRadio(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    QVector<Track> Deezer::getRadioTracks(int id)
+    QNetworkReply *Deezer::getRadioTracks(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO, QString::number(id), Deezer::TRACKS);
         QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseTrack(responseJson);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Radio> Deezer::getRadioLists(int index = 0, int limit = 25)
+    QNetworkReply *Deezer::getRadioLists(int index = 0, int limit = 25)
     {
         const QString url = QString("%1/%2/lists").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseRadio(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    Track Deezer::getTrack(int id)
+    QNetworkReply *Deezer::getTrack(int id)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::TRACK, QString::number(id));
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        Track response;
-        deserializeTrack(responseJson, response);
-        return response;
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    User Deezer::getUser(int id)
+    QNetworkReply *Deezer::getUser(int id)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        User response;
-        deserializeUser(responseJson, response);
-        return response;
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Album> Deezer::getUserChartsAlbums(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserChartsAlbums(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::CHARTS, Deezer::ALBUMS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseAlbum(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Playlist> Deezer::getUserChartsPlaylists(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserChartsPlaylists(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::CHARTS, Deezer::PLAYLISTS);
         QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponsePlaylist(responseJson);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Track> Deezer::getUserChartsTracks(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserChartsTracks(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::CHARTS, Deezer::TRACKS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseTrack(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Album> Deezer::getUserFavoriteAlbums(int id)
+    QNetworkReply *Deezer::getUserFavoriteAlbums(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::ALBUMS);
-        QNetworkRequest request = buildPartialRequest(url, 0, 25);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseAlbum(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, 0, 25);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Artist> Deezer::getUserFavoriteArtists(int id)
+    QNetworkReply *Deezer::getUserFavoriteArtists(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::ARTISTS);
-        QNetworkRequest request = buildPartialRequest(url, 0, 25);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseArtist(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, 0, 25);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Radio> Deezer::getUserFavoriteRadios(int id)
+    QNetworkReply *Deezer::getUserFavoriteRadios(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RADIOS);
         QNetworkRequest request = buildPartialRequest(url, 0, 25);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseRadio(responseJson);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Track> Deezer::getUserFavoriteTracks(int id)
+    QNetworkReply *Deezer::getUserFavoriteTracks(int id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::TRACKS);
-        QNetworkRequest request = buildPartialRequest(url, 0, 25);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseTrack(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, 0, 25);
+        return networkManager->get(request);
     }
 
-    QVector<Folder> Deezer::getUserFolders()
+    QNetworkReply *Deezer::getUserFolders()
     {
         const QString url = QString("%1/%2/me/folders").arg(Deezer::DEEZER_API_HOST, Deezer::USER);
-        return QVector<Folder>();
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
-    PartialSearchResponse<User> Deezer::getUserFollowings(int id, int index, int limit)
+
+    QNetworkReply *Deezer::getUserFollowings(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/followings").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseUser(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<User> Deezer::getUserFollowers(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserFollowers(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/followers").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseUser(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    QVector<Track> Deezer::getUserFlow(int id)
+    QNetworkReply *Deezer::getUserFlow(int id)
     {
         const QString url = QString("%1/%2/%3/flow").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        return deserializeResponseTrack(responseJson);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Track> Deezer::getUserHistory(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserHistory(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/history").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseTrack(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    Options Deezer::getUserOptions()
-    {
-        return Options();
-    }
-
-    QVector<QString> Deezer::getUserPermissions()
+    QNetworkReply *Deezer::getUserOptions()
     {
         const QString url = QString("%1/%2/me/permissions").arg(Deezer::DEEZER_API_HOST,Deezer:: USER);
-        QNetworkRequest request(url);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-
-        if (!(responseJson.contains("data") && responseJson["data"].isArray()))
-        {
-            return QVector<QString>();
-        }
-
-        QJsonArray permissionsJsonArray = responseJson["data"].toArray();
-        QVector<QString> permissions(permissionsJsonArray.size());
-        for (int i = 0; i < permissionsJsonArray.size(); i++)
-        {
-            permissions[i] = permissionsJsonArray[i].toString();
-        }
-        return permissions;
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Track> Deezer::getUserPersonalSongs(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserPermissions()
+    {
+        const QString url = QString("%1/%2/me/permissions").arg(Deezer::DEEZER_API_HOST,Deezer:: USER);
+        const QNetworkRequest request(url);
+        return networkManager->get(request);
+    }
+
+    QNetworkReply *Deezer::getUserPersonalSongs(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/personal_songs").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseTrack(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Playlist> Deezer::getUserPlaylists(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserPlaylists(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::PLAYLISTS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponsePlaylist(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Album> Deezer::getUserRecommendedAlbums(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserRecommendedAlbums(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::ALBUMS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseAlbum(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Artist> Deezer::getUserRecommendedArtists(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserRecommendedArtists(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::ARTISTS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseArtist(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Playlist> Deezer::getUserRecommendedPlaylists(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserRecommendedPlaylists(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::PLAYLISTS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponsePlaylist(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Radio> Deezer::getUserRecommendedRadios(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserRecommendedRadios(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::RADIOS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseRadio(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Album> Deezer::getUserRecommendedReleases(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserRecommendedReleases(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/releases").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseAlbum(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Track> Deezer::getUserRecommendedTracks(int id, int index, int limit)
+    QNetworkReply *Deezer::getUserRecommendedTracks(int id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::TRACKS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-
-        QNetworkReply *reply = networkManager->get(request);
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseTrack(responseJson);
+        const QNetworkRequest request = buildPartialRequest(url, index, limit);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Track> Deezer::search(QString &query, int index, int limit, bool strict, SearchOrder order)
+    QNetworkReply *Deezer::search(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::TRACKS);
-        QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-
-        QNetworkReply *reply = networkManager->get(request);
-
-        QEventLoop loop;
-        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
-
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseTrack(responseJson);
+        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Track> Deezer::search(AdvancedSearchQuery query, int index, int limit, bool strict, SearchOrder order)
+    QNetworkReply *Deezer::search(AdvancedSearchQuery query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::TRACKS);
         QNetworkRequest request = buildSearchRequest(url, query.toString(), index, limit, strict, order);
-
-        QNetworkReply *reply = networkManager->get(request);
-
-        QEventLoop loop;
-        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
-
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseTrack(responseJson);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Album> Deezer::searchAlbums(QString &query, int index, int limit, bool strict, SearchOrder order)
+    QNetworkReply *Deezer::searchAlbums(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::ALBUM);
-        QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-
-        QNetworkReply *reply = networkManager->get(request);
-
-        QEventLoop loop;
-        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
-
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseAlbum(responseJson);
+        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Artist> Deezer::searchArtists(QString &query, int index, int limit, bool strict, SearchOrder order)
+    QNetworkReply *Deezer::searchArtists(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::ARTIST);
-        QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-
-        QNetworkReply *reply = networkManager->get(request);
-
-        QEventLoop loop;
-        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
-
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseArtist(responseJson);
+        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Playlist> Deezer::searchPlaylists(QString &query, int index, int limit, bool strict, SearchOrder order)
+    QNetworkReply *Deezer::searchPlaylists(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::PLAYLIST);
-        QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-
-        QNetworkReply *reply = networkManager->get(request);
-
-        QEventLoop loop;
-        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
-
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponsePlaylist(responseJson);
+        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Radio> Deezer::searchRadio(QString &query, int index, int limit, bool strict, SearchOrder order)
+    QNetworkReply *Deezer::searchRadio(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::RADIO);
-        QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-
-        QNetworkReply *reply = networkManager->get(request);
-
-        QEventLoop loop;
-        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
-
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseRadio(responseJson);
+        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<Track> Deezer::searchTracks(QString &query, int index, int limit, bool strict, SearchOrder order)
+    QNetworkReply *Deezer::searchTracks(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::TRACKS);
-        QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-
-        QNetworkReply *reply = networkManager->get(request);
-
-        QEventLoop loop;
-        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
-
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseTrack(responseJson);
+        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
+        return networkManager->get(request);
     }
 
-    PartialSearchResponse<User> Deezer::searchUsers(QString &query, int index, int limit, bool strict, SearchOrder order)
+    QNetworkReply *Deezer::searchUsers(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::USER);
-        QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-
-        QNetworkReply *reply = networkManager->get(request);
-
-        QEventLoop loop;
-        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
-
-        QJsonParseError error;
-        QJsonObject responseJson = QJsonDocument::fromJson(reply->readAll(), &error).object();
-        reply->deleteLater();
-        return deserializePartialResponseUser(responseJson);
+        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
+        return networkManager->get(request);
     }
 }

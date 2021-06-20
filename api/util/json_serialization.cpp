@@ -856,4 +856,21 @@ namespace api
         }
         return QString();
     }
+
+    QJsonDocument tryReadResponse(QNetworkReply *reply)
+    {
+        QJsonParseError parseError;
+        auto response = QJsonDocument::fromJson(reply->readAll(), &parseError);
+        reply->deleteLater();
+        if (parseError.error != QJsonParseError::NoError)
+        {
+
+        }
+
+        if (response.isObject() && response.object().contains("error"))
+        {
+
+        }
+        return response;
+    }
 }

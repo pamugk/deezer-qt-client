@@ -6,7 +6,6 @@ SearchPage::SearchPage(api::Deezer * deezerApiInstance, QWidget *parent) :
     deezerApiInstance(deezerApiInstance),
     ui(new Ui::SearchPage)
 {
-    hasUndergoingSearch = false;
     ui->setupUi(this);
 
     albums = new AlbumFlow(deezerApiInstance, ui->albumTab);
@@ -31,80 +30,39 @@ SearchPage::~SearchPage()
 
 void SearchPage::search(QString request)
 {
-    if (hasUndergoingSearch || request.isNull() || request.isEmpty())
+    if (request.isNull() || request.isEmpty())
     {
         return;
     }
 
-    hasUndergoingSearch = true;
-
     clear();
 
-    api::PartialSearchResponse<api::Track> trackPrefetch = deezerApiInstance->searchTracks(request, 0, 5);
-    if (trackPrefetch.getTotal() > 0)
-    {
-        addTab(ui->trackTab, QString("Треки"));
-        ui->overviewContentsLayout->addWidget(new QLabel("Треки", ui->overviewContents));
-        ui->trackLabel->setText(QString("Треков: %1").arg(QString::number(trackPrefetch.getTotal())));
-    }
+    currentRequest = request;
 
-    api::PartialSearchResponse<api::Album> albumPrefetch = deezerApiInstance->searchAlbums(request, 0, 5);
-    if (albumPrefetch.getTotal() > 0)
-    {
-        addTab(ui->albumTab, QString("Альбомы"));
-        ui->overviewContentsLayout->addWidget(new QLabel("Альбомы", ui->overviewContents));
-        ui->albumLabel->setText(QString("Альбомов: %1").arg(QString::number(albumPrefetch.getTotal())));
+    auto trackPrefetchResponse = deezerApiInstance->searchTracks(request, 0, 5);
+    connect(trackPrefetchResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(trackPrefetchResponse, error); });
+    connect(trackPrefetchResponse, &QNetworkReply::finished, [=] { prefetchedAlbums(trackPrefetchResponse); });
 
-        api::PartialSearchResponse<api::Album> albumsResponse = deezerApiInstance->searchAlbums(request, 0, 20);
-        QVector<api::Album> albumsData = albumsResponse.getData();
-        albums->addContents(albumsData);
-    }
 
-    api::PartialSearchResponse<api::Artist> artistPrefetch = deezerApiInstance->searchArtists(request, 0, 5);
-    if (artistPrefetch.getTotal() > 0)
-    {
-        addTab(ui->artistTab, QString("Исполнители"));
-        ui->overviewContentsLayout->addWidget(new QLabel("Исполнители", ui->overviewContents));
-        ui->artistLabel->setText(QString("Исполнителей: %1").arg(QString::number(artistPrefetch.getTotal())));
+    auto albumPrefetchResponse = deezerApiInstance->searchAlbums(request, 0, 5);
+    connect(albumPrefetchResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(albumPrefetchResponse, error); });
+    connect(albumPrefetchResponse, &QNetworkReply::finished, [=] { prefetchedAlbums(albumPrefetchResponse); });
 
-        api::PartialSearchResponse<api::Artist> artistsResponse = deezerApiInstance->searchArtists(request, 0, 20);
-        QVector<api::Artist> artistsData = artistsResponse.getData();
-        artists->addContents(artistsData);
-    }
+    auto artistPrefetchResponse = deezerApiInstance->searchArtists(request, 0, 5);
+    connect(artistPrefetchResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(artistPrefetchResponse, error); });
+    connect(artistPrefetchResponse, &QNetworkReply::finished, [=] { prefetchedArtists(artistPrefetchResponse); });
 
-    api::PartialSearchResponse<api::Playlist> playlistPrefetch = deezerApiInstance->searchPlaylists(request, 0, 5);
-    if (playlistPrefetch.getTotal() > 0)
-    {
-        addTab(ui->playlistTab, QString("Плейлисты"));
-        ui->overviewContentsLayout->addWidget(new QLabel("Плейлисты", ui->overviewContents));
-        ui->playlistLabel->setText(QString("Плейлистов: %1").arg(QString::number(playlistPrefetch.getTotal())));
+    auto playlistPrefetchResponse = deezerApiInstance->searchPlaylists(request, 0, 5);
+    connect(albumPrefetchResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(playlistPrefetchResponse, error); });
+    connect(playlistPrefetchResponse, &QNetworkReply::finished, [=] { prefetchedPlaylists(playlistPrefetchResponse); });
 
-        api::PartialSearchResponse<api::Playlist> playlistsResponse = deezerApiInstance->searchPlaylists(request, 0, 20);
-        QVector<api::Playlist> playlistsData = playlistsResponse.getData();
-        playlists->addContents(playlistsData);
-    }
+    auto radioPrefetchResponse = deezerApiInstance->searchRadio(request, 0, 5);
+    connect(radioPrefetchResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(radioPrefetchResponse, error); });
+    connect(radioPrefetchResponse, &QNetworkReply::finished, [=] { prefetchedRadio(radioPrefetchResponse); });
 
-    api::PartialSearchResponse<api::Radio> radioPrefetch = deezerApiInstance->searchRadio(request, 0, 5);
-    if (radioPrefetch.getTotal() > 0)
-    {
-        addTab(ui->mixTab, QString("Миксы"));
-        ui->overviewContentsLayout->addWidget(new QLabel("Миксы", ui->overviewContents));
-        ui->mixLabel->setText(QString("Миксов: %1").arg(QString::number(radioPrefetch.getTotal())));
-    }
-
-    api::PartialSearchResponse<api::User> userPrefetch = deezerApiInstance->searchUsers(request, 0, 5);
-    if (userPrefetch.getTotal() > 0)
-    {
-        addTab(ui->userTab, QString("Профили"));
-        ui->overviewContentsLayout->addWidget(new QLabel("Профили", ui->overviewContents));
-        ui->userLabel->setText(QString("Профилей: %1").arg(QString::number(userPrefetch.getTotal())));
-
-        api::PartialSearchResponse<api::User> usersResponse = deezerApiInstance->searchUsers(request, 0, 20);
-        QVector<api::User> usersData = usersResponse.getData();
-        users->addContents(usersData);
-    }
-
-    hasUndergoingSearch = false;
+    auto userPrefetchResponse = deezerApiInstance->searchUsers(request, 0, 5);
+    connect(userPrefetchResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(userPrefetchResponse, error); });
+    connect(userPrefetchResponse, &QNetworkReply::finished, [=] { prefetchedUsers(userPrefetchResponse); });
 }
 
 void SearchPage::clear()
@@ -124,3 +82,150 @@ void SearchPage::clear()
     playlists->clearAll();
     users->clearAll();
 }
+
+void SearchPage::fetchedAlbums(QNetworkReply *reply)
+{
+    auto albumsJson = api::tryReadResponse(reply).object();
+    auto albumsResponse = api::deserializePartialResponseAlbum(albumsJson);
+    QVector<api::Album> albumsData = albumsResponse.getData();
+    albums->addContents(albumsData);
+}
+
+void SearchPage::fetchedArtists(QNetworkReply *reply)
+{
+    auto artistsJson = api::tryReadResponse(reply).object();
+    auto artistsResponse = api::deserializePartialResponseArtist(artistsJson);
+    QVector<api::Artist> artistsData = artistsResponse.getData();
+    artists->addContents(artistsData);
+}
+
+void SearchPage::fetchedPlaylists(QNetworkReply *reply)
+{
+    auto playlistsJson = api::tryReadResponse(reply).object();
+    auto playlistsResponse = api::deserializePartialResponsePlaylist(playlistsJson);
+    QVector<api::Playlist> playlistsData = playlistsResponse.getData();
+    playlists->addContents(playlistsData);
+}
+
+void SearchPage::fetchedRadio(QNetworkReply *reply)
+{
+    auto radioJson = api::tryReadResponse(reply).object();
+    auto radioResponse = api::deserializePartialResponseRadio(radioJson);
+}
+
+void SearchPage::fetchedTracks(QNetworkReply *reply)
+{
+    auto tracksJson = api::tryReadResponse(reply).object();
+    auto tracksResponse = api::deserializePartialResponseUser(tracksJson);
+}
+
+void SearchPage::fetchedUsers(QNetworkReply *reply)
+{
+    auto usersJson = api::tryReadResponse(reply).object();
+    auto usersResponse = api::deserializePartialResponseUser(usersJson);
+    QVector<api::User> usersData = usersResponse.getData();
+    users->addContents(usersData);
+}
+
+void SearchPage::gotError(QNetworkReply *reply, QNetworkReply::NetworkError error)
+{
+    qDebug() << error;
+    reply->deleteLater();
+}
+
+void SearchPage::prefetchedAlbums(QNetworkReply *reply)
+{
+    auto albumPrefetchJson = api::tryReadResponse(reply).object();
+    auto albumPrefetch = api::deserializePartialResponseAlbum(albumPrefetchJson);
+    if (albumPrefetch.getTotal() > 0)
+    {
+        addTab(ui->albumTab, QString("Альбомы"));
+        ui->overviewContentsLayout->addWidget(new QLabel("Альбомы", ui->overviewContents));
+        ui->albumLabel->setText(QString("Альбомов: %1").arg(QString::number(albumPrefetch.getTotal())));
+
+        auto albumsResponse = deezerApiInstance->searchAlbums(currentRequest, 0, 20);
+        connect(albumsResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(albumsResponse, error); });
+        connect(albumsResponse, &QNetworkReply::finished, [=] { fetchedAlbums(albumsResponse); });
+    }
+}
+
+void SearchPage::prefetchedArtists(QNetworkReply *reply)
+{
+    auto artistPrefetchJson = api::tryReadResponse(reply).object();
+    auto artistPrefetch = api::deserializePartialResponseArtist(artistPrefetchJson);
+    if (artistPrefetch.getTotal() > 0)
+    {
+        addTab(ui->artistTab, QString("Исполнители"));
+        ui->overviewContentsLayout->addWidget(new QLabel("Исполнители", ui->overviewContents));
+        ui->artistLabel->setText(QString("Исполнителей: %1").arg(QString::number(artistPrefetch.getTotal())));
+
+        auto artistsResponse = deezerApiInstance->searchArtists(currentRequest, 0, 20);
+        connect(artistsResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(artistsResponse, error); });
+        connect(artistsResponse, &QNetworkReply::finished, [=] { fetchedArtists(artistsResponse); });
+    }
+}
+
+void SearchPage::prefetchedPlaylists(QNetworkReply *reply)
+{
+    auto playlistPrefetchJson = api::tryReadResponse(reply).object();
+    auto playlistPrefetch = api::deserializePartialResponsePlaylist(playlistPrefetchJson);
+    if (playlistPrefetch.getTotal() > 0)
+    {
+        addTab(ui->playlistTab, QString("Плейлисты"));
+        ui->overviewContentsLayout->addWidget(new QLabel("Плейлисты", ui->overviewContents));
+        ui->playlistLabel->setText(QString("Плейлистов: %1").arg(QString::number(playlistPrefetch.getTotal())));
+
+        auto playlistsResponse = deezerApiInstance->searchPlaylists(currentRequest, 0, 20);
+        connect(playlistsResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(playlistsResponse, error); });
+        connect(playlistsResponse, &QNetworkReply::finished, [=] { fetchedPlaylists(playlistsResponse); });
+    }
+}
+
+void SearchPage::prefetchedRadio(QNetworkReply *reply)
+{
+    auto radioPrefetchJson = api::tryReadResponse(reply).object();
+    auto radioPrefetch = api::deserializePartialResponseRadio(radioPrefetchJson);
+    if (radioPrefetch.getTotal() > 0)
+    {
+        addTab(ui->mixTab, QString("Миксы"));
+        ui->overviewContentsLayout->addWidget(new QLabel("Миксы", ui->overviewContents));
+        ui->mixLabel->setText(QString("Миксов: %1").arg(QString::number(radioPrefetch.getTotal())));
+
+        auto radioResponse = deezerApiInstance->searchRadio(currentRequest, 0, 20);
+        connect(radioResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(radioResponse, error); });
+        connect(radioResponse, &QNetworkReply::finished, [=] { fetchedRadio(radioResponse); });
+    }
+}
+
+void SearchPage::prefetchedTracks(QNetworkReply *reply)
+{
+    auto trackPrefetchJson = api::tryReadResponse(reply).object();
+    auto trackPrefetch = api::deserializePartialResponseTrack(trackPrefetchJson);
+    if (trackPrefetch.getTotal() > 0)
+    {
+        addTab(ui->trackTab, QString("Треки"));
+        ui->overviewContentsLayout->addWidget(new QLabel("Треки", ui->overviewContents));
+        ui->trackLabel->setText(QString("Треков: %1").arg(QString::number(trackPrefetch.getTotal())));
+
+        auto tracksResponse = deezerApiInstance->searchRadio(currentRequest, 0, 20);
+        connect(tracksResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(tracksResponse, error); });
+        connect(tracksResponse, &QNetworkReply::finished, [=] { fetchedTracks(tracksResponse); });
+    }
+}
+
+void SearchPage::prefetchedUsers(QNetworkReply *reply)
+{
+    auto userPrefetchJson = api::tryReadResponse(reply).object();
+    auto userPrefetch = api::deserializePartialResponseUser(userPrefetchJson);
+    if (userPrefetch.getTotal() > 0)
+    {
+        addTab(ui->userTab, QString("Профили"));
+        ui->overviewContentsLayout->addWidget(new QLabel("Профили", ui->overviewContents));
+        ui->userLabel->setText(QString("Профилей: %1").arg(QString::number(userPrefetch.getTotal())));
+
+        auto usersResponse = deezerApiInstance->searchUsers(currentRequest, 0, 20);
+        connect(usersResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(usersResponse, error); });
+        connect(usersResponse, &QNetworkReply::finished, [=] { fetchedUsers(usersResponse); });
+    }
+}
+

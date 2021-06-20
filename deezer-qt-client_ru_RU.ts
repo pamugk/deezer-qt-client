@@ -40,12 +40,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/artistcard.ui" line="50"/>
+        <location filename="widgets/artistcard.ui" line="53"/>
         <source>Исполнитель</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/artistcard.ui" line="60"/>
+        <location filename="widgets/artistcard.ui" line="63"/>
         <source>Поклонников: %1</source>
         <oldsource>Поклонников:</oldsource>
         <translation type="unfinished"></translation>
@@ -152,12 +152,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/playlistcard.ui" line="60"/>
+        <location filename="widgets/playlistcard.ui" line="63"/>
         <source>Плейлист</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/playlistcard.ui" line="70"/>
+        <location filename="widgets/playlistcard.ui" line="73"/>
         <source>Треков: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -241,42 +241,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="195"/>
+        <location filename="pages/searchpage.ui" line="167"/>
         <source>Каналы</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="208"/>
+        <location filename="pages/searchpage.ui" line="180"/>
         <source>Каналов: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="244"/>
+        <location filename="pages/searchpage.ui" line="216"/>
         <source>Подкасты</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="257"/>
+        <location filename="pages/searchpage.ui" line="229"/>
         <source>Подкастов: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="293"/>
+        <location filename="pages/searchpage.ui" line="265"/>
         <source>Выпуски</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="306"/>
+        <location filename="pages/searchpage.ui" line="278"/>
         <source>Выпусков:  </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="342"/>
+        <location filename="pages/searchpage.ui" line="314"/>
         <source>Миксы</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="355"/>
+        <location filename="pages/searchpage.ui" line="327"/>
         <source>Миксов: </source>
         <translation type="unfinished"></translation>
     </message>
