@@ -189,8 +189,8 @@ QPushButton:hover {
           <string>Избранное</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/heart.svg</normaloff>:/fontawesome/icons/regular/assets/fontawesome/svgs/regular/heart.svg</iconset>
+          <iconset resource="resources.qrc">
+           <normaloff>:/assets/fontawesome/svgs/regular/heart.svg</normaloff>:/assets/fontawesome/svgs/regular/heart.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -221,8 +221,8 @@ QPushButton:hover {
           <string>Исследуйте</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/th-large.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/th-large.svg</iconset>
+          <iconset resource="resources.qrc">
+           <normaloff>:/assets/fontawesome/svgs/solid/th-large.svg</normaloff>:/assets/fontawesome/svgs/solid/th-large.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -243,8 +243,8 @@ QPushButton:hover {
           <string>Подкасты</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/microphone-alt.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/microphone-alt.svg</iconset>
+          <iconset resource="resources.qrc">
+           <normaloff>:/assets/fontawesome/svgs/solid/microphone-alt.svg</normaloff>:/assets/fontawesome/svgs/solid/microphone-alt.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -272,8 +272,8 @@ QPushButton:hover {
           <string>Музыка</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/music.svg</normaloff>:/fontawesome/icons/solid/assets/fontawesome/svgs/solid/music.svg</iconset>
+          <iconset resource="resources.qrc">
+           <normaloff>:/assets/fontawesome/svgs/solid/music.svg</normaloff>:/assets/fontawesome/svgs/solid/music.svg</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>
