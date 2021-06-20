@@ -6,6 +6,7 @@
 #include "../widgets/albumflow.h"
 #include "../widgets/artistflow.h"
 #include "../widgets/playlistflow.h"
+#include "../widgets/radioflow.h"
 #include "../widgets/userflow.h"
 
 
@@ -34,6 +35,7 @@ private:
     AlbumFlow *albums;
     ArtistFlow *artists;
     PlaylistFlow *playlists;
+    RadioFlow *radios;
     UserFlow *users;
 
     api::Deezer *deezerApiInstance;

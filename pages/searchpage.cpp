@@ -17,6 +17,9 @@ SearchPage::SearchPage(api::Deezer * deezerApiInstance, QWidget *parent) :
     playlists = new PlaylistFlow(deezerApiInstance, ui->playlistTab);
     ui->playlistTabLayout->addWidget(playlists);
 
+    radios = new RadioFlow(deezerApiInstance, ui->mixTab);
+    ui->mixTabLayout->addWidget(radios);
+
     users = new UserFlow(deezerApiInstance, ui->userTab);
     ui->userTabLayout->addWidget(users);
 
@@ -80,6 +83,7 @@ void SearchPage::clear()
     albums->clearAll();
     artists->clearAll();
     playlists->clearAll();
+    radios->clearAll();
     users->clearAll();
 }
 
@@ -111,6 +115,8 @@ void SearchPage::fetchedRadio(QNetworkReply *reply)
 {
     auto radioJson = api::tryReadResponse(reply).object();
     auto radioResponse = api::deserializePartialResponseRadio(radioJson);
+    QVector<api::Radio> radiosData = radioResponse.getData();
+    radios->addContents(radiosData);
 }
 
 void SearchPage::fetchedTracks(QNetworkReply *reply)

@@ -14,7 +14,7 @@
    <string>TabWidget</string>
   </property>
   <property name="currentIndex">
-   <number>5</number>
+   <number>9</number>
   </property>
   <widget class="QWidget" name="overviewTab">
    <attribute name="title">
@@ -35,7 +35,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>250</height>
+         <height>248</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -192,7 +192,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>229</height>
+         <height>226</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -241,7 +241,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>229</height>
+         <height>226</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -290,7 +290,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>229</height>
+         <height>226</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -313,7 +313,7 @@
    <attribute name="title">
     <string>Миксы</string>
    </attribute>
-   <layout class="QVBoxLayout" name="miaxTabLayout">
+   <layout class="QVBoxLayout" name="mixTabLayout">
     <item>
      <widget class="QLabel" name="mixLabel">
       <property name="font">
@@ -326,34 +326,6 @@
       <property name="text">
        <string>Миксов: </string>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QScrollArea" name="mixScrollArea">
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="mixContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>376</width>
-         <height>229</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_20">
-        <item>
-         <layout class="QGridLayout" name="mixGrid"/>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </item>
    </layout>

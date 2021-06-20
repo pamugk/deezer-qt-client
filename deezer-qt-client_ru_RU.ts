@@ -173,8 +173,21 @@
 <context>
     <name>RadioCard</name>
     <message>
-        <location filename="widgets/radiocard.ui" line="13"/>
+        <location filename="widgets/radiocard.ui" line="14"/>
         <source>StackedWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="widgets/radiocard.ui" line="20"/>
+        <source>Плейлист</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RadioFlow</name>
+    <message>
+        <location filename="widgets/radioflow.ui" line="13"/>
+        <source>ScrollArea</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -106,6 +106,9 @@ set(PROJECT_SOURCES
         widgets/radiocard.h
         widgets/radiocard.cpp
         widgets/radiocard.ui
+        widgets/radioflow.h
+        widgets/radioflow.cpp
+        widgets/radioflow.ui
         widgets/usercard.h
         widgets/usercard.cpp
         widgets/usercard.ui
