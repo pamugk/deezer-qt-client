@@ -79,9 +79,27 @@ set(PROJECT_SOURCES
         api/object/user/user.cpp
         api/object/user/user.h
 
+        pages/albumpage.h
+        pages/albumpage.cpp
+        pages/albumpage.ui
+        pages/artistpage.h
+        pages/artistpage.cpp
+        pages/artistpage.ui
+        pages/mainpage.h
+        pages/mainpage.cpp
+        pages/mainpage.ui
+        pages/playlistpage.h
+        pages/playlistpage.cpp
+        pages/playlistpage.ui
+        pages/radiopage.h
+        pages/radiopage.cpp
+        pages/radiopage.ui
         pages/searchpage.h
         pages/searchpage.cpp
         pages/searchpage.ui
+        pages/userpage.h
+        pages/userpage.cpp
+        pages/userpage.ui
 
         resources.qrc
 
