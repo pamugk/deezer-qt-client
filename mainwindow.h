@@ -3,6 +3,7 @@
 
 #include "api/deezer.h"
 
+#include "pages/mainpage.h"
 #include "pages/searchpage.h"
 
 #include <QMainWindow>
@@ -33,6 +34,7 @@ private:
     QSystemTrayIcon *trayIcon;
     Ui::MainWindow *ui;
 
+    MainPage *mainPage;
     SearchPage *searchPage;
     api::Deezer* deezerApiInstance;
 };
