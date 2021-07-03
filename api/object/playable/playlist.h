@@ -4,6 +4,7 @@
 #include "track.h"
 #include "../user/user.h"
 
+#include <QTime>
 #include <QSharedPointer>
 #include <QString>
 #include <QVector>
@@ -30,7 +31,7 @@ namespace api {
         /*!
          * \brief The playlist's duration (seconds)
          */
-        int duration;
+        QTime duration;
         /*!
          * \brief If the playlist is public or not
          */

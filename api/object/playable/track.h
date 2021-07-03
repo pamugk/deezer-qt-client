@@ -7,6 +7,7 @@
 #include <QDate>
 #include <QSharedPointer>
 #include <QString>
+#include <QTime>
 #include <QVector>
 
 namespace api {
@@ -60,7 +61,7 @@ namespace api {
         /*!
          * \brief The track's duration in seconds
          */
-        int duration;
+        QTime duration;
         /*!
          * \brief The position of the track in its album
          */

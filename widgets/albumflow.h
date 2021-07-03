@@ -30,9 +30,6 @@ private:
     Ui::AlbumFlow *ui;
 
     api::Deezer *apiInstance;
-
-private slots:
-    void innerClickedItem(int id);
 };
 
 #endif // ALBUMFLOW_H

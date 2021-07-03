@@ -2,6 +2,14 @@
 
 namespace api
 {
+    QTime deserializeTime(int totalSeconds) {
+        int hours = totalSeconds / 3600;
+        const int hourPart = totalSeconds % 3600;
+        int minutes = hourPart / 60;
+        int seconds = hourPart % 60;
+        return QTime(hours, minutes, seconds);
+    }
+
     void deserializeAlbum(QJsonObject &jsonObj, Album& albumOut)
     {
         if (jsonObj.contains("id"))
@@ -67,7 +75,7 @@ namespace api
         }
         if (jsonObj.contains("duration"))
         {
-            albumOut.duration = jsonObj["duration"].toInt();
+            albumOut.duration = deserializeTime(jsonObj["duration"].toInt());
         }
         if (jsonObj.contains("fans"))
         {
@@ -246,7 +254,7 @@ namespace api
         }
         if (jsonObj.contains("duration"))
         {
-            playlistOut.duration = jsonObj["duration"].toInt();
+            playlistOut.duration = deserializeTime(jsonObj["duration"].toInt());
         }
         if (jsonObj.contains("public"))
         {
@@ -483,7 +491,7 @@ namespace api
 
         if (jsonObj.contains("duration"))
         {
-            trackOut.duration = jsonObj["duration"].toInt();
+            trackOut.duration = deserializeTime(jsonObj["duration"].toInt());
         }
         if (jsonObj.contains("track_position"))
         {

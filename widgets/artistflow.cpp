@@ -15,7 +15,7 @@ void ArtistFlow::addContents(QVector<api::Artist> &data)
     for (int i = 0; i < data.size(); i++, lastContentIndex++)
     {
         ArtistCard *artistCard = new ArtistCard(apiInstance, data[i], ui->contents);
-        connect(artistCard, &ArtistCard::clickedArtist, this, &ArtistFlow::innerClickedItem);
+        connect(artistCard, &ArtistCard::clickedArtist, this, &ArtistFlow::clickedItem);
         ui->contentsLayout->addWidget(artistCard, lastContentIndex / 4, lastContentIndex % 4);
     }
 }
@@ -28,12 +28,6 @@ void ArtistFlow::clearAll()
     }
     lastContentIndex = 0;
 }
-
-void ArtistFlow::innerClickedItem(int id)
-{
-    emit clickedItem(id);
-}
-
 
 ArtistFlow::~ArtistFlow()
 {

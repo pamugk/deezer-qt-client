@@ -28,9 +28,6 @@ private:
     Ui::RadioFlow *ui;
 
     api::Deezer *apiInstance;
-
-private slots:
-    void innerClickedItem(int id);
 };
 
 #endif // RADIOFLOW_H

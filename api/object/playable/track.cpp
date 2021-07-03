@@ -16,7 +16,7 @@ namespace api
         link(QString()),
         share(QString()),
 
-        duration(-1),
+        duration(QTime()),
         trackPosition(-1),
         diskNumber(-1),
         rank(-1),

@@ -79,6 +79,9 @@ set(PROJECT_SOURCES
         api/object/user/user.cpp
         api/object/user/user.h
 
+        model/albumtracksmodel.h
+        model/albumtracksmodel.cpp
+
         pages/albumpage.h
         pages/albumpage.cpp
         pages/albumpage.ui
@@ -88,6 +91,7 @@ set(PROJECT_SOURCES
         pages/mainpage.h
         pages/mainpage.cpp
         pages/mainpage.ui
+        pages/pages.h
         pages/playlistpage.h
         pages/playlistpage.cpp
         pages/playlistpage.ui

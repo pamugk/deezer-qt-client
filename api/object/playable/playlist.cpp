@@ -7,7 +7,7 @@ namespace api
         title(QString()),
 
         description(QString()),
-        duration(-1),
+        duration(QTime()),
         public_(true),
         lovedTrack(false),
         collaborative(false),

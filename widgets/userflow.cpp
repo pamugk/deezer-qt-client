@@ -15,7 +15,7 @@ void UserFlow::addContents(QVector<api::User> &data)
     for (int i = 0; i < data.size(); i++, lastContentIndex++)
     {
         UserCard *artistCard = new UserCard(apiInstance, data[i], ui->contents);
-        connect(artistCard, &UserCard::clickedUser, this, &UserFlow::innerClickedItem);
+        connect(artistCard, &UserCard::clickedUser, this, &UserFlow::clickedItem);
         ui->contentsLayout->addWidget(artistCard, lastContentIndex / 4, lastContentIndex % 4);
     }
 }
@@ -28,12 +28,6 @@ void UserFlow::clearAll()
     }
     lastContentIndex = 0;
 }
-
-void UserFlow::innerClickedItem(int id)
-{
-    emit clickedItem(id);
-}
-
 
 UserFlow::~UserFlow()
 {

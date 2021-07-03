@@ -9,18 +9,23 @@ SearchPage::SearchPage(api::Deezer * deezerApiInstance, QWidget *parent) :
     ui->setupUi(this);
 
     albums = new AlbumFlow(deezerApiInstance, ui->albumTab);
+    connect(albums, &AlbumFlow::clickedItem, this, &SearchPage::albumClicked);
     ui->albumTabLayout->addWidget(albums);
 
     artists = new ArtistFlow(deezerApiInstance, ui->artistTab);
+    connect(artists, &ArtistFlow::clickedItem, this, &SearchPage::artistClicked);
     ui->artistTabLayout->addWidget(artists);
 
     playlists = new PlaylistFlow(deezerApiInstance, ui->playlistTab);
+    connect(playlists, &PlaylistFlow::clickedItem, this, &SearchPage::playlistClicked);
     ui->playlistTabLayout->addWidget(playlists);
 
     radios = new RadioFlow(deezerApiInstance, ui->mixTab);
+    connect(radios, &RadioFlow::clickedItem, this, &SearchPage::radioClicked);
     ui->mixTabLayout->addWidget(radios);
 
     users = new UserFlow(deezerApiInstance, ui->userTab);
+    connect(users, &UserFlow::clickedItem, this, &SearchPage::userClicked);
     ui->userTabLayout->addWidget(users);
 
     clear();
@@ -31,7 +36,7 @@ SearchPage::~SearchPage()
     delete ui;
 }
 
-void SearchPage::search(QString request)
+void SearchPage::searchRequested(QString request)
 {
     if (request.isNull() || request.isEmpty())
     {
@@ -45,7 +50,6 @@ void SearchPage::search(QString request)
     auto trackPrefetchResponse = deezerApiInstance->searchTracks(request, 0, 5);
     connect(trackPrefetchResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(trackPrefetchResponse, error); });
     connect(trackPrefetchResponse, &QNetworkReply::finished, [=] { prefetchedAlbums(trackPrefetchResponse); });
-
 
     auto albumPrefetchResponse = deezerApiInstance->searchAlbums(request, 0, 5);
     connect(albumPrefetchResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(albumPrefetchResponse, error); });
@@ -234,4 +238,3 @@ void SearchPage::prefetchedUsers(QNetworkReply *reply)
         connect(usersResponse, &QNetworkReply::finished, [=] { fetchedUsers(usersResponse); });
     }
 }
-

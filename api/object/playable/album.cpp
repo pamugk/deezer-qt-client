@@ -20,7 +20,7 @@ namespace api {
             genres(QVector<Genre>()),
 
             trackCount(-1),
-            duration(-1),
+            duration(QTime()),
             fanCount(-1),
             rating(-1),
             releaseDate(QDate()),

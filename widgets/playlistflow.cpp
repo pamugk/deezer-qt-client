@@ -15,7 +15,7 @@ void PlaylistFlow::addContents(QVector<api::Playlist> &data)
     for (int i = 0; i < data.size(); i++, lastContentIndex++)
     {
         PlaylistCard *playlistCard = new PlaylistCard(apiInstance, data[i], ui->contents);
-        connect(playlistCard, &PlaylistCard::clickedPlaylist, this, &PlaylistFlow::innerClickedItem);
+        connect(playlistCard, &PlaylistCard::clickedPlaylist, this, &PlaylistFlow::clickedItem);
         ui->contentsLayout->addWidget(playlistCard, lastContentIndex / 4, lastContentIndex % 4);
     }
 }
@@ -28,12 +28,6 @@ void PlaylistFlow::clearAll()
     }
     lastContentIndex = 0;
 }
-
-void PlaylistFlow::innerClickedItem(int id)
-{
-    emit clickedItem(id);
-}
-
 
 PlaylistFlow::~PlaylistFlow()
 {

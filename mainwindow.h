@@ -3,8 +3,7 @@
 
 #include "api/deezer.h"
 
-#include "pages/mainpage.h"
-#include "pages/searchpage.h"
+#include "pages/pages.h"
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
@@ -22,6 +21,16 @@ public:
     ~MainWindow();
 
 private slots:
+    void onRedirectToAlbum(int id);
+
+    void onRedirectToArtist(int id);
+
+    void onRedirectToPlaylist(int id);
+
+    void onRedirectToRadio(int id);
+
+    void onRedirectToUser(int id);
+
     void on_searchLineEdit_textChanged(const QString &arg1);
 
     void on_clearSearchButton_clicked();
@@ -34,8 +43,42 @@ private:
     QSystemTrayIcon *trayIcon;
     Ui::MainWindow *ui;
 
-    MainPage *mainPage;
-    SearchPage *searchPage;
+    PageKinds currentPageKind;
+    QWidget *currentPage;
+
     api::Deezer* deezerApiInstance;
+
+    AlbumPage *initializeAlbumPage(api::Album&);
+
+    ArtistPage *initializeArtistPage(api::Artist&);
+
+    MainPage *initializeMainPage();
+
+    PlaylistPage *initializePlaylistPage(api::Playlist&);
+
+    RadioPage *initializeRadioPage(api::Radio&);
+
+    SearchPage *initializeSearchPage();
+
+    UserPage *initializeUserPage(api::User&);
+
+    void onError(QNetworkReply *reply, QNetworkReply::NetworkError error);
+
+    void onRedirectedToAlbum(QNetworkReply *reply);
+
+    void onRedirectedToArtist(QNetworkReply *reply);
+
+    void onRedirectedToPlaylist(QNetworkReply *reply);
+
+    void onRedirectedToRadio(QNetworkReply *reply);
+
+    void onRedirectedToUser(QNetworkReply *reply);
+
+    void startSearch();
+
+    void switchPage(QWidget *newPage);
+
+signals:
+    void onSearchInitiated(QString searchString);
 };
 #endif // MAINWINDOW_H

@@ -28,9 +28,6 @@ private:
     Ui::UserFlow *ui;
 
     api::Deezer *apiInstance;
-
-private slots:
-    void innerClickedItem(int id);
 };
 
 #endif // USERFLOW_H

@@ -24,8 +24,15 @@ public:
     explicit SearchPage(api::Deezer *, QWidget *parent = nullptr);
     ~SearchPage();
 
+signals:
+    void albumClicked(int id);
+    void artistClicked(int id);
+    void playlistClicked(int id);
+    void radioClicked(int id);
+    void userClicked(int id);
+
 public slots:
-    void search(QString);
+    void searchRequested(QString);
 
 private:
     QString currentRequest;
@@ -57,6 +64,7 @@ private:
     void prefetchedRadio(QNetworkReply*);
     void prefetchedTracks(QNetworkReply*);
     void prefetchedUsers(QNetworkReply*);
+
 };
 
 #endif // SEARCHPAGE_H

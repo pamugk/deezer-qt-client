@@ -15,7 +15,7 @@ void AlbumFlow::addContents(QVector<api::Album> &data)
     for (int i = 0; i < data.size(); i++, lastContentIndex++)
     {
         AlbumCard *albumCard = new AlbumCard(apiInstance, data[i], ui->contents);
-        connect(albumCard, &AlbumCard::clickedAlbum, this, &AlbumFlow::innerClickedItem);
+        connect(albumCard, &AlbumCard::clickedAlbum, this, &AlbumFlow::clickedItem);
         ui->contentsLayout->addWidget(albumCard, lastContentIndex / 4, lastContentIndex % 4);
     }
 }
@@ -27,11 +27,6 @@ void AlbumFlow::clearAll()
         ui->contentsLayout->removeItem(item);
     }
     lastContentIndex = 0;
-}
-
-void AlbumFlow::innerClickedItem(int id)
-{
-    emit clickedItem(id);
 }
 
 AlbumFlow::~AlbumFlow()

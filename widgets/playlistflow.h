@@ -30,9 +30,6 @@ private:
     Ui::PlaylistFlow *ui;
 
     api::Deezer *apiInstance;
-
-private slots:
-    void innerClickedItem(int id);
 };
 
 #endif // PLAYLISTFLOW_H

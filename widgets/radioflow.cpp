@@ -15,7 +15,7 @@ void RadioFlow::addContents(QVector<api::Radio> &data)
     for (int i = 0; i < data.size(); i++, lastContentIndex++)
     {
         auto radioCard = new RadioCard(apiInstance, data[i], ui->contents);
-        connect(radioCard, &RadioCard::clickedRadio, this, &RadioFlow::innerClickedItem);
+        connect(radioCard, &RadioCard::clickedRadio, this, &RadioFlow::clickedItem);
         ui->contentsLayout->addWidget(radioCard, lastContentIndex / 4, lastContentIndex % 4);
     }
 }
@@ -27,11 +27,6 @@ void RadioFlow::clearAll()
         ui->contentsLayout->removeItem(item);
     }
     lastContentIndex = 0;
-}
-
-void RadioFlow::innerClickedItem(int id)
-{
-    emit clickedItem(id);
 }
 
 RadioFlow::~RadioFlow()

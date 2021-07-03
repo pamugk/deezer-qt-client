@@ -9,6 +9,7 @@
 #include <QDate>
 #include <QSharedPointer>
 #include <QString>
+#include <QTime>
 #include <QVector>
 
 namespace api {
@@ -78,7 +79,7 @@ namespace api {
         /*!
          * \brief The album's duration (seconds)
          */
-        int duration;
+        QTime duration;
         /*!
          * \brief The number of album's Fans
          */
