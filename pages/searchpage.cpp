@@ -154,6 +154,7 @@ void SearchPage::prefetchedAlbums(QNetworkReply *reply)
 
         auto prefetchedAlbumList = new QWidget(ui->overviewContents);
         auto prefetchedAlbumsLayout = new AlbumFlow(deezerApiInstance, prefetchedAlbumList);
+        connect(prefetchedAlbumsLayout, &AlbumFlow::clickedItem, this, &SearchPage::albumClicked);
         prefetchedAlbumsLayout->addContents(albumPrefetch.getData());
         prefetchedAlbumList->setLayout(prefetchedAlbumsLayout);
         ui->overviewContentsLayout->addWidget(prefetchedAlbumList);
@@ -177,6 +178,7 @@ void SearchPage::prefetchedArtists(QNetworkReply *reply)
 
         auto prefetchedArtistList = new QWidget(ui->overviewContents);
         auto prefetchedArtistsLayout = new ArtistFlow(deezerApiInstance, prefetchedArtistList);
+        connect(prefetchedArtistsLayout, &ArtistFlow::clickedItem, this, &SearchPage::artistClicked);
         prefetchedArtistsLayout->addContents(artistPrefetch.getData());
         prefetchedArtistList->setLayout(prefetchedArtistsLayout);
         ui->overviewContentsLayout->addWidget(prefetchedArtistList);
@@ -200,6 +202,7 @@ void SearchPage::prefetchedPlaylists(QNetworkReply *reply)
 
         auto prefetchedPlaylistList = new QWidget(ui->overviewContents);
         auto prefetchedPlaylistsLayout = new PlaylistFlow(deezerApiInstance, prefetchedPlaylistList);
+        connect(prefetchedPlaylistsLayout, &PlaylistFlow::clickedItem, this, &SearchPage::playlistClicked);
         prefetchedPlaylistsLayout->addContents(playlistPrefetch.getData());
         prefetchedPlaylistList->setLayout(prefetchedPlaylistsLayout);
         ui->overviewContentsLayout->addWidget(prefetchedPlaylistList);
@@ -223,6 +226,7 @@ void SearchPage::prefetchedRadio(QNetworkReply *reply)
 
         auto prefetchedRadioList = new QWidget(ui->overviewContents);
         auto prefetchedRadiosLayout = new RadioFlow(deezerApiInstance, prefetchedRadioList);
+        connect(prefetchedRadiosLayout, &RadioFlow::clickedItem, this, &SearchPage::radioClicked);
         prefetchedRadiosLayout->addContents(radioPrefetch.getData());
         prefetchedRadioList->setLayout(prefetchedRadiosLayout);
         ui->overviewContentsLayout->addWidget(prefetchedRadioList);
@@ -262,6 +266,7 @@ void SearchPage::prefetchedUsers(QNetworkReply *reply)
 
         auto prefetchedUserList = new QWidget(ui->overviewContents);
         auto prefetchedUsersLayout = new UserFlow(deezerApiInstance, prefetchedUserList);
+        connect(prefetchedUsersLayout, &UserFlow::clickedItem, this, &SearchPage::userClicked);
         prefetchedUsersLayout->addContents(userPrefetch.getData());
         prefetchedUserList->setLayout(prefetchedUsersLayout);
         ui->overviewContentsLayout->addWidget(prefetchedUserList);

@@ -24,18 +24,18 @@ QVariant AlbumTracksModel::headerData(int section, Qt::Orientation orientation, 
 
 int AlbumTracksModel::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? items.size(): 0;
+    return items.size();
 }
 
 int AlbumTracksModel::columnCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? header.size(): 0;
+    return header.size();
 }
 
-QVariant getTrackColumnValue(api::Track &track, int column) {
+QVariant getTrackColumnValue(api::Track &track, int column, int row) {
     switch (column) {
         case 0: {
-            return track.trackPosition;
+            return row + 1;
         }
         case 1: {
             return track.title;
@@ -58,7 +58,7 @@ QVariant AlbumTracksModel::data(const QModelIndex &index, int role) const
     auto item = items.at(index.row());
     switch (role) {
         case Qt::DisplayRole: {
-            return getTrackColumnValue(item, index.column());
+            return getTrackColumnValue(item, index.column(), index.row());
         }
     }
 

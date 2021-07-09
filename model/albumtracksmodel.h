@@ -4,6 +4,7 @@
 #include "../api/object/playable/track.h"
 
 #include <QAbstractTableModel>
+#include <QDebug>
 #include <QString>
 #include <QVector>
 

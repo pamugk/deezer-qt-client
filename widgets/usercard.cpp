@@ -28,9 +28,8 @@ UserCard::~UserCard()
 {
     if (pictureReply != nullptr && !pictureReply->isFinished())
     {
-        qDebug() << "Aborting";
         QEventLoop loop;
-        connect(pictureReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        connect(pictureReply, &QNetworkReply::errorOccurred, &loop, &QEventLoop::quit);
         pictureReply->abort();
         loop.exec();
     }

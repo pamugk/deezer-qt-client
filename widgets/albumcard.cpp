@@ -42,7 +42,7 @@ AlbumCard::~AlbumCard()
     {
         qDebug() << "Aborting";
         QEventLoop loop;
-        connect(coverReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        connect(coverReply, &QNetworkReply::errorOccurred, &loop, &QEventLoop::quit);
         coverReply->abort();
         loop.exec();
     }
@@ -66,7 +66,6 @@ void AlbumCard::errorOccurred(QNetworkReply::NetworkError error)
 {
     if (coverReply != nullptr)
     {
-        qDebug() << error;
         coverReply->deleteLater();
         coverReply = nullptr;
     }

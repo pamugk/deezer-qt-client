@@ -1,7 +1,6 @@
 #ifndef FLOW_H
 #define FLOW_H
 
-#include <QDebug>
 #include <QLayout>
 #include <QStyle>
 #include <QVector>
