@@ -151,6 +151,13 @@ void SearchPage::prefetchedAlbums(QNetworkReply *reply)
     {
         addTab(ui->albumTab, QString("Альбомы"));
         ui->overviewContentsLayout->addWidget(new QLabel("Альбомы", ui->overviewContents));
+
+        auto prefetchedAlbumList = new QWidget(ui->overviewContents);
+        auto prefetchedAlbumsLayout = new AlbumFlow(deezerApiInstance, prefetchedAlbumList);
+        prefetchedAlbumsLayout->addContents(albumPrefetch.getData());
+        prefetchedAlbumList->setLayout(prefetchedAlbumsLayout);
+        ui->overviewContentsLayout->addWidget(prefetchedAlbumList);
+
         ui->albumLabel->setText(QString("Альбомов: %1").arg(QString::number(albumPrefetch.getTotal())));
 
         auto albumsResponse = deezerApiInstance->searchAlbums(currentRequest, 0, 20);
@@ -167,6 +174,13 @@ void SearchPage::prefetchedArtists(QNetworkReply *reply)
     {
         addTab(ui->artistTab, QString("Исполнители"));
         ui->overviewContentsLayout->addWidget(new QLabel("Исполнители", ui->overviewContents));
+
+        auto prefetchedArtistList = new QWidget(ui->overviewContents);
+        auto prefetchedArtistsLayout = new ArtistFlow(deezerApiInstance, prefetchedArtistList);
+        prefetchedArtistsLayout->addContents(artistPrefetch.getData());
+        prefetchedArtistList->setLayout(prefetchedArtistsLayout);
+        ui->overviewContentsLayout->addWidget(prefetchedArtistList);
+
         ui->artistLabel->setText(QString("Исполнителей: %1").arg(QString::number(artistPrefetch.getTotal())));
 
         auto artistsResponse = deezerApiInstance->searchArtists(currentRequest, 0, 20);
@@ -183,6 +197,13 @@ void SearchPage::prefetchedPlaylists(QNetworkReply *reply)
     {
         addTab(ui->playlistTab, QString("Плейлисты"));
         ui->overviewContentsLayout->addWidget(new QLabel("Плейлисты", ui->overviewContents));
+
+        auto prefetchedPlaylistList = new QWidget(ui->overviewContents);
+        auto prefetchedPlaylistsLayout = new PlaylistFlow(deezerApiInstance, prefetchedPlaylistList);
+        prefetchedPlaylistsLayout->addContents(playlistPrefetch.getData());
+        prefetchedPlaylistList->setLayout(prefetchedPlaylistsLayout);
+        ui->overviewContentsLayout->addWidget(prefetchedPlaylistList);
+
         ui->playlistLabel->setText(QString("Плейлистов: %1").arg(QString::number(playlistPrefetch.getTotal())));
 
         auto playlistsResponse = deezerApiInstance->searchPlaylists(currentRequest, 0, 20);
@@ -199,6 +220,13 @@ void SearchPage::prefetchedRadio(QNetworkReply *reply)
     {
         addTab(ui->mixTab, QString("Миксы"));
         ui->overviewContentsLayout->addWidget(new QLabel("Миксы", ui->overviewContents));
+
+        auto prefetchedRadioList = new QWidget(ui->overviewContents);
+        auto prefetchedRadiosLayout = new RadioFlow(deezerApiInstance, prefetchedRadioList);
+        prefetchedRadiosLayout->addContents(radioPrefetch.getData());
+        prefetchedRadioList->setLayout(prefetchedRadiosLayout);
+        ui->overviewContentsLayout->addWidget(prefetchedRadioList);
+
         ui->mixLabel->setText(QString("Миксов: %1").arg(QString::number(radioPrefetch.getTotal())));
 
         auto radioResponse = deezerApiInstance->searchRadio(currentRequest, 0, 20);
@@ -231,6 +259,13 @@ void SearchPage::prefetchedUsers(QNetworkReply *reply)
     {
         addTab(ui->userTab, QString("Профили"));
         ui->overviewContentsLayout->addWidget(new QLabel("Профили", ui->overviewContents));
+
+        auto prefetchedUserList = new QWidget(ui->overviewContents);
+        auto prefetchedUsersLayout = new UserFlow(deezerApiInstance, prefetchedUserList);
+        prefetchedUsersLayout->addContents(userPrefetch.getData());
+        prefetchedUserList->setLayout(prefetchedUsersLayout);
+        ui->overviewContentsLayout->addWidget(prefetchedUserList);
+
         ui->userLabel->setText(QString("Профилей: %1").arg(QString::number(userPrefetch.getTotal())));
 
         auto usersResponse = deezerApiInstance->searchUsers(currentRequest, 0, 20);
