@@ -7,6 +7,8 @@ ArtistCard::ArtistCard(api::Deezer *apiInstance, api::Artist &artist, QWidget *p
 {
     ui->setupUi(this);
 
+    this->setToolTip(artist.name);
+
     ui->nameLabel->setText(artist.name);
 
     if (artist.fanCount == -1)

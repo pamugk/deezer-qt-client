@@ -4,22 +4,22 @@
 <context>
     <name>AlbumCard</name>
     <message>
-        <location filename="widgets/albumcard.ui" line="25"/>
+        <location filename="widgets/albumcard.ui" line="31"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/albumcard.ui" line="59"/>
+        <location filename="widgets/albumcard.ui" line="65"/>
         <source>Альбом</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/albumcard.ui" line="72"/>
+        <location filename="widgets/albumcard.ui" line="78"/>
         <source>от %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/albumcard.ui" line="92"/>
+        <location filename="widgets/albumcard.ui" line="98"/>
         <source>EXPLICIT</source>
         <translation type="unfinished"></translation>
     </message>
@@ -55,17 +55,17 @@
 <context>
     <name>ArtistCard</name>
     <message>
-        <location filename="widgets/artistcard.ui" line="19"/>
+        <location filename="widgets/artistcard.ui" line="25"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/artistcard.ui" line="53"/>
+        <location filename="widgets/artistcard.ui" line="59"/>
         <source>Исполнитель</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/artistcard.ui" line="63"/>
+        <location filename="widgets/artistcard.ui" line="69"/>
         <source>Поклонников: %1</source>
         <oldsource>Поклонников:</oldsource>
         <translation type="unfinished"></translation>
@@ -175,17 +175,17 @@
 <context>
     <name>PlaylistCard</name>
     <message>
-        <location filename="widgets/playlistcard.ui" line="19"/>
+        <location filename="widgets/playlistcard.ui" line="25"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/playlistcard.ui" line="63"/>
+        <location filename="widgets/playlistcard.ui" line="69"/>
         <source>Плейлист</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/playlistcard.ui" line="73"/>
+        <location filename="widgets/playlistcard.ui" line="79"/>
         <source>Треков: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -201,7 +201,7 @@
 <context>
     <name>RadioCard</name>
     <message>
-        <location filename="widgets/radiocard.ui" line="26"/>
+        <location filename="widgets/radiocard.ui" line="32"/>
         <source>StackedWidget</source>
         <translation type="unfinished"></translation>
     </message>
@@ -320,12 +320,12 @@
 <context>
     <name>UserCard</name>
     <message>
-        <location filename="widgets/usercard.ui" line="19"/>
+        <location filename="widgets/usercard.ui" line="25"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/usercard.ui" line="57"/>
+        <location filename="widgets/usercard.ui" line="63"/>
         <source>Профиль</source>
         <translation type="unfinished"></translation>
     </message>

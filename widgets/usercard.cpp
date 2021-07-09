@@ -7,6 +7,8 @@ UserCard::UserCard(api::Deezer *apiInstance, api::User &user, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setToolTip(user.name);
+
     ui->nameLabel->setText(user.name);
 
     connect(ui->pictureButton, &QPushButton::clicked, [userId{ user.id }, this]{ emit clickedUser(userId); });

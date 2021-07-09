@@ -7,6 +7,8 @@ AlbumCard::AlbumCard(api::Deezer *apiInstance, api::Album &album, QWidget *paren
 {
     ui->setupUi(this);
 
+    this->setToolTip(album.title);
+
     ui->titleLabel->setText(album.title);
 
     if (album.artist.isNull())

@@ -6,6 +6,9 @@ PlaylistCard::PlaylistCard(api::Deezer *apiInstance, api::Playlist &playlist, QW
     ui(new Ui::PlaylistCard)
 {
     ui->setupUi(this);
+
+    this->setToolTip(playlist.title);
+
     ui->titleLabel->setText(playlist.title);
 
     if (playlist.trackCount == -1)

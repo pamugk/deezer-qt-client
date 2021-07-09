@@ -1,6 +1,7 @@
 #ifndef FLOW_H
 #define FLOW_H
 
+#include <QDebug>
 #include <QLayout>
 #include <QStyle>
 #include <QVector>
@@ -24,7 +25,7 @@ private:
         int y = effectiveRect.y();
         int lineHeight = 0;
 
-        for (QLayoutItem *item : qAsConst(items))
+        for (QLayoutItem *item: qAsConst(items))
         {
             const QWidget *wid = item->widget();
 
@@ -103,8 +104,8 @@ public:
     void clearAll()
     {
         QLayoutItem *item;
-        while ((item = takeAt(0)))
-            delete item;
+        while (items.count() > 0)
+            delete takeAt(0);
     }
 
     int count() const override
@@ -141,9 +142,9 @@ public:
 
     QLayoutItem *itemAt(int index) const override
     {
-        return index < 0 || index > items.count() ?
-                    nullptr :
-                    items.at(index);
+        return index >= 0 && index < items.size() ?
+                    items.at(index) :
+                    nullptr;
     }
 
     QSize minimumSize() const override
@@ -170,9 +171,9 @@ public:
 
     QLayoutItem *takeAt(int index) override
     {
-        return index < 0 || index > items.count() ?
-                    nullptr :
-                    items.takeAt(index);
+        return index >= 0 && index < items.size() ?
+                    items.takeAt(index) :
+                    nullptr;
     }
 
     int verticalSpacing() const

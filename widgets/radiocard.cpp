@@ -7,6 +7,8 @@ RadioCard::RadioCard(api::Deezer *apiInstance, api::Radio &radio, QWidget *paren
 {
     ui->setupUi(this);
 
+    this->setToolTip(radio.title);
+
     connect(ui->pictureButton, &QPushButton::clicked, [radioId{ radio.id }, this]{ emit clickedRadio(radioId); });
 
     if (!radio.pictureMedium.isEmpty())
