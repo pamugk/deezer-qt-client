@@ -35,7 +35,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>248</height>
+         <height>251</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -97,6 +97,23 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QScrollArea" name="albumScrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="albumScrollAreaContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>376</width>
+         <height>226</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QWidget" name="playlistTab">
@@ -116,6 +133,23 @@
       <property name="text">
        <string>Плейлистов: </string>
       </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QScrollArea" name="playlistScrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="playlistScrollAreaContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>376</width>
+         <height>226</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -139,6 +173,23 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QScrollArea" name="artistScrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="artistScrollAreaContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>376</width>
+         <height>226</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QWidget" name="userTab">
@@ -158,6 +209,23 @@
       <property name="text">
        <string>Профилей:</string>
       </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QScrollArea" name="userScrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="userScrollAreaContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>376</width>
+         <height>226</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -201,11 +269,7 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_14">
-        <item>
-         <layout class="QGridLayout" name="channelGrid"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_14"/>
       </widget>
      </widget>
     </item>
@@ -326,6 +390,23 @@
       <property name="text">
        <string>Миксов: </string>
       </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QScrollArea" name="mixScrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="mixScrollAreaContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>376</width>
+         <height>226</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>

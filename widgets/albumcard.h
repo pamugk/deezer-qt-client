@@ -22,7 +22,12 @@ signals:
     void clickedArtist(int id);
 
 private:
+    QNetworkReply *coverReply;
     Ui::AlbumCard *ui;
+
+private slots:
+    void coverLoaded();
+    void errorOccurred(QNetworkReply::NetworkError error);
 };
 
 #endif // ALBUMCARD_H

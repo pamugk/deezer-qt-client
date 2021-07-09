@@ -1,33 +1,23 @@
 #ifndef RADIOFLOW_H
 #define RADIOFLOW_H
 
+#include "flow.h"
 #include "radiocard.h"
 
-#include <QLayoutItem>
-#include <QScrollArea>
-
-namespace Ui {
-class RadioFlow;
-}
-
-class RadioFlow : public QScrollArea
+class RadioFlow : public Flow<api::Radio>
 {
     Q_OBJECT
 
 public:
-    explicit RadioFlow(api::Deezer *apiInstance, QWidget *parent = nullptr);
-    ~RadioFlow();
-    void addContents(QVector<api::Radio>&);
-    void clearAll();
+    explicit RadioFlow(api::Deezer *apiInstance,
+                       QWidget *parent = nullptr, int margin = -1, int hSpacing = -1, int vSpacing = -1);
 
 signals:
     void clickedItem(int id);
 
 private:
-    int lastContentIndex;
-    Ui::RadioFlow *ui;
-
     api::Deezer *apiInstance;
+    QWidget *instantiateItem(api::Radio &item) override;
 };
 
 #endif // RADIOFLOW_H

@@ -80,7 +80,14 @@ SearchPage *MainWindow::initializeSearchPage()
 {
     currentPageKind = PageKinds::SEARCH_PAGE;
     auto searchPage = new SearchPage(deezerApiInstance, ui->centralwidget);
+
     connect(this, &MainWindow::onSearchInitiated, searchPage, &SearchPage::searchRequested);
+    connect(searchPage, &SearchPage::albumClicked, this, &MainWindow::onRedirectToAlbum);
+    connect(searchPage, &SearchPage::artistClicked, this, &MainWindow::onRedirectToArtist);
+    connect(searchPage, &SearchPage::playlistClicked, this, &MainWindow::onRedirectToPlaylist);
+    connect(searchPage, &SearchPage::radioClicked, this, &MainWindow::onRedirectToRadio);
+    connect(searchPage, &SearchPage::userClicked, this, &MainWindow::onRedirectToUser);
+
     return searchPage;
 }
 
@@ -201,7 +208,7 @@ void MainWindow::switchPage(QWidget *newPage)
     auto replacedPageItem = ui->windowLayout->replaceWidget(currentPage, newPage);
 
     if (replacedPageItem != nullptr) {
-        delete replacedPageItem;
+        replacedPageItem->widget()->deleteLater();
     }
 
     currentPage = newPage;

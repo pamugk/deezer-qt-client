@@ -23,7 +23,12 @@ signals:
     void clickedPlaylist(int id);
 
 private:
+    QNetworkReply *pictureReply;
     Ui::PlaylistCard *ui;
+
+private slots:
+    void errorOccurred(QNetworkReply::NetworkError error);
+    void pictureLoaded();
 };
 
 #endif // PLAYLISTCARD_H

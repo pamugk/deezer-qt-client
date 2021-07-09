@@ -112,31 +112,27 @@ set(PROJECT_SOURCES
         widgets/albumcard.ui
         widgets/albumflow.h
         widgets/albumflow.cpp
-        widgets/albumflow.ui
         widgets/artistcard.h
         widgets/artistcard.cpp
         widgets/artistcard.ui
         widgets/artistflow.h
         widgets/artistflow.cpp
-        widgets/artistflow.ui
+        widgets/flow.h
         widgets/playlistcard.h
         widgets/playlistcard.cpp
         widgets/playlistcard.ui
         widgets/playlistflow.h
         widgets/playlistflow.cpp
-        widgets/playlistflow.ui
         widgets/radiocard.h
         widgets/radiocard.cpp
         widgets/radiocard.ui
         widgets/radioflow.h
         widgets/radioflow.cpp
-        widgets/radioflow.ui
         widgets/usercard.h
         widgets/usercard.cpp
         widgets/usercard.ui
         widgets/userflow.h
         widgets/userflow.cpp
-        widgets/userflow.ui
 
         ${TS_FILES}
 )

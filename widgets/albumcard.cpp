@@ -26,26 +26,46 @@ AlbumCard::AlbumCard(api::Deezer *apiInstance, api::Album &album, QWidget *paren
     if (!album.coverMedium.isEmpty())
     {
         QUrl coverUrl(album.coverMedium);
-        QNetworkReply *coverReply = apiInstance->getAnything(coverUrl);
-        connect(coverReply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error)
-        {
-            coverReply->deleteLater();
-        });
-        connect(coverReply, &QNetworkReply::finished, [=]
-        {
-            if (coverReply->error() == QNetworkReply::NetworkError::NoError)
-            {
-                auto imageBytes = coverReply->readAll();
-                auto cover = QPixmap(250, 250);
-                cover.loadFromData(imageBytes);
-                ui->coverButton->setIcon(QIcon(cover));
-                coverReply->deleteLater();
-            }
-        });
+        coverReply = apiInstance->getAnything(coverUrl);
+        connect(coverReply, &QNetworkReply::errorOccurred, this, &AlbumCard::errorOccurred);
+        connect(coverReply, &QNetworkReply::finished, this, &AlbumCard::coverLoaded);
+    } else {
+        coverReply = nullptr;
     }
 }
 
 AlbumCard::~AlbumCard()
 {
+    if (coverReply != nullptr && !coverReply->isFinished())
+    {
+        qDebug() << "Aborting";
+        QEventLoop loop;
+        connect(coverReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        coverReply->abort();
+        loop.exec();
+    }
     delete ui;
+}
+
+void AlbumCard::coverLoaded()
+{
+    if (coverReply->error() == QNetworkReply::NetworkError::NoError)
+    {
+        auto imageBytes = coverReply->readAll();
+        auto cover = QPixmap(250, 250);
+        cover.loadFromData(imageBytes);
+        ui->coverButton->setIcon(QIcon(cover));
+    }
+    coverReply->deleteLater();
+    coverReply = nullptr;
+}
+
+void AlbumCard::errorOccurred(QNetworkReply::NetworkError error)
+{
+    if (coverReply != nullptr)
+    {
+        qDebug() << error;
+        coverReply->deleteLater();
+        coverReply = nullptr;
+    }
 }

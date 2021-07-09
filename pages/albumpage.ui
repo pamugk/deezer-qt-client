@@ -16,13 +16,6 @@
   <layout class="QVBoxLayout" name="pageLayout">
    <item>
     <layout class="QGridLayout" name="overviewLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="coverLabel">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="1">
       <widget class="QLabel" name="tracksLabel">
        <property name="styleSheet">
@@ -30,26 +23,6 @@
        </property>
        <property name="text">
         <string>Треков: </string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QLabel" name="releaseDateLabel">
-       <property name="styleSheet">
-        <string notr="true">color: rgb(114, 114, 125);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="durationLabel">
-       <property name="styleSheet">
-        <string notr="true">color: rgb(114, 114, 125);</string>
-       </property>
-       <property name="text">
-        <string/>
        </property>
       </widget>
      </item>
@@ -77,6 +50,46 @@
        </property>
        <property name="text">
         <string>Название альбома</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="releaseDateLabel">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(114, 114, 125);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="durationLabel">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(114, 114, 125);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0" rowspan="3">
+      <widget class="QLabel" name="coverLabel">
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>

@@ -21,7 +21,12 @@ signals:
     void clickedArtist(int id);
 
 private:
+    QNetworkReply *pictureReply;
     Ui::ArtistCard *ui;
+
+private slots:
+    void errorOccurred(QNetworkReply::NetworkError error);
+    void pictureLoaded();
 };
 
 #endif // ARTISTCARD_H

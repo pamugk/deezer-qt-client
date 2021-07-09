@@ -1,35 +1,13 @@
 #include "playlistflow.h"
-#include "ui_playlistflow.h"
 
-PlaylistFlow::PlaylistFlow(api::Deezer *apiInstance, QWidget *parent) :
-    QScrollArea(parent),
-    apiInstance(apiInstance),
-    lastContentIndex(0),
-    ui(new Ui::PlaylistFlow)
-{
-    ui->setupUi(this);
-}
+PlaylistFlow::PlaylistFlow(api::Deezer *apiInstance,
+                           QWidget *parent, int margin, int hSpacing, int vSpacing) :
+        Flow(parent, margin, hSpacing, vSpacing),
+        apiInstance(apiInstance){}
 
-void PlaylistFlow::addContents(QVector<api::Playlist> &data)
+QWidget *PlaylistFlow::instantiateItem(api::Playlist &obj)
 {
-    for (int i = 0; i < data.size(); i++, lastContentIndex++)
-    {
-        PlaylistCard *playlistCard = new PlaylistCard(apiInstance, data[i], ui->contents);
-        connect(playlistCard, &PlaylistCard::clickedPlaylist, this, &PlaylistFlow::clickedItem);
-        ui->contentsLayout->addWidget(playlistCard, lastContentIndex / 4, lastContentIndex % 4);
-    }
-}
-
-void PlaylistFlow::clearAll()
-{
-    while (QLayoutItem * item = ui->contentsLayout->takeAt(0))
-    {
-        ui->contentsLayout->removeItem(item);
-    }
-    lastContentIndex = 0;
-}
-
-PlaylistFlow::~PlaylistFlow()
-{
-    delete ui;
+    PlaylistCard *playlistCard = new PlaylistCard(apiInstance, obj, static_cast<QWidget *>(this->parent()));
+    connect(playlistCard, &PlaylistCard::clickedPlaylist, this, &PlaylistFlow::clickedItem);
+    return playlistCard;
 }

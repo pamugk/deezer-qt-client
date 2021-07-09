@@ -8,25 +8,25 @@ SearchPage::SearchPage(api::Deezer * deezerApiInstance, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    albums = new AlbumFlow(deezerApiInstance, ui->albumTab);
-    connect(albums, &AlbumFlow::clickedItem, this, &SearchPage::albumClicked);
-    ui->albumTabLayout->addWidget(albums);
+    albumFlow = new AlbumFlow(deezerApiInstance, ui->albumScrollAreaContents);
+    connect(albumFlow, &AlbumFlow::clickedItem, this, &SearchPage::albumClicked);
+    ui->albumScrollAreaContents->setLayout(albumFlow);
 
-    artists = new ArtistFlow(deezerApiInstance, ui->artistTab);
-    connect(artists, &ArtistFlow::clickedItem, this, &SearchPage::artistClicked);
-    ui->artistTabLayout->addWidget(artists);
+    artistFlow = new ArtistFlow(deezerApiInstance, ui->artistScrollAreaContents);
+    connect(artistFlow, &ArtistFlow::clickedItem, this, &SearchPage::artistClicked);
+    ui->artistScrollAreaContents->setLayout(artistFlow);
 
-    playlists = new PlaylistFlow(deezerApiInstance, ui->playlistTab);
-    connect(playlists, &PlaylistFlow::clickedItem, this, &SearchPage::playlistClicked);
-    ui->playlistTabLayout->addWidget(playlists);
+    playlistFlow = new PlaylistFlow(deezerApiInstance, ui->playlistScrollAreaContents);
+    connect(playlistFlow, &PlaylistFlow::clickedItem, this, &SearchPage::playlistClicked);
+    ui->playlistScrollAreaContents->setLayout(playlistFlow);
 
-    radios = new RadioFlow(deezerApiInstance, ui->mixTab);
-    connect(radios, &RadioFlow::clickedItem, this, &SearchPage::radioClicked);
-    ui->mixTabLayout->addWidget(radios);
+    radioFlow = new RadioFlow(deezerApiInstance, ui->mixScrollAreaContents);
+    connect(radioFlow, &RadioFlow::clickedItem, this, &SearchPage::radioClicked);
+    ui->mixScrollAreaContents->setLayout(radioFlow);
 
-    users = new UserFlow(deezerApiInstance, ui->userTab);
-    connect(users, &UserFlow::clickedItem, this, &SearchPage::userClicked);
-    ui->userTabLayout->addWidget(users);
+    userFlow = new UserFlow(deezerApiInstance, ui->userScrollAreaContents);
+    connect(userFlow, &UserFlow::clickedItem, this, &SearchPage::userClicked);
+    ui->userScrollAreaContents->setLayout(userFlow);
 
     clear();
 }
@@ -84,11 +84,11 @@ void SearchPage::clear()
         ui->overviewContentsLayout->removeItem(item);
     }
 
-    albums->clearAll();
-    artists->clearAll();
-    playlists->clearAll();
-    radios->clearAll();
-    users->clearAll();
+    albumFlow->clearAll();
+    artistFlow->clearAll();
+    playlistFlow->clearAll();
+    radioFlow->clearAll();
+    userFlow->clearAll();
 }
 
 void SearchPage::fetchedAlbums(QNetworkReply *reply)
@@ -96,7 +96,7 @@ void SearchPage::fetchedAlbums(QNetworkReply *reply)
     auto albumsJson = api::tryReadResponse(reply).object();
     auto albumsResponse = api::deserializePartialResponseAlbum(albumsJson);
     QVector<api::Album> albumsData = albumsResponse.getData();
-    albums->addContents(albumsData);
+    albumFlow->addContents(albumsData);
 }
 
 void SearchPage::fetchedArtists(QNetworkReply *reply)
@@ -104,7 +104,7 @@ void SearchPage::fetchedArtists(QNetworkReply *reply)
     auto artistsJson = api::tryReadResponse(reply).object();
     auto artistsResponse = api::deserializePartialResponseArtist(artistsJson);
     QVector<api::Artist> artistsData = artistsResponse.getData();
-    artists->addContents(artistsData);
+    artistFlow->addContents(artistsData);
 }
 
 void SearchPage::fetchedPlaylists(QNetworkReply *reply)
@@ -112,7 +112,7 @@ void SearchPage::fetchedPlaylists(QNetworkReply *reply)
     auto playlistsJson = api::tryReadResponse(reply).object();
     auto playlistsResponse = api::deserializePartialResponsePlaylist(playlistsJson);
     QVector<api::Playlist> playlistsData = playlistsResponse.getData();
-    playlists->addContents(playlistsData);
+    playlistFlow->addContents(playlistsData);
 }
 
 void SearchPage::fetchedRadio(QNetworkReply *reply)
@@ -120,7 +120,7 @@ void SearchPage::fetchedRadio(QNetworkReply *reply)
     auto radioJson = api::tryReadResponse(reply).object();
     auto radioResponse = api::deserializePartialResponseRadio(radioJson);
     QVector<api::Radio> radiosData = radioResponse.getData();
-    radios->addContents(radiosData);
+    radioFlow->addContents(radiosData);
 }
 
 void SearchPage::fetchedTracks(QNetworkReply *reply)
@@ -134,7 +134,7 @@ void SearchPage::fetchedUsers(QNetworkReply *reply)
     auto usersJson = api::tryReadResponse(reply).object();
     auto usersResponse = api::deserializePartialResponseUser(usersJson);
     QVector<api::User> usersData = usersResponse.getData();
-    users->addContents(usersData);
+    userFlow->addContents(usersData);
 }
 
 void SearchPage::gotError(QNetworkReply *reply, QNetworkReply::NetworkError error)

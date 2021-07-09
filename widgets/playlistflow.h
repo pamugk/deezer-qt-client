@@ -1,35 +1,23 @@
 #ifndef PLAYLISTFLOW_H
 #define PLAYLISTFLOW_H
 
-#include "../api/deezer.h"
-
+#include "flow.h"
 #include "playlistcard.h"
 
-#include <QLayoutItem>
-#include <QScrollArea>
-
-namespace Ui {
-class PlaylistFlow;
-}
-
-class PlaylistFlow : public QScrollArea
+class PlaylistFlow : public Flow<api::Playlist>
 {
     Q_OBJECT
 
 public:
-    explicit PlaylistFlow(api::Deezer *apiInstance, QWidget *parent = nullptr);
-    ~PlaylistFlow();
-    void addContents(QVector<api::Playlist>&);
-    void clearAll();
+    explicit PlaylistFlow(api::Deezer *apiInstance,
+                          QWidget *parent = nullptr, int margin = -1, int hSpacing = -1, int vSpacing = -1);
 
 signals:
     void clickedItem(int id);
 
 private:
-    int lastContentIndex;
-    Ui::PlaylistFlow *ui;
-
     api::Deezer *apiInstance;
+    QWidget *instantiateItem(api::Playlist &item) override;
 };
 
 #endif // PLAYLISTFLOW_H

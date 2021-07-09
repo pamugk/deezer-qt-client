@@ -1,35 +1,13 @@
 #include "userflow.h"
-#include "ui_userflow.h"
 
-UserFlow::UserFlow(api::Deezer *apiInstance, QWidget *parent) :
-    QScrollArea(parent),
-    apiInstance(apiInstance),
-    lastContentIndex(0),
-    ui(new Ui::UserFlow)
-{
-    ui->setupUi(this);
-}
+UserFlow::UserFlow(api::Deezer *apiInstance,
+                   QWidget *parent, int margin, int hSpacing, int vSpacing) :
+    Flow(parent, margin, hSpacing, vSpacing),
+    apiInstance(apiInstance){}
 
-void UserFlow::addContents(QVector<api::User> &data)
+QWidget *UserFlow::instantiateItem(api::User &obj)
 {
-    for (int i = 0; i < data.size(); i++, lastContentIndex++)
-    {
-        UserCard *artistCard = new UserCard(apiInstance, data[i], ui->contents);
-        connect(artistCard, &UserCard::clickedUser, this, &UserFlow::clickedItem);
-        ui->contentsLayout->addWidget(artistCard, lastContentIndex / 4, lastContentIndex % 4);
-    }
-}
-
-void UserFlow::clearAll()
-{
-    while (QLayoutItem * item = ui->contentsLayout->takeAt(0))
-    {
-        ui->contentsLayout->removeItem(item);
-    }
-    lastContentIndex = 0;
-}
-
-UserFlow::~UserFlow()
-{
-    delete ui;
+    UserCard *userCard = new UserCard(apiInstance, obj, static_cast<QWidget *>(this->parent()));
+    connect(userCard, &UserCard::clickedUser, this, &UserFlow::clickedItem);
+    return userCard;
 }

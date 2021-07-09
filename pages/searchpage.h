@@ -39,11 +39,11 @@ private:
 
     Ui::SearchPage *ui;
 
-    AlbumFlow *albums;
-    ArtistFlow *artists;
-    PlaylistFlow *playlists;
-    RadioFlow *radios;
-    UserFlow *users;
+    AlbumFlow *albumFlow;
+    ArtistFlow *artistFlow;
+    PlaylistFlow *playlistFlow;
+    RadioFlow *radioFlow;
+    UserFlow *userFlow;
 
     api::Deezer *deezerApiInstance;
 

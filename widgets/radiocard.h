@@ -21,7 +21,12 @@ signals:
     void clickedRadio(int id);
 
 private:
+    QNetworkReply *pictureReply;
     Ui::RadioCard *ui;
+
+private slots:
+    void errorOccurred(QNetworkReply::NetworkError error);
+    void pictureLoaded();
 };
 
 #endif // RADIOCARD_H

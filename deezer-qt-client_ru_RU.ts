@@ -25,10 +25,30 @@
     </message>
 </context>
 <context>
-    <name>AlbumFlow</name>
+    <name>AlbumPage</name>
     <message>
-        <location filename="widgets/albumflow.ui" line="14"/>
-        <source>ScrollArea</source>
+        <location filename="pages/albumpage.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="25"/>
+        <source>Треков: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="35"/>
+        <source>Поклонников: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="52"/>
+        <source>Название альбома</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="117"/>
+        <source>play-circle Слушать</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -52,10 +72,18 @@
     </message>
 </context>
 <context>
-    <name>ArtistFlow</name>
+    <name>ArtistPage</name>
     <message>
-        <location filename="widgets/artistflow.ui" line="13"/>
-        <source>ScrollArea</source>
+        <location filename="pages/artistpage.ui" line="16"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MainPage</name>
+    <message>
+        <location filename="pages/mainpage.ui" line="16"/>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -163,31 +191,26 @@
     </message>
 </context>
 <context>
-    <name>PlaylistFlow</name>
+    <name>PlaylistPage</name>
     <message>
-        <location filename="widgets/playlistflow.ui" line="13"/>
-        <source>ScrollArea</source>
+        <location filename="pages/playlistpage.ui" line="16"/>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RadioCard</name>
     <message>
-        <location filename="widgets/radiocard.ui" line="14"/>
+        <location filename="widgets/radiocard.ui" line="26"/>
         <source>StackedWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="widgets/radiocard.ui" line="20"/>
-        <source>Плейлист</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>RadioFlow</name>
+    <name>RadioPage</name>
     <message>
-        <location filename="widgets/radioflow.ui" line="13"/>
-        <source>ScrollArea</source>
+        <location filename="pages/radiopage.ui" line="16"/>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -224,72 +247,72 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="104"/>
+        <location filename="pages/searchpage.ui" line="121"/>
         <source>Плейлисты</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="117"/>
+        <location filename="pages/searchpage.ui" line="134"/>
         <source>Плейлистов: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="125"/>
+        <location filename="pages/searchpage.ui" line="159"/>
         <source>Исполнители</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="138"/>
+        <location filename="pages/searchpage.ui" line="172"/>
         <source>Исполнителей: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="146"/>
+        <location filename="pages/searchpage.ui" line="197"/>
         <source>Профили</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="159"/>
+        <location filename="pages/searchpage.ui" line="210"/>
         <source>Профилей:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="167"/>
+        <location filename="pages/searchpage.ui" line="235"/>
         <source>Каналы</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="180"/>
+        <location filename="pages/searchpage.ui" line="248"/>
         <source>Каналов: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="216"/>
+        <location filename="pages/searchpage.ui" line="280"/>
         <source>Подкасты</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="229"/>
+        <location filename="pages/searchpage.ui" line="293"/>
         <source>Подкастов: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="265"/>
+        <location filename="pages/searchpage.ui" line="329"/>
         <source>Выпуски</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="278"/>
+        <location filename="pages/searchpage.ui" line="342"/>
         <source>Выпусков:  </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="314"/>
+        <location filename="pages/searchpage.ui" line="378"/>
         <source>Миксы</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="327"/>
+        <location filename="pages/searchpage.ui" line="391"/>
         <source>Миксов: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -308,10 +331,10 @@
     </message>
 </context>
 <context>
-    <name>UserFlow</name>
+    <name>UserPage</name>
     <message>
-        <location filename="widgets/userflow.ui" line="13"/>
-        <source>ScrollArea</source>
+        <location filename="pages/userpage.ui" line="16"/>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

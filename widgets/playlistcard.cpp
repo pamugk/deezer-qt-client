@@ -20,26 +20,46 @@ PlaylistCard::PlaylistCard(api::Deezer *apiInstance, api::Playlist &playlist, QW
     if (!playlist.pictureMedium.isEmpty())
     {
         QUrl pictureUrl(playlist.pictureMedium);
-        QNetworkReply *coverReply = apiInstance->getAnything(pictureUrl);
-        connect(coverReply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error)
-        {
-            coverReply->deleteLater();
-        });
-        connect(coverReply, &QNetworkReply::finished, [=]
-        {
-            if (coverReply->error() == QNetworkReply::NetworkError::NoError)
-            {
-                auto imageBytes = coverReply->readAll();
-                auto cover = QPixmap(250, 250);
-                cover.loadFromData(imageBytes);
-                ui->pictureButton->setIcon(QIcon(cover));
-                coverReply->deleteLater();
-            }
-        });
+        pictureReply = apiInstance->getAnything(pictureUrl);
+        connect(pictureReply, &QNetworkReply::errorOccurred, this, &PlaylistCard::errorOccurred);
+        connect(pictureReply, &QNetworkReply::finished, this, &PlaylistCard::pictureLoaded);
+    } else {
+        pictureReply = nullptr;
     }
 }
 
 PlaylistCard::~PlaylistCard()
 {
+    if (pictureReply != nullptr && !pictureReply->isFinished())
+    {
+        qDebug() << "Aborting";
+        QEventLoop loop;
+        connect(pictureReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        pictureReply->abort();
+        loop.exec();
+    }
     delete ui;
 }
+
+void PlaylistCard::errorOccurred(QNetworkReply::NetworkError error)
+{
+    if (pictureReply != nullptr)
+    {
+        pictureReply->deleteLater();
+        pictureReply = nullptr;
+    }
+}
+
+void PlaylistCard::pictureLoaded()
+{
+    if (pictureReply->error() == QNetworkReply::NetworkError::NoError)
+    {
+        auto imageBytes = pictureReply->readAll();
+        auto cover = QPixmap(250, 250);
+        cover.loadFromData(imageBytes);
+        ui->pictureButton->setIcon(QIcon(cover));
+    }
+    pictureReply->deleteLater();
+    pictureReply = nullptr;
+}
+
