@@ -14,7 +14,7 @@
    <string>TabWidget</string>
   </property>
   <property name="currentIndex">
-   <number>9</number>
+   <number>1</number>
   </property>
   <widget class="QWidget" name="overviewTab">
    <attribute name="title">
@@ -74,7 +74,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QTableWidget" name="tracksTable"/>
+     <widget class="QTableView" name="tracksTable"/>
     </item>
    </layout>
   </widget>

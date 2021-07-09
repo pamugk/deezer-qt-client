@@ -460,14 +460,14 @@ namespace api {
 
     QNetworkReply *Deezer::search(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::TRACKS);
+        const QString url = QString("%1/%2").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH);
         const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
         return networkManager->get(request);
     }
 
     QNetworkReply *Deezer::search(AdvancedSearchQuery query, int index, int limit, bool strict, SearchOrder order)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::TRACKS);
+        const QString url = QString("%1/%2").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH);
         QNetworkRequest request = buildSearchRequest(url, query.toString(), index, limit, strict, order);
         return networkManager->get(request);
     }
@@ -502,7 +502,7 @@ namespace api {
 
     QNetworkReply *Deezer::searchTracks(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::TRACKS);
+        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::TRACK);
         const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
         return networkManager->get(request);
     }

@@ -24,6 +24,9 @@ SearchPage::SearchPage(api::Deezer * deezerApiInstance, QWidget *parent) :
     connect(radioFlow, &RadioFlow::clickedItem, this, &SearchPage::radioClicked);
     ui->mixScrollAreaContents->setLayout(radioFlow);
 
+    searchTracksModel = new SearchTracksModel(deezerApiInstance, ui->trackTab);
+    ui->tracksTable->setModel(searchTracksModel);
+
     userFlow = new UserFlow(deezerApiInstance, ui->userScrollAreaContents);
     connect(userFlow, &UserFlow::clickedItem, this, &SearchPage::userClicked);
     ui->userScrollAreaContents->setLayout(userFlow);
@@ -49,7 +52,7 @@ void SearchPage::searchRequested(QString request)
 
     auto trackPrefetchResponse = deezerApiInstance->searchTracks(request, 0, 5);
     connect(trackPrefetchResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(trackPrefetchResponse, error); });
-    connect(trackPrefetchResponse, &QNetworkReply::finished, [=] { prefetchedAlbums(trackPrefetchResponse); });
+    connect(trackPrefetchResponse, &QNetworkReply::finished, [=] { prefetchedTracks(trackPrefetchResponse); });
 
     auto albumPrefetchResponse = deezerApiInstance->searchAlbums(request, 0, 5);
     connect(albumPrefetchResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(albumPrefetchResponse, error); });
@@ -88,6 +91,7 @@ void SearchPage::clear()
     artistFlow->clearAll();
     playlistFlow->clearAll();
     radioFlow->clearAll();
+    searchTracksModel->clearAll();
     userFlow->clearAll();
 }
 
@@ -126,7 +130,9 @@ void SearchPage::fetchedRadio(QNetworkReply *reply)
 void SearchPage::fetchedTracks(QNetworkReply *reply)
 {
     auto tracksJson = api::tryReadResponse(reply).object();
-    auto tracksResponse = api::deserializePartialResponseUser(tracksJson);
+    auto tracksResponse = api::deserializePartialResponseTrack(tracksJson);
+
+    searchTracksModel->addData(tracksResponse.getData());
 }
 
 void SearchPage::fetchedUsers(QNetworkReply *reply)
@@ -246,10 +252,17 @@ void SearchPage::prefetchedTracks(QNetworkReply *reply)
     if (trackPrefetch.getTotal() > 0)
     {
         addTab(ui->trackTab, QString("Треки"));
+
         ui->overviewContentsLayout->addWidget(new QLabel("Треки", ui->overviewContents));
+        auto prefetchedTracksTable = new QTableView(ui->overviewContents);
+        auto prefetchedTracksModel = new SearchTracksModel(deezerApiInstance, prefetchedTracksTable);
+        prefetchedTracksModel->addData(trackPrefetch.getData());
+        prefetchedTracksTable->setModel(prefetchedTracksModel);
+        ui->overviewContentsLayout->addWidget(prefetchedTracksTable);
+
         ui->trackLabel->setText(QString("Треков: %1").arg(QString::number(trackPrefetch.getTotal())));
 
-        auto tracksResponse = deezerApiInstance->searchRadio(currentRequest, 0, 20);
+        auto tracksResponse = deezerApiInstance->searchTracks(currentRequest, 0, 20);
         connect(tracksResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ gotError(tracksResponse, error); });
         connect(tracksResponse, &QNetworkReply::finished, [=] { fetchedTracks(tracksResponse); });
     }

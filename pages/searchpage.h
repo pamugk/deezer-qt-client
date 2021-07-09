@@ -3,6 +3,8 @@
 
 #include "../api/deezer.h"
 
+#include "../model/searchtracksmodel.h"
+
 #include "../widgets/albumflow.h"
 #include "../widgets/artistflow.h"
 #include "../widgets/playlistflow.h"
@@ -43,6 +45,7 @@ private:
     ArtistFlow *artistFlow;
     PlaylistFlow *playlistFlow;
     RadioFlow *radioFlow;
+    SearchTracksModel *searchTracksModel;
     UserFlow *userFlow;
 
     api::Deezer *deezerApiInstance;
