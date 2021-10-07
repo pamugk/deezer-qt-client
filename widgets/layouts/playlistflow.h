@@ -2,7 +2,7 @@
 #define PLAYLISTFLOW_H
 
 #include "flow.h"
-#include "playlistcard.h"
+#include "../playlistcard.h"
 
 class PlaylistFlow : public Flow<api::Playlist>
 {

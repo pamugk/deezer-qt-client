@@ -3,13 +3,13 @@
 
 #include "../api/deezer.h"
 
-#include "../model/searchtracksmodel.h"
+#include "../widgets/models/searchtracksmodel.h"
 
-#include "../widgets/albumflow.h"
-#include "../widgets/artistflow.h"
-#include "../widgets/playlistflow.h"
-#include "../widgets/radioflow.h"
-#include "../widgets/userflow.h"
+#include "../widgets/layouts/albumflow.h"
+#include "../widgets/layouts/artistflow.h"
+#include "../widgets/layouts/playlistflow.h"
+#include "../widgets/layouts/radioflow.h"
+#include "../widgets/layouts/userflow.h"
 
 
 #include <QTabWidget>

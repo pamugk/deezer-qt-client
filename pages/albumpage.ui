@@ -16,7 +16,47 @@
   <layout class="QVBoxLayout" name="pageLayout">
    <item>
     <layout class="QGridLayout" name="overviewLayout">
-     <item row="1" column="1">
+     <item row="1" column="0" rowspan="3">
+      <widget class="QLabel" name="coverLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLabel" name="durationLabel">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(114, 114, 125);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QLabel" name="releaseDateLabel">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(114, 114, 125);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1" colspan="2">
+      <spacer name="overviewLowerSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="1">
       <widget class="QLabel" name="tracksLabel">
        <property name="styleSheet">
         <string notr="true">color: rgb(114, 114, 125);</string>
@@ -26,7 +66,20 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="4">
+     <item row="1" column="5" rowspan="3">
+      <spacer name="overviewRightSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="4">
       <widget class="QLabel" name="fansLabel">
        <property name="styleSheet">
         <string notr="true">color: rgb(114, 114, 125);</string>
@@ -36,7 +89,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1" colspan="4">
+     <item row="1" column="1" colspan="4">
       <widget class="QLabel" name="titleLabel">
        <property name="font">
         <font>
@@ -53,28 +106,8 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="3">
-      <widget class="QLabel" name="releaseDateLabel">
-       <property name="styleSheet">
-        <string notr="true">color: rgb(114, 114, 125);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="durationLabel">
-       <property name="styleSheet">
-        <string notr="true">color: rgb(114, 114, 125);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1" colspan="2">
-      <spacer name="verticalSpacer">
+     <item row="0" column="0" colspan="6">
+      <spacer name="overviewUpperSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -85,13 +118,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item row="0" column="0" rowspan="3">
-      <widget class="QLabel" name="coverLabel">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>
@@ -124,17 +150,30 @@ background-color: rgb(239, 84, 102);</string>
      <item>
       <widget class="QPushButton" name="favouriteButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text">
-        <string/>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
-       <property name="icon">
-        <iconset resource="../resources.qrc">
-         <normaloff>:/assets/fontawesome/svgs/regular/heart.svg</normaloff>:/assets/fontawesome/svgs/regular/heart.svg</iconset>
+       <property name="font">
+        <font>
+         <family>Font Awesome 5 Free</family>
+        </font>
+       </property>
+       <property name="text">
+        <string>heart</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>16</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -146,23 +185,39 @@ background-color: rgb(239, 84, 102);</string>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text">
-        <string/>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
-       <property name="icon">
-        <iconset resource="../resources.qrc">
-         <normaloff>:/assets/fontawesome/svgs/solid/share-square.svg</normaloff>:/assets/fontawesome/svgs/solid/share-square.svg</iconset>
+       <property name="font">
+        <font>
+         <family>Font Awesome 5 Free</family>
+        </font>
+       </property>
+       <property name="text">
+        <string>share-square</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="moreButton">
-       <property name="text">
-        <string/>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
-       <property name="icon">
-        <iconset resource="../resources.qrc">
-         <normaloff>:/assets/fontawesome/svgs/solid/ellipsis-h.svg</normaloff>:/assets/fontawesome/svgs/solid/ellipsis-h.svg</iconset>
+       <property name="font">
+        <font>
+         <family>Font Awesome 5 Free</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>ellipsis-h</string>
        </property>
       </widget>
      </item>
@@ -178,6 +233,172 @@ background-color: rgb(239, 84, 102);</string>
         </size>
        </property>
       </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="discographyCarousel">
+     <item row="0" column="3">
+      <widget class="QPushButton" name="nextDiscographyButton">
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Font Awesome 5 Free</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>angle-right</string>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="discographyLabel">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Дискография</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <spacer name="discographySpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="prevDiscographyButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Font Awesome 5 Free</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>angle-left</string>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QWidget" name="discographyCarouselContents" native="true"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="relatedArtistsCarousel">
+     <item row="0" column="3">
+      <widget class="QPushButton" name="nextRelatedArtistsButton">
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Font Awesome 5 Free</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>angle-right</string>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="relatedArtistsLabel">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Похожие исполнители</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <spacer name="relatedArtistsSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="prevRelatedArtistsButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Font Awesome 5 Free</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>angle-left</string>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QWidget" name="relatedArtistsCarouselContents" native="true"/>
      </item>
     </layout>
    </item>
@@ -205,9 +426,6 @@ background-color: rgb(239, 84, 102);</string>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../resources.qrc"/>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

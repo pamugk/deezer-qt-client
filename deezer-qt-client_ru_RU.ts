@@ -32,23 +32,60 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="25"/>
+        <location filename="pages/albumpage.ui" line="65"/>
         <source>Треков: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="35"/>
+        <location filename="pages/albumpage.ui" line="88"/>
         <source>Поклонников: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="52"/>
+        <location filename="pages/albumpage.ui" line="105"/>
         <source>Название альбома</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="117"/>
+        <location filename="pages/albumpage.ui" line="143"/>
         <source>play-circle Слушать</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="170"/>
+        <source>heart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="200"/>
+        <source>share-square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="220"/>
+        <source>ellipsis-h</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="257"/>
+        <location filename="pages/albumpage.ui" line="340"/>
+        <source>angle-right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="274"/>
+        <source>Дискография</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="310"/>
+        <location filename="pages/albumpage.ui" line="393"/>
+        <source>angle-left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/albumpage.ui" line="357"/>
+        <source>Похожие исполнители</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -287,32 +324,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="280"/>
+        <location filename="pages/searchpage.ui" line="279"/>
         <source>Подкасты</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="293"/>
+        <location filename="pages/searchpage.ui" line="292"/>
         <source>Подкастов: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="329"/>
+        <location filename="pages/searchpage.ui" line="323"/>
         <source>Выпуски</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="342"/>
+        <location filename="pages/searchpage.ui" line="336"/>
         <source>Выпусков:  </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="378"/>
+        <location filename="pages/searchpage.ui" line="367"/>
         <source>Миксы</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/searchpage.ui" line="391"/>
+        <location filename="pages/searchpage.ui" line="380"/>
         <source>Миксов: </source>
         <translation type="unfinished"></translation>
     </message>

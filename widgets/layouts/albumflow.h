@@ -1,7 +1,7 @@
 #ifndef ALBUMFLOW_H
 #define ALBUMFLOW_H
 
-#include "albumcard.h"
+#include "../albumcard.h"
 #include "flow.h"
 
 class AlbumFlow : public Flow<api::Album>

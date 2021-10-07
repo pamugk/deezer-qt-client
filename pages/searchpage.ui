@@ -14,7 +14,7 @@
    <string>TabWidget</string>
   </property>
   <property name="currentIndex">
-   <number>1</number>
+   <number>0</number>
   </property>
   <widget class="QWidget" name="overviewTab">
    <attribute name="title">
@@ -269,7 +269,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_14"/>
       </widget>
      </widget>
     </item>
@@ -314,11 +313,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_16">
-        <item>
-         <layout class="QGridLayout" name="podcastGrid"/>
-        </item>
-       </layout>
       </widget>
      </widget>
     </item>
@@ -363,11 +357,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_18">
-        <item>
-         <layout class="QGridLayout" name="episodeGrid"/>
-        </item>
-       </layout>
       </widget>
      </widget>
     </item>

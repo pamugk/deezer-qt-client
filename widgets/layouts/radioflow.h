@@ -2,7 +2,7 @@
 #define RADIOFLOW_H
 
 #include "flow.h"
-#include "radiocard.h"
+#include "../radiocard.h"
 
 class RadioFlow : public Flow<api::Radio>
 {

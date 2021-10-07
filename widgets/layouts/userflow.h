@@ -2,7 +2,7 @@
 #define USERFLOW_H
 
 #include "flow.h"
-#include "usercard.h"
+#include "../usercard.h"
 
 class UserFlow : public Flow<api::User>
 {

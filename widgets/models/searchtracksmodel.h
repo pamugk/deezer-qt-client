@@ -1,7 +1,7 @@
 #ifndef SEARCHTRACKSMODEL_H
 #define SEARCHTRACKSMODEL_H
 
-#include "../api/deezer.h"
+#include "../../api/deezer.h"
 
 #include <QAbstractTableModel>
 

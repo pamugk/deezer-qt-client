@@ -1,7 +1,7 @@
 #ifndef ARTISTFLOW_H
 #define ARTISTFLOW_H
 
-#include "artistcard.h"
+#include "../artistcard.h"
 #include "flow.h"
 
 class ArtistFlow : public Flow<api::Artist>

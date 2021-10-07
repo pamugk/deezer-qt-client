@@ -60,9 +60,6 @@ set(PROJECT_SOURCES
         api/object/user/folder.cpp api/object/user/folder.h
         api/object/user/user.cpp api/object/user/user.h
 
-        model/albumtracksmodel.h model/albumtracksmodel.cpp
-        model/searchtracksmodel.h model/searchtracksmodel.cpp
-
         pages/albumpage.h pages/albumpage.cpp pages/albumpage.ui
         pages/artistpage.h pages/artistpage.cpp pages/artistpage.ui
         pages/mainpage.h pages/mainpage.cpp pages/mainpage.ui
@@ -75,16 +72,24 @@ set(PROJECT_SOURCES
         resources.qrc
 
         widgets/albumcard.h widgets/albumcard.cpp widgets/albumcard.ui
-        widgets/albumflow.h widgets/albumflow.cpp
         widgets/artistcard.h widgets/artistcard.cpp widgets/artistcard.ui
-        widgets/artistflow.h widgets/artistflow.cpp
-        widgets/flow.h
         widgets/playlistcard.h widgets/playlistcard.cpp widgets/playlistcard.ui
-        widgets/playlistflow.h widgets/playlistflow.cpp
         widgets/radiocard.h widgets/radiocard.cpp widgets/radiocard.ui
-        widgets/radioflow.h widgets/radioflow.cpp
         widgets/usercard.h widgets/usercard.cpp widgets/usercard.ui
-        widgets/userflow.h widgets/userflow.cpp
+
+        widgets/layouts/albumcarousel.h widgets/layouts/albumcarousel.cpp
+        widgets/layouts/albumflow.h widgets/layouts/albumflow.cpp
+        widgets/layouts/artistflow.h widgets/layouts/artistflow.cpp
+        widgets/layouts/artistcarousel.h widgets/layouts/artistcarousel.cpp
+        widgets/layouts/carousel.h
+        widgets/layouts/flow.h
+        widgets/layouts/icarousel.h
+        widgets/layouts/playlistflow.h widgets/layouts/playlistflow.cpp
+        widgets/layouts/radioflow.h widgets/layouts/radioflow.cpp
+        widgets/layouts/userflow.h widgets/layouts/userflow.cpp
+
+        widgets/models/albumtracksmodel.h widgets/models/albumtracksmodel.cpp
+        widgets/models/searchtracksmodel.h widgets/models/searchtracksmodel.cpp
 
         ${TS_FILES}
 )

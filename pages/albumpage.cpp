@@ -9,10 +9,13 @@ AlbumPage::AlbumPage(api::Deezer *apiInstance, api::Album &album, QWidget *paren
 {
     ui->setupUi(this);
 
+    discographyCarousel = nullptr;
+    relatedArtistsCarousel = nullptr;
+
     if (!album.coverMedium.isEmpty())
     {
         QUrl coverUrl(album.coverMedium);
-        QNetworkReply *coverReply = apiInstance->getAnything(coverUrl);
+        auto coverReply = apiInstance->getAnything(coverUrl);
         connect(coverReply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error)
         {
             coverReply->deleteLater();
@@ -30,6 +33,42 @@ AlbumPage::AlbumPage(api::Deezer *apiInstance, api::Album &album, QWidget *paren
         });
     }
 
+    auto discographyReply = apiInstance->getArtistAlbums(album.artist->id, 0, 10);
+    connect(discographyReply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error)
+    {
+        discographyReply->deleteLater();
+    });
+    connect(discographyReply, &QNetworkReply::finished, [=]
+    {
+        if (discographyReply->error() == QNetworkReply::NetworkError::NoError)
+        {
+            auto discographyJson = api::tryReadResponse(discographyReply).object();
+            auto discography = api::deserializePartialResponseAlbum(discographyJson);
+
+            discographyCarousel = new AlbumCarousel(apiInstance, ui->discographyCarouselContents);
+            discographyCarousel->addData(discography.getData());
+            ui->discographyCarouselContents->setLayout(discographyCarousel);
+        }
+    });
+
+    auto relatedArtistsReply = apiInstance->getArtistRelated(album.artist->id, 0, 10);
+    connect(relatedArtistsReply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error)
+    {
+        relatedArtistsReply->deleteLater();
+    });
+    connect(discographyReply, &QNetworkReply::finished, [=]
+    {
+        if (relatedArtistsReply->error() == QNetworkReply::NetworkError::NoError)
+        {
+            auto relatedArtistsJson = api::tryReadResponse(relatedArtistsReply).object();
+            auto relatedArtists = api::deserializePartialResponseArtist(relatedArtistsJson);
+
+            relatedArtistsCarousel = new ArtistCarousel(apiInstance, ui->relatedArtistsCarouselContents);
+            relatedArtistsCarousel->addData(relatedArtists.getData());
+            ui->relatedArtistsCarouselContents->setLayout(relatedArtistsCarousel);
+        }
+    });
+
     ui->titleLabel->setText(album.title);
     ui->tracksLabel->setText(ui->tracksLabel->text().append(QString::number(album.trackCount)));
     ui->durationLabel->setText(album.duration.hour() > 0 ?
@@ -45,3 +84,33 @@ AlbumPage::~AlbumPage()
 {
     delete ui;
 }
+
+void AlbumPage::on_prevDiscographyButton_clicked()
+{
+    if (discographyCarousel != nullptr)
+    {
+        discographyCarousel->prev();
+    }
+}
+
+
+void AlbumPage::on_nextDiscographyButton_clicked()
+{
+    if (discographyCarousel != nullptr)
+    {
+        discographyCarousel->next();
+    }
+}
+
+
+void AlbumPage::on_prevRelatedArtistsButton_clicked()
+{
+
+}
+
+
+void AlbumPage::on_nextRelatedArtistsButton_clicked()
+{
+
+}
+

@@ -1,59 +1,62 @@
-#ifndef FLOW_H
-#define FLOW_H
+#ifndef CAROUSEL_H
+#define CAROUSEL_H
 
-#include <QLayout>
+#include "icarousel.h"
+
 #include <QStyle>
 #include <QVector>
 #include <QWidget>
 
 template<typename T>
-class Flow: public QLayout
+class CarouselLayout: public ICarousel
 {
-
 private:
     QList<QLayoutItem*> items;
     int hSpacing;
-    int vSpacing;
+    int leftmostItem;
+    int visibleItemsCount;
 
-    int doLayout(const QRect &rect, bool updateGeometry) const
+    void doLayout(const QRect &rect)
     {
         int left, top, right, bottom;
         getContentsMargins(&left, &top, &right, &bottom);
         QRect effectiveRect = rect.adjusted(+left, +top, -right, -bottom);
         int x = effectiveRect.x();
-        int y = effectiveRect.y();
+        const int y = effectiveRect.y();
         int lineHeight = 0;
 
-        for (QLayoutItem *item: qAsConst(items))
+        int i;
+        for (i = 0; i < leftmostItem; i++)
         {
-            const QWidget *wid = item->widget();
+            items[i]->widget()->hide();
+        }
+
+        for (i = i; i < items.size(); i++)
+        {
+            const auto item = items[i];
+            const QWidget *wid = items[i]->widget();
 
             int spaceX = horizontalSpacing();
             if (spaceX == -1)
                 spaceX = wid->style()->layoutSpacing(QSizePolicy::PushButton, QSizePolicy::PushButton, Qt::Horizontal);
 
-            int spaceY = verticalSpacing();
-            if (spaceY == -1)
-                spaceY = wid->style()->layoutSpacing(QSizePolicy::PushButton, QSizePolicy::PushButton, Qt::Vertical);
-
             int nextX = x + item->sizeHint().width() + spaceX;
             if (nextX - spaceX > effectiveRect.right() && lineHeight > 0)
             {
-                x = effectiveRect.x();
-                y = y + lineHeight + spaceY;
-                nextX = x + item->sizeHint().width() + spaceX;
-                lineHeight = 0;
+                break;
             }
 
-            if (updateGeometry)
-            {
-                item->setGeometry(QRect(QPoint(x, y), item->sizeHint()));
-            }
+            item->setGeometry(QRect(QPoint(x, y), item->sizeHint()));
 
             x = nextX;
             lineHeight = qMax(lineHeight, item->sizeHint().height());
         }
-        return y + lineHeight - rect.y() + bottom;
+
+        visibleItemsCount = i - leftmostItem;
+        for (i = i; i < items.size(); i++)
+        {
+            items[i]->widget()->hide();
+        }
     }
 
     int smartSpacing(QStyle::PixelMetric pm) const
@@ -73,26 +76,22 @@ private:
     }
 
 protected:
-    virtual QWidget* instantiateItem(T &item) = 0;
+    virtual QWidget* instantiateItem(T &obj) = 0;
 
 public:
-    Flow(QWidget *parent = nullptr, int margin = -1, int hSpacing = -1, int vSpacing = -1):
-        QLayout(parent), hSpacing(hSpacing), vSpacing(vSpacing)
+    explicit CarouselLayout(QWidget *parent = nullptr, int margin = -1, int hSpacing = -1):
+        ICarousel(parent), hSpacing(hSpacing), leftmostItem(0)
     {
         setContentsMargins(margin, margin, margin, margin);
     }
 
-    ~Flow()
+    ~CarouselLayout()
     {
-        clearAll();
+        while (items.count() > 0)
+            delete takeAt(0);
     }
 
-    void addItem(QLayoutItem *item) override
-    {
-        items.append(item);
-    }
-
-    void addContents(QVector<T> &data)
+    void addData(QVector<T> &data)
     {
         for (T obj: data)
         {
@@ -100,11 +99,9 @@ public:
         }
     }
 
-    void clearAll()
+    void addItem(QLayoutItem *item) override
     {
-        QLayoutItem *item;
-        while (items.count() > 0)
-            delete takeAt(0);
+        items.append(item);
     }
 
     int count() const override
@@ -114,7 +111,7 @@ public:
 
     Qt::Orientations expandingDirections() const override
     {
-        return {};
+        return Qt::Horizontal;
     }
 
     bool hasHeightForWidth() const override
@@ -124,7 +121,29 @@ public:
 
     int heightForWidth(int width) const override
     {
-        return doLayout(QRect(0, 0, width, 0), false);
+        int lineHeight = 0;
+        int takenWidth = 0;
+        for (int i = leftmostItem; i < items.size(); i++)
+        {
+
+            const auto item = items[i];
+            const QWidget *wid = items[i]->widget();
+
+            int spaceX = horizontalSpacing();
+            if (spaceX == -1)
+                spaceX = wid->style()->layoutSpacing(QSizePolicy::PushButton, QSizePolicy::PushButton, Qt::Horizontal);
+
+            int nextX = takenWidth + item->sizeHint().width() + spaceX;
+            if (nextX - spaceX > width && lineHeight > 0)
+            {
+                break;
+            }
+
+            takenWidth = nextX;
+            lineHeight = qMax(lineHeight, item->sizeHint().height());
+        }
+
+        return lineHeight;
     }
 
     int horizontalSpacing() const
@@ -148,19 +167,14 @@ public:
 
     QSize minimumSize() const override
     {
-        QSize size;
-        for (const QLayoutItem *item : qAsConst(items))
-            size = size.expandedTo(item->minimumSize());
-
         const QMargins margins = contentsMargins();
-        size += QSize(margins.left() + margins.right(), margins.top() + margins.bottom());
-        return size;
+        return items[leftmostItem]->minimumSize() + QSize(margins.left() + margins.right(), margins.top() + margins.bottom());
     }
 
     void setGeometry(const QRect &rect) override
     {
         QLayout::setGeometry(rect);
-        doLayout(rect, true);
+        doLayout(rect);
     }
 
     QSize sizeHint() const override
@@ -175,12 +189,17 @@ public:
                     nullptr;
     }
 
-    int verticalSpacing() const
+    bool prev() override
     {
-        return vSpacing < 0 ?
-                    smartSpacing(QStyle::PM_LayoutHorizontalSpacing) :
-                    vSpacing;
+        leftmostItem = qMax(leftmostItem - visibleItemsCount, 0);
+        return leftmostItem == 0;
+    }
+
+    bool next() override
+    {
+        leftmostItem = qMin(leftmostItem + visibleItemsCount, items.size() - 1);
+        return leftmostItem + visibleItemsCount < items.size();
     }
 };
 
-#endif // FLOW_H
+#endif // CAROUSEL_H

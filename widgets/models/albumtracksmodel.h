@@ -1,7 +1,7 @@
 #ifndef ALBUMTRACKSMODEL_H
 #define ALBUMTRACKSMODEL_H
 
-#include "../api/object/playable/track.h"
+#include "../../api/object/playable/track.h"
 
 #include <QAbstractTableModel>
 #include <QDebug>

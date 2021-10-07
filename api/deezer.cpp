@@ -460,7 +460,7 @@ namespace api {
 
     QNetworkReply *Deezer::search(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
-        const QString url = QString("%1/%2").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH);
+        const QString url = QString("%1/%2").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH );
         const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
         return networkManager->get(request);
     }
