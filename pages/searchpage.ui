@@ -35,7 +35,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>251</height>
+         <height>242</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -108,7 +108,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>226</height>
+         <height>220</height>
         </rect>
        </property>
       </widget>
@@ -146,7 +146,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>226</height>
+         <height>220</height>
         </rect>
        </property>
       </widget>
@@ -184,7 +184,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>226</height>
+         <height>220</height>
         </rect>
        </property>
       </widget>
@@ -222,7 +222,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>226</height>
+         <height>220</height>
         </rect>
        </property>
       </widget>
@@ -260,7 +260,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>226</height>
+         <height>220</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -304,7 +304,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>226</height>
+         <height>220</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -348,7 +348,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>226</height>
+         <height>220</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -392,7 +392,7 @@
          <x>0</x>
          <y>0</y>
          <width>376</width>
-         <height>226</height>
+         <height>220</height>
         </rect>
        </property>
       </widget>

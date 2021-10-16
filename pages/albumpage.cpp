@@ -44,6 +44,7 @@ AlbumPage::AlbumPage(api::Deezer *apiInstance, api::Album &album, QWidget *paren
         {
             auto discographyJson = api::tryReadResponse(discographyReply).object();
             auto discography = api::deserializePartialResponseAlbum(discographyJson);
+            discographyReply->deleteLater();
 
             discographyCarousel = new AlbumCarousel(apiInstance, ui->discographyCarouselContents);
             discographyCarousel->addData(discography.getData());
@@ -56,12 +57,13 @@ AlbumPage::AlbumPage(api::Deezer *apiInstance, api::Album &album, QWidget *paren
     {
         relatedArtistsReply->deleteLater();
     });
-    connect(discographyReply, &QNetworkReply::finished, [=]
+    connect(relatedArtistsReply, &QNetworkReply::finished, [=]
     {
         if (relatedArtistsReply->error() == QNetworkReply::NetworkError::NoError)
         {
             auto relatedArtistsJson = api::tryReadResponse(relatedArtistsReply).object();
             auto relatedArtists = api::deserializePartialResponseArtist(relatedArtistsJson);
+            relatedArtistsReply->deleteLater();
 
             relatedArtistsCarousel = new ArtistCarousel(apiInstance, ui->relatedArtistsCarouselContents);
             relatedArtistsCarousel->addData(relatedArtists.getData());

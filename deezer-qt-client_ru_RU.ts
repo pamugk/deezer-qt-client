@@ -32,17 +32,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="65"/>
+        <location filename="pages/albumpage.ui" line="52"/>
         <source>Треков: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="88"/>
+        <location filename="pages/albumpage.ui" line="75"/>
         <source>Поклонников: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="105"/>
+        <location filename="pages/albumpage.ui" line="92"/>
         <source>Название альбома</source>
         <translation type="unfinished"></translation>
     </message>
@@ -111,16 +111,75 @@
 <context>
     <name>ArtistPage</name>
     <message>
-        <location filename="pages/artistpage.ui" line="16"/>
+        <location filename="pages/artistpage.ui" line="14"/>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/artistpage.ui" line="29"/>
+        <source>Имя исполнителя</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/artistpage.ui" line="39"/>
+        <source>Поклонников: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/artistpage.ui" line="104"/>
+        <source>Дискография</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/artistpage.ui" line="135"/>
+        <location filename="pages/artistpage.ui" line="167"/>
+        <location filename="pages/artistpage.ui" line="193"/>
+        <source>Популярные треки</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/artistpage.ui" line="152"/>
+        <source>Альбомы</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/artistpage.ui" line="206"/>
+        <source>Поиск в найденном</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/artistpage.ui" line="217"/>
+        <location filename="pages/artistpage.ui" line="248"/>
+        <source>Похожие исполнители</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/artistpage.ui" line="263"/>
+        <location filename="pages/artistpage.ui" line="291"/>
+        <source>Плейлисты</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/artistpage.ui" line="306"/>
+        <source>Туры</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/artistpage.ui" line="316"/>
+        <source>Биография</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="pages/mainpage.ui" line="16"/>
+        <location filename="pages/mainpage.ui" line="14"/>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/mainpage.ui" line="25"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Похоже, в данный момент вы не вошли.&lt;/p&gt;&lt;p&gt;Для вас это значит, что вы не сможете совершать специфичные для пользователей действия.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -173,38 +232,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="664"/>
+        <location filename="mainwindow.ui" line="676"/>
         <source>Поиск</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="561"/>
-        <location filename="mainwindow.ui" line="598"/>
+        <location filename="mainwindow.ui" line="567"/>
+        <location filename="mainwindow.ui" line="604"/>
         <source>00:00</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="442"/>
+        <location filename="mainwindow.ui" line="448"/>
         <source>Включить режим перемешивания</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="574"/>
+        <location filename="mainwindow.ui" line="580"/>
         <source>Добавить в избранное</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="465"/>
+        <location filename="mainwindow.ui" line="471"/>
         <source>Не предлагать этот трек</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="386"/>
+        <location filename="mainwindow.ui" line="392"/>
         <source>Повторять все треки</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="366"/>
+        <location filename="mainwindow.ui" line="372"/>
         <source>Аудио</source>
         <translation type="unfinished"></translation>
     </message>

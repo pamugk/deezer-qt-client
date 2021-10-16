@@ -83,6 +83,12 @@ QVariant SearchTracksModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+void SearchTracksModel::addData(api::Track data) {
+    items.append(data);
+
+    emit layoutChanged();
+}
+
 void SearchTracksModel::addData(QVector<api::Track> &data)
 {
     for (api::Track item: qAsConst(data))

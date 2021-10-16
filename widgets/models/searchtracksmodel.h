@@ -27,6 +27,7 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+    void addData(api::Track data);
     void addData(QVector<api::Track> &data);
     void clearAll();
 

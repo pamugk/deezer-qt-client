@@ -46,16 +46,22 @@ QSystemTrayIcon *createTrayIcon()
     return trayIcon;
 }
 
-AlbumPage *MainWindow::initializeAlbumPage(api::Album& album)
+AlbumPage *MainWindow::initializeAlbumPage(api::Album &album)
 {
     currentPageKind = PageKinds::ALBUM_PAGE;
     return new AlbumPage(deezerApiInstance, album, ui->centralwidget);
 }
 
-ArtistPage *MainWindow::initializeArtistPage(api::Artist&)
+ArtistPage *MainWindow::initializeArtistPage(api::Artist &artist)
 {
     currentPageKind = PageKinds::ARTIST_PAGE;
-    return new ArtistPage(ui->centralwidget);
+
+    auto artistPage = new ArtistPage(deezerApiInstance, artist, ui->centralwidget);
+    connect(artistPage, &ArtistPage::albumClicked, this, &MainWindow::onRedirectToAlbum);
+    connect(artistPage, &ArtistPage::artistClicked, this, &MainWindow::onRedirectToArtist);
+    connect(artistPage, &ArtistPage::playlistClicked, this, &MainWindow::onRedirectToPlaylist);
+
+    return artistPage;
 }
 
 MainPage *MainWindow::initializeMainPage()
@@ -125,7 +131,10 @@ void MainWindow::onRedirectToArtist(int id) {
 
 void MainWindow::onRedirectedToArtist(QNetworkReply *reply)
 {
-    reply->deleteLater();
+    auto artistJson = api::tryReadResponse(reply).object();
+    api::Artist artist;
+    api::deserializeArtist(artistJson, artist);
+    switchPage(initializeArtistPage(artist));
 }
 
 void MainWindow::onRedirectToPlaylist(int id)

@@ -24,7 +24,7 @@ SearchPage::SearchPage(api::Deezer * deezerApiInstance, QWidget *parent) :
     connect(radioFlow, &RadioFlow::clickedItem, this, &SearchPage::radioClicked);
     ui->mixScrollAreaContents->setLayout(radioFlow);
 
-    searchTracksModel = new SearchTracksModel(deezerApiInstance, ui->trackTab);
+    searchTracksModel = new SearchTracksModel(deezerApiInstance, ui->tracksTable);
     ui->tracksTable->setModel(searchTracksModel);
 
     userFlow = new UserFlow(deezerApiInstance, ui->userScrollAreaContents);
