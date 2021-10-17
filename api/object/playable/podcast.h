@@ -12,7 +12,7 @@ namespace api {
         /*!
          * \brief The podcast's Deezer id
          */
-        int id;
+        long id;
         /*!
          * \brief The podcast's title
          */

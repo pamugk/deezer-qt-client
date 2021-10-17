@@ -13,7 +13,7 @@ public:
                         QWidget *parent = nullptr, int margin = -1, int hSpacing = -1, int vSpacing = -1);
 
 signals:
-    void clickedItem(int id);
+    void clickedItem(long id);
 
 private:
     api::Deezer *apiInstance;

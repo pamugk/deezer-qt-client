@@ -18,7 +18,7 @@ public:
     ~ArtistCard();
 
 signals:
-    void clickedArtist(int id);
+    void clickedArtist(long id);
 
 private:
     QNetworkReply *pictureReply;

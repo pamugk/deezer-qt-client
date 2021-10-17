@@ -21,7 +21,7 @@ namespace api {
         /*!
          * \brief The Deezer album id
          */
-        int id;
+        long id;
         /*!
          * \brief The album title
          */

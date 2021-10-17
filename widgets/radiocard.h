@@ -18,7 +18,7 @@ public:
     ~RadioCard();
 
 signals:
-    void clickedRadio(int id);
+    void clickedRadio(long id);
 
 private:
     QNetworkReply *pictureReply;

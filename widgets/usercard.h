@@ -19,7 +19,7 @@ public:
     ~UserCard();
 
 signals:
-    void clickedUser(int id);
+    void clickedUser(long id);
 
 private:
     QNetworkReply *pictureReply;

@@ -21,7 +21,7 @@ namespace api {
         /*!
          * \brief The track's Deezer id
          */
-        int id;
+        long id;
         /*!
          * \brief If the track is readable in the player for the current user
          */

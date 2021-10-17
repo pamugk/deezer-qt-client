@@ -21,15 +21,17 @@ public:
     ~MainWindow();
 
 private slots:
-    void onRedirectToAlbum(int id);
+    void onRedirectToAlbum(long id);
 
-    void onRedirectToArtist(int id);
+    void onRedirectToArtist(long id);
 
-    void onRedirectToPlaylist(int id);
+    void onRedirectToPlaylist(long id);
 
-    void onRedirectToRadio(int id);
+    void onRedirectToRadio(long id);
 
-    void onRedirectToUser(int id);
+    void onRedirectToTrack(long id);
+
+    void onRedirectToUser(long id);
 
     void on_searchLineEdit_textChanged(const QString &arg1);
 
@@ -71,6 +73,8 @@ private:
     void onRedirectedToPlaylist(QNetworkReply *reply);
 
     void onRedirectedToRadio(QNetworkReply *reply);
+
+    void onRedirectedToTrack(QNetworkReply *reply);
 
     void onRedirectedToUser(QNetworkReply *reply);
 

@@ -70,10 +70,17 @@ MainPage *MainWindow::initializeMainPage()
     return new MainPage(ui->centralwidget);
 }
 
-PlaylistPage *MainWindow::initializePlaylistPage(api::Playlist&)
+PlaylistPage *MainWindow::initializePlaylistPage(api::Playlist &playlist)
 {
     currentPageKind = PageKinds::PLAYLIST_PAGE;
-    return new PlaylistPage(ui->centralwidget);
+
+    auto playlistPage = new PlaylistPage(deezerApiInstance, playlist, ui->centralwidget);
+    connect(playlistPage, &PlaylistPage::albumClicked, this, &MainWindow::onRedirectToAlbum);
+    connect(playlistPage, &PlaylistPage::artistClicked, this, &MainWindow::onRedirectToArtist);
+    connect(playlistPage, &PlaylistPage::trackClicked, this, &MainWindow::onRedirectToTrack);
+    connect(playlistPage, &PlaylistPage::userClicked, this, &MainWindow::onRedirectToUser);
+
+    return playlistPage;
 }
 
 RadioPage *MainWindow::initializeRadioPage(api::Radio&)
@@ -109,7 +116,7 @@ void MainWindow::onError(QNetworkReply *reply, QNetworkReply::NetworkError error
     reply->deleteLater();
 }
 
-void MainWindow::MainWindow::onRedirectToAlbum(int id) {
+void MainWindow::MainWindow::onRedirectToAlbum(long id) {
     auto albumResponse = deezerApiInstance->getAlbum(id);
     connect(albumResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ onError(albumResponse, error); });
     connect(albumResponse, &QNetworkReply::finished, [=] { onRedirectedToAlbum(albumResponse); });
@@ -123,7 +130,7 @@ void MainWindow::onRedirectedToAlbum(QNetworkReply *reply)
     switchPage(initializeAlbumPage(album));
 }
 
-void MainWindow::onRedirectToArtist(int id) {
+void MainWindow::onRedirectToArtist(long id) {
     auto artistResponse = deezerApiInstance->getArtist(id);
     connect(artistResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ onError(artistResponse, error); });
     connect(artistResponse, &QNetworkReply::finished, [=] { onRedirectedToArtist(artistResponse); });
@@ -137,7 +144,7 @@ void MainWindow::onRedirectedToArtist(QNetworkReply *reply)
     switchPage(initializeArtistPage(artist));
 }
 
-void MainWindow::onRedirectToPlaylist(int id)
+void MainWindow::onRedirectToPlaylist(long id)
 {
     auto playlistResponse = deezerApiInstance->getPlaylist(id);
     connect(playlistResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ onError(playlistResponse, error); });
@@ -146,10 +153,13 @@ void MainWindow::onRedirectToPlaylist(int id)
 
 void MainWindow::onRedirectedToPlaylist(QNetworkReply *reply)
 {
-    reply->deleteLater();
+    auto playlistJson = api::tryReadResponse(reply).object();
+    api::Playlist playlist;
+    api::deserializePlaylist(playlistJson, playlist);
+    switchPage(initializePlaylistPage(playlist));
 }
 
-void MainWindow::onRedirectToRadio(int id)
+void MainWindow::onRedirectToRadio(long id)
 {
     auto radioResponse = deezerApiInstance->getRadio(id);
     connect(radioResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ onError(radioResponse, error); });
@@ -161,7 +171,19 @@ void MainWindow::onRedirectedToRadio(QNetworkReply *reply)
     reply->deleteLater();
 }
 
-void MainWindow::onRedirectToUser(int id)
+void MainWindow::onRedirectToTrack(long id)
+{
+    auto trackResponse = deezerApiInstance->getTrack(id);
+    connect(trackResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ onError(trackResponse, error); });
+    connect(trackResponse, &QNetworkReply::finished, [=] { onRedirectedToTrack(trackResponse); });
+}
+
+void MainWindow::onRedirectedToTrack(QNetworkReply *reply)
+{
+    reply->deleteLater();
+}
+
+void MainWindow::onRedirectToUser(long id)
 {
     auto userResponse = deezerApiInstance->getUser(id);
     connect(userResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error){ onError(userResponse, error); });

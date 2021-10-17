@@ -27,11 +27,11 @@ public:
     ~SearchPage();
 
 signals:
-    void albumClicked(int id);
-    void artistClicked(int id);
-    void playlistClicked(int id);
-    void radioClicked(int id);
-    void userClicked(int id);
+    void albumClicked(long id);
+    void artistClicked(long id);
+    void playlistClicked(long id);
+    void radioClicked(long id);
+    void userClicked(long id);
 
 public slots:
     void searchRequested(QString);

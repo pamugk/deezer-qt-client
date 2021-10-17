@@ -24,9 +24,9 @@ public:
     ~ArtistPage();
 
 signals:
-    void albumClicked(int id);
-    void artistClicked(int id);
-    void playlistClicked(int id);
+    void albumClicked(long id);
+    void artistClicked(long id);
+    void playlistClicked(long id);
 
 private:
     Ui::ArtistPage *ui;

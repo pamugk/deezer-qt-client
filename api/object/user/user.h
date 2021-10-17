@@ -25,7 +25,7 @@ namespace api {
         /*!
          * \brief The user's Deezer ID
          */
-        int id;
+        long id;
         /*!
          * \brief The user's Deezer nickname
          */

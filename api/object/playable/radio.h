@@ -12,7 +12,7 @@ namespace api {
         /*!
          * \brief The radio deezer ID
          */
-        int id;
+        long id;
         /*!
          * \brief The radio title
          */

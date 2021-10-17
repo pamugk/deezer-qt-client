@@ -289,8 +289,43 @@
 <context>
     <name>PlaylistPage</name>
     <message>
-        <location filename="pages/playlistpage.ui" line="16"/>
+        <location filename="pages/playlistpage.ui" line="14"/>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/playlistpage.ui" line="28"/>
+        <source>Поклонников: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/playlistpage.ui" line="80"/>
+        <source>Треков: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/playlistpage.ui" line="110"/>
+        <source>Обновлено: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/playlistpage.ui" line="125"/>
+        <source>0 ч. 0 мин.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/playlistpage.ui" line="165"/>
+        <source>Автор</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/playlistpage.ui" line="65"/>
+        <source>Название плейлиста</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/playlistpage.ui" line="95"/>
+        <source>Описание</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

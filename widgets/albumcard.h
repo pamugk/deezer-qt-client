@@ -18,8 +18,8 @@ public:
     ~AlbumCard();
 
 signals:
-    void clickedAlbum(int id);
-    void clickedArtist(int id);
+    void clickedAlbum(long id);
+    void clickedArtist(long id);
 
 private:
     QNetworkReply *coverReply;

@@ -12,7 +12,7 @@ namespace api {
         /*!
          * \brief The genre's Deezer id
          */
-        int id;
+        long id;
         /*!
          * \brief The genre's name
          */

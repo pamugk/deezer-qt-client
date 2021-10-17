@@ -20,7 +20,7 @@ public:
     ~PlaylistCard();
 
 signals:
-    void clickedPlaylist(int id);
+    void clickedPlaylist(long id);
 
 private:
     QNetworkReply *pictureReply;

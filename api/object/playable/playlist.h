@@ -18,7 +18,7 @@ namespace api {
         /*!
          * \brief The playlist's Deezer id
          */
-        int id;
+        long id;
         /*!
          * \brief The playlist's title
          */
