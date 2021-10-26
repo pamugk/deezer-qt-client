@@ -1,4 +1,5 @@
 #include "json_serialization.h"
+#include <iostream>
 
 namespace api
 {
@@ -14,7 +15,7 @@ namespace api
     {
         if (jsonObj.contains("id"))
         {
-            albumOut.id = jsonObj["id"].toInt();
+            albumOut.id = jsonObj["id"].toString().toLong();
         }
         if (jsonObj.contains("title"))
         {
@@ -149,7 +150,7 @@ namespace api
     {
         if (jsonObj.contains("id"))
         {
-            artistOut.id = jsonObj["id"].toInt();
+            artistOut.id = jsonObj["id"].toString().toLong();
         }
         if (jsonObj.contains("name"))
         {
@@ -208,7 +209,7 @@ namespace api
     {
         if (jsonObj.contains("id"))
         {
-            genreOut.id = jsonObj["id"].toInt();
+            genreOut.id = jsonObj["id"].toString().toLong();
         }
         if (jsonObj.contains("name"))
         {
@@ -239,9 +240,14 @@ namespace api
 
     void deserializePlaylist(QJsonObject &jsonObj, Playlist &playlistOut)
     {
+        for (int i = 0; i < jsonObj.keys().size(); i++) {
+            std::cout << "[" << jsonObj.keys().at(i).toStdString() << "]" << "=" <<
+                         jsonObj[jsonObj.keys().at(i)].toString().toStdString() << "\n";
+        }
+
         if (jsonObj.contains("id"))
         {
-            playlistOut.id = jsonObj["id"].toInt();
+            playlistOut.id = jsonObj["id"].toString().toLong();
         }
         if (jsonObj.contains("title"))
         {
@@ -337,7 +343,7 @@ namespace api
     {
         if (jsonObj.contains("id"))
         {
-            podcastOut.id = jsonObj["id"].toInt();
+            podcastOut.id = jsonObj["id"].toString().toLong();
         }
         if (jsonObj.contains("title"))
         {
@@ -401,7 +407,7 @@ namespace api
     {
         if (jsonObj.contains("id"))
         {
-            radioOut.id = jsonObj["id"].toInt();
+            radioOut.id = jsonObj["id"].toString().toLong();
         }
         if (jsonObj.contains("title"))
         {
@@ -451,7 +457,7 @@ namespace api
     {
         if (jsonObj.contains("id"))
         {
-            trackOut.id = jsonObj["id"].toInt();
+            trackOut.id = jsonObj["id"].toString().toLong();
         }
         if (jsonObj.contains("readable"))
         {
@@ -570,7 +576,7 @@ namespace api
     {
         if (jsonObj.contains("id"))
         {
-            userOut.id = jsonObj["id"].toInt();
+            userOut.id = jsonObj["id"].toString().toLong();
         }
         if (jsonObj.contains("name"))
         {

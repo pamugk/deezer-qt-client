@@ -43,7 +43,7 @@ namespace api
 
         QNetworkReply *getAnything(QUrl&);
 
-        QNetworkReply *getAlbum(int id);
+        QNetworkReply *getAlbum(long id);
 
         /*!
          * \brief Return a list of album's fans
@@ -52,23 +52,23 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getAlbumFans(int id, int index = 0, int limit = 25);
+        QNetworkReply *getAlbumFans(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of album's tracks
          * \param Album id
          * \return
          */
-        QNetworkReply *getAlbumTracks(int id);
+        QNetworkReply *getAlbumTracks(long id);
 
-        QNetworkReply *getArtist(int id);
+        QNetworkReply *getArtist(long id);
 
         /*!
          * \brief Get the top 5 tracks of an artist
          * \param Artist id
          * \return
          */
-        QNetworkReply *getArtistTop(int id);
+        QNetworkReply *getArtistTop(long id);
 
         /*!
          * \brief Return a list of artist's albums
@@ -77,7 +77,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getArtistAlbums(int id, int index = 0, int limit = 25);
+        QNetworkReply *getArtistAlbums(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of artist's fans
@@ -86,7 +86,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getArtistFans(int id, int index = 0, int limit = 25);
+        QNetworkReply *getArtistFans(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of related artists
@@ -95,7 +95,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getArtistRelated(int id, int index = 0, int limit = 25);
+        QNetworkReply *getArtistRelated(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of artist's playlists
@@ -104,7 +104,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getArtistPlaylists(int id, int index = 0, int limit = 25);
+        QNetworkReply *getArtistPlaylists(long id, int index = 0, int limit = 25);
 
         Chart getChart();
 
@@ -115,7 +115,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getChartAlbums(int id, int index = 0, int limit = 25);
+        QNetworkReply *getChartAlbums(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Returns the Top artists
@@ -124,7 +124,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getChartArtists(int id, int index = 0, int limit = 25);
+        QNetworkReply *getChartArtists(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Returns the Top playlists
@@ -133,7 +133,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getChartPlaylists(int id, int index = 0, int limit = 25);
+        QNetworkReply *getChartPlaylists(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Returns the Top podcasts
@@ -142,7 +142,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getChartPodcasts(int id, int index = 0, int limit = 25);
+        QNetworkReply *getChartPodcasts(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Returns the Top tracks
@@ -151,18 +151,18 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getChartTracks(int id, int index = 0, int limit = 25);
+        QNetworkReply *getChartTracks(long id, int index = 0, int limit = 25);
 
         QNetworkReply *getEditorial();
 
-        QNetworkReply *getEditorial(int id);
+        QNetworkReply *getEditorial(long id);
 
         /*!
          * \brief This method returns four lists : Top track, Top album, Top artist and Top playlist
          * \param Editorial id
          * \return
          */
-        QNetworkReply *getEditorialCharts(int id);
+        QNetworkReply *getEditorialCharts(long id);
 
         /*!
          * \brief This method returns the new releases per genre for the current country
@@ -171,30 +171,30 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getEditorialReleases(int id, int index = 0, int limit = 25);
+        QNetworkReply *getEditorialReleases(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of albums selected every week by the Deezer Team
          * \param Editorial id
          * \return
          */
-        QNetworkReply *getEditorialSelection(int id);
+        QNetworkReply *getEditorialSelection(long id);
 
-        QNetworkReply *getGenre(int id);
+        QNetworkReply *getGenre(long id);
 
         /*!
          * \brief Returns all artists for a genre
          * \param Genre id
          * \return
          */
-        QNetworkReply *getGenreArtists(int id);
+        QNetworkReply *getGenreArtists(long id);
 
         /*!
          * \brief Returns all radios for a genre
          * \param Genre id
          * \return
          */
-        QNetworkReply *getGenreRadios(int id);
+        QNetworkReply *getGenreRadios(long id);
 
         /*!
          * \brief Get the information about the API in the current country
@@ -202,7 +202,7 @@ namespace api
          */
         QNetworkReply *getInfos();
 
-        QNetworkReply *getPlaylist(int id);
+        QNetworkReply *getPlaylist(long id);
 
         /*!
          * \brief Return a list of playlist's fans
@@ -211,25 +211,25 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getPlaylistFans(int id, int index = 0, int limit = 25);
+        QNetworkReply *getPlaylistFans(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of playlist's recommendation tracks
          * \param Playlist id
          * \return
          */
-        QNetworkReply *getPlaylistRadio(int id);
+        QNetworkReply *getPlaylistRadio(long id);
 
         /*!
          * \brief Return a list of playlist's tracks
          * \param Playlist id
          * \return
          */
-        QNetworkReply *getPlaylistTracks(int id);
+        QNetworkReply *getPlaylistTracks(long id);
 
         QNetworkReply *getRadio();
 
-        QNetworkReply *getRadio(int id);
+        QNetworkReply *getRadio(long id);
 
         /*!
          * \brief Returns a list of radio splitted by genre
@@ -250,7 +250,7 @@ namespace api
          * \param Radio id
          * \return
          */
-        QNetworkReply *getRadioTracks(int id);
+        QNetworkReply *getRadioTracks(long id);
 
         /*!
          * \brief Returns a list of personal radio splitted by genre (as MIX in website)
@@ -260,17 +260,9 @@ namespace api
          */
         QNetworkReply *getRadioLists(int index, int limit);
 
-        QNetworkReply *getTrack(int id);
+        QNetworkReply *getTrack(long id);
 
-        QNetworkReply *getUser(int id);
-
-        /*!
-         * \param User id
-         * \param Index of results page
-         * \param Max page size
-         * \return
-         */
-        QNetworkReply *getUserChartsAlbums(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUser(long id);
 
         /*!
          * \param User id
@@ -278,7 +270,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserChartsPlaylists(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserChartsAlbums(long id, int index = 0, int limit = 25);
 
         /*!
          * \param User id
@@ -286,35 +278,43 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserChartsTracks(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserChartsPlaylists(long id, int index = 0, int limit = 25);
+
+        /*!
+         * \param User id
+         * \param Index of results page
+         * \param Max page size
+         * \return
+         */
+        QNetworkReply *getUserChartsTracks(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of user's favorite albums
          * \param User id
          * \return
          */
-        QNetworkReply *getUserFavoriteAlbums(int id);
+        QNetworkReply *getUserFavoriteAlbums(long id);
 
         /*!
          * \brief Return a list of user's favorite artists
          * \param User id
          * \return
          */
-        QNetworkReply *getUserFavoriteArtists(int id);
+        QNetworkReply *getUserFavoriteArtists(long id);
 
         /*!
          * \brief Return a list of user's favorite Radios
          * \param User id
          * \return
          */
-        QNetworkReply *getUserFavoriteRadios(int id);
+        QNetworkReply *getUserFavoriteRadios(long id);
 
         /*!
          * \brief Return a list of user's favorite tracks
          * \param User id
          * \return
          */
-        QNetworkReply *getUserFavoriteTracks(int id);
+        QNetworkReply *getUserFavoriteTracks(long id);
 
         /*!
          * \brief Return a list of user's Folder
@@ -329,7 +329,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserFollowings(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserFollowings(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of user's followers
@@ -338,9 +338,9 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserFollowers(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserFollowers(long id, int index = 0, int limit = 25);
 
-        QNetworkReply *getUserFlow(int id);
+        QNetworkReply *getUserFlow(long id);
 
         /*!
          * \brief Returns a list of the recently played tracks
@@ -349,7 +349,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserHistory(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserHistory(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Alias of /options
@@ -370,7 +370,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserPersonalSongs(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserPersonalSongs(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of user's public Playlist.
@@ -380,7 +380,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserPlaylists(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserPlaylists(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of albums recommendations
@@ -389,7 +389,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserRecommendedAlbums(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserRecommendedAlbums(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of artists recommendations
@@ -398,7 +398,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserRecommendedArtists(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserRecommendedArtists(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of playlists recommendations
@@ -407,7 +407,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserRecommendedPlaylists(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserRecommendedPlaylists(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of radios recommendations
@@ -416,7 +416,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserRecommendedRadios(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserRecommendedRadios(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of released albums recommendations
@@ -425,7 +425,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserRecommendedReleases(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserRecommendedReleases(long id, int index = 0, int limit = 25);
 
         /*!
          * \brief Return a list of tracks recommendations
@@ -434,7 +434,7 @@ namespace api
          * \param Max page size
          * \return
          */
-        QNetworkReply *getUserRecommendedTracks(int id, int index = 0, int limit = 25);
+        QNetworkReply *getUserRecommendedTracks(long id, int index = 0, int limit = 25);
 
         QNetworkReply *search(QString& query, int index = 0, int limit = 25, bool strict = false,
                                             SearchOrder order = SearchOrder::NONE);
