@@ -464,8 +464,73 @@
 <context>
     <name>UserPage</name>
     <message>
-        <location filename="pages/userpage.ui" line="16"/>
+        <location filename="pages/userpage.ui" line="14"/>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="27"/>
+        <source>Имя пользователя</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="37"/>
+        <source>Подписчиков: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="47"/>
+        <source>Добавить</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="60"/>
+        <source>Подписок: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="104"/>
+        <source>Обзор</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="128"/>
+        <source>Любимые треки</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="138"/>
+        <source>Плейлисты</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="162"/>
+        <source>Альбомы</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="186"/>
+        <source>Исполнители</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="210"/>
+        <source>Подкасты</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="234"/>
+        <source>Миксы</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="258"/>
+        <source>Подписки</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pages/userpage.ui" line="282"/>
+        <source>Подписчики</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

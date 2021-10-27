@@ -81,6 +81,8 @@ ArtistPage::ArtistPage(api::Deezer *apiInstance, api::Artist &artist, QWidget *p
             albumFlow->addContents(albums.getData());
             connect(albumFlow, &AlbumFlow::clickedItem, this, &ArtistPage::albumClicked);
             ui->discographyFlow->setLayout(albumFlow);
+
+            ui->infoTabsWidget->addTab(ui->discographyTab, QString("Дискография"));
         }
     });
 

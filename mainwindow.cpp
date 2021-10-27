@@ -104,10 +104,18 @@ SearchPage *MainWindow::initializeSearchPage()
     return searchPage;
 }
 
-UserPage *MainWindow::initializeUserPage(api::User&)
+UserPage *MainWindow::initializeUserPage(api::User& user)
 {
     currentPageKind = PageKinds::USER_PAGE;
-    return new UserPage(ui->centralwidget);
+    auto userPage = new UserPage(deezerApiInstance, user, ui->centralwidget);
+
+    connect(userPage, &UserPage::albumClicked, this, &MainWindow::onRedirectToAlbum);
+    connect(userPage, &UserPage::artistClicked, this, &MainWindow::onRedirectToArtist);
+    connect(userPage, &UserPage::playlistClicked, this, &MainWindow::onRedirectToPlaylist);
+    connect(userPage, &UserPage::radioClicked, this, &MainWindow::onRedirectToRadio);
+    connect(userPage, &UserPage::userClicked, this, &MainWindow::onRedirectToUser);
+
+    return userPage;
 }
 
 void MainWindow::onError(QNetworkReply *reply, QNetworkReply::NetworkError error)
