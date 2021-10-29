@@ -61,13 +61,6 @@ private:
 
     void gotError(QNetworkReply*, QNetworkReply::NetworkError);
 
-    void prefetchedAlbums(QNetworkReply*);
-    void prefetchedArtists(QNetworkReply*);
-    void prefetchedPlaylists(QNetworkReply*);
-    void prefetchedRadio(QNetworkReply*);
-    void prefetchedTracks(QNetworkReply*);
-    void prefetchedUsers(QNetworkReply*);
-
 };
 
 #endif // SEARCHPAGE_H

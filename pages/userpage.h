@@ -43,18 +43,6 @@ private:
     UserFlow *followingsFlow;
 
     api::Deezer *deezerApiInstance;
-
-    void clear();
-
-    void fetchedAlbums(QNetworkReply*);
-    void fetchedArtists(QNetworkReply*);
-    void fetchedPlaylists(QNetworkReply*);
-    void fetchedRadio(QNetworkReply*);
-    void fetchedTracks(QNetworkReply*);
-    void fetchedFollowers(QNetworkReply*);
-    void fetchedFollowings(QNetworkReply*);
-
-    void gotError(QNetworkReply*, QNetworkReply::NetworkError);
 };
 
 #endif // USERPAGE_H

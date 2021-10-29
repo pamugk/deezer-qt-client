@@ -9,7 +9,8 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
 
     ui->followingLabel->setVisible(false);
     ui->followersLabel->setVisible(false);
-    while (ui->infoTabsWidget->count() > 1) {
+    while (ui->infoTabsWidget->count() > 1)
+    {
         ui->infoTabsWidget->removeTab(1);
     }
 
@@ -24,10 +25,27 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
         {
             auto playlistsJson = api::tryReadResponse(playlistsReply).object();
             auto playlists = api::deserializePartialResponsePlaylist(playlistsJson);
+            auto playlistsData = playlists.getData();
             playlistsReply->deleteLater();
 
+            if (playlists.getTotal() == 0)
+            {
+                return;
+            }
+
+            ui->overviewContentsLayout->addWidget(new QLabel("Плейлисты", ui->overviewScrollContents));
+            auto top5PlaylistList = new QWidget(ui->overviewScrollContents);
+            auto top5PlaylistsLayout = new PlaylistFlow(deezerApiInstance, top5PlaylistList);
+            connect(top5PlaylistsLayout, &PlaylistFlow::clickedItem, this, &UserPage::playlistClicked);
+            for (int i = 0; i < 5 && i < playlistsData.size(); i ++) {
+                auto playlist = playlistsData.at(0);
+                top5PlaylistsLayout->addElement(playlist);
+            }
+            top5PlaylistList->setLayout(top5PlaylistsLayout);
+            ui->overviewContentsLayout->addWidget(top5PlaylistList);
+
             playlistFlow = new PlaylistFlow(apiInstance, ui->playlistsScrollContents);
-            playlistFlow->addContents(playlists.getData());
+            playlistFlow->addContents(playlistsData);
             connect(playlistFlow, &PlaylistFlow::clickedItem, this, &UserPage::playlistClicked);
             ui->playlistsScrollContents->setLayout(playlistFlow);
 
@@ -47,6 +65,22 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
             auto albumsJson = api::tryReadResponse(albumsReply).object();
             auto albums = api::deserializeResponseAlbum(albumsJson);
             albumsReply->deleteLater();
+
+            if (albums.size() == 0)
+            {
+                return;
+            }
+
+            ui->overviewContentsLayout->addWidget(new QLabel("Альбомы", ui->overviewScrollContents));
+            auto top5AlbumList = new QWidget(ui->overviewScrollContents);
+            auto top5AlbumsLayout = new AlbumFlow(deezerApiInstance, top5AlbumList);
+            connect(top5AlbumsLayout, &AlbumFlow::clickedItem, this, &UserPage::albumClicked);
+            for (int i = 0; i < 5 && i < albums.size(); i ++) {
+                auto album = albums.at(0);
+                top5AlbumsLayout->addElement(album);
+            }
+            top5AlbumList->setLayout(top5AlbumsLayout);
+            ui->overviewContentsLayout->addWidget(top5AlbumList);
 
             albumFlow = new AlbumFlow(apiInstance, ui->albumsScrollContents);
             albumFlow->addContents(albums);
@@ -70,6 +104,22 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
             auto artists = api::deserializeResponseArtist(artistsJson);
             artistsReply->deleteLater();
 
+            if (artists.size() == 0)
+            {
+                return;
+            }
+
+            ui->overviewContentsLayout->addWidget(new QLabel("Исполнители", ui->overviewScrollContents));
+            auto top5ArtistList = new QWidget(ui->overviewScrollContents);
+            auto top5ArtistsLayout = new ArtistFlow(deezerApiInstance, top5ArtistList);
+            connect(top5ArtistsLayout, &ArtistFlow::clickedItem, this, &UserPage::artistClicked);
+            for (int i = 0; i < 5 && i < artists.size(); i ++) {
+                auto artist = artists.at(0);
+                top5ArtistsLayout->addElement(artist);
+            }
+            top5ArtistList->setLayout(top5ArtistsLayout);
+            ui->overviewContentsLayout->addWidget(top5ArtistList);
+
             artistFlow = new ArtistFlow(apiInstance, ui->artitsScrollContents);
             artistFlow->addContents(artists);
             connect(artistFlow, &ArtistFlow::clickedItem, this, &UserPage::artistClicked);
@@ -92,6 +142,22 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
             auto radios = api::deserializeResponseRadio(radiosJson);
             radiosReply->deleteLater();
 
+            if (radios.size() == 0)
+            {
+                return;
+            }
+
+            ui->overviewContentsLayout->addWidget(new QLabel("Миксы", ui->overviewScrollContents));
+            auto top5RadioList = new QWidget(ui->overviewScrollContents);
+            auto top5RadiosLayout = new RadioFlow(deezerApiInstance, top5RadioList);
+            connect(top5RadiosLayout, &RadioFlow::clickedItem, this, &UserPage::radioClicked);
+            for (int i = 0; i < 5 && i < radios.size(); i ++) {
+                auto radio = radios.at(0);
+                top5RadiosLayout->addElement(radio);
+            }
+            top5RadioList->setLayout(top5RadiosLayout);
+            ui->overviewContentsLayout->addWidget(top5RadioList);
+
             radioFlow = new RadioFlow(apiInstance, ui->radiosScrollContents);
             radioFlow->addContents(radios);
             connect(radioFlow, &RadioFlow::clickedItem, this, &UserPage::radioClicked);
@@ -112,10 +178,27 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
         {
             auto followingsJson = api::tryReadResponse(followingsReply).object();
             auto followings = api::deserializePartialResponseUser(followingsJson);
+            auto followingsData = followings.getData();
             followingsReply->deleteLater();
 
+            if (followings.getTotal() == 0)
+            {
+                return;
+            }
+
+            ui->overviewContentsLayout->addWidget(new QLabel("Подписки", ui->overviewScrollContents));
+            auto top5FollowingsList = new QWidget(ui->overviewScrollContents);
+            auto top5FollowingsLayout = new UserFlow(deezerApiInstance, top5FollowingsList);
+            connect(top5FollowingsLayout, &UserFlow::clickedItem, this, &UserPage::userClicked);
+            for (int i = 0; i < 5 && i < followingsData.size(); i ++) {
+                auto user = followingsData.at(0);
+                top5FollowingsLayout->addElement(user);
+            }
+            top5FollowingsList->setLayout(top5FollowingsLayout);
+            ui->overviewContentsLayout->addWidget(top5FollowingsList);
+
             followingsFlow = new UserFlow(apiInstance, ui->followingScrollContents);
-            followingsFlow->addContents(followings.getData());
+            followingsFlow->addContents(followingsData);
             connect(followingsFlow, &UserFlow::clickedItem, this, &UserPage::userClicked);
             ui->followingScrollContents->setLayout(followingsFlow);
 
@@ -136,10 +219,27 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
         {
             auto followersJson = api::tryReadResponse(followersReply).object();
             auto followers = api::deserializePartialResponseUser(followersJson);
+            auto followersData = followers.getData();
             followersReply->deleteLater();
 
+            if (followers.getTotal() == 0)
+            {
+                return;
+            }
+
+            ui->overviewContentsLayout->addWidget(new QLabel("Подписчики", ui->overviewScrollContents));
+            auto top5FollowingsList = new QWidget(ui->overviewScrollContents);
+            auto top5FollowingsLayout = new UserFlow(deezerApiInstance, top5FollowingsList);
+            connect(top5FollowingsLayout, &UserFlow::clickedItem, this, &UserPage::userClicked);
+            for (int i = 0; i < 5 && i < followersData.size(); i ++) {
+                auto user = followersData.at(0);
+                top5FollowingsLayout->addElement(user);
+            }
+            top5FollowingsList->setLayout(top5FollowingsLayout);
+            ui->overviewContentsLayout->addWidget(top5FollowingsList);
+
             followersFlow = new UserFlow(apiInstance, ui->followersScrollContents);
-            followersFlow->addContents(followers.getData());
+            followersFlow->addContents(followersData);
             connect(followersFlow, &UserFlow::clickedItem, this, &UserPage::userClicked);
             ui->followersScrollContents->setLayout(followersFlow);
 
@@ -155,58 +255,4 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
 UserPage::~UserPage()
 {
     delete ui;
-}
-
-void UserPage::fetchedAlbums(QNetworkReply *reply)
-{
-    auto albumsJson = api::tryReadResponse(reply).object();
-    auto albumsResponse = api::deserializePartialResponseAlbum(albumsJson);
-    QVector<api::Album> albumsData = albumsResponse.getData();
-    albumFlow->addContents(albumsData);
-}
-
-void UserPage::fetchedArtists(QNetworkReply *reply)
-{
-    auto artistsJson = api::tryReadResponse(reply).object();
-    auto artistsResponse = api::deserializePartialResponseArtist(artistsJson);
-    QVector<api::Artist> artistsData = artistsResponse.getData();
-    artistFlow->addContents(artistsData);
-}
-
-void UserPage::fetchedPlaylists(QNetworkReply *reply)
-{
-    auto playlistsJson = api::tryReadResponse(reply).object();
-    auto playlistsResponse = api::deserializePartialResponsePlaylist(playlistsJson);
-    QVector<api::Playlist> playlistsData = playlistsResponse.getData();
-    playlistFlow->addContents(playlistsData);
-}
-
-void UserPage::fetchedRadio(QNetworkReply *reply)
-{
-    auto radioJson = api::tryReadResponse(reply).object();
-    auto radioResponse = api::deserializePartialResponseRadio(radioJson);
-    QVector<api::Radio> radiosData = radioResponse.getData();
-    radioFlow->addContents(radiosData);
-}
-
-void UserPage::fetchedTracks(QNetworkReply *reply)
-{
-    auto tracksJson = api::tryReadResponse(reply).object();
-    auto tracksResponse = api::deserializePartialResponseTrack(tracksJson);
-
-    searchTracksModel->addData(tracksResponse.getData());
-}
-
-void UserPage::fetchedFollowers(QNetworkReply *reply)
-{
-    auto usersJson = api::tryReadResponse(reply).object();
-    auto usersResponse = api::deserializePartialResponseUser(usersJson);
-    QVector<api::User> usersData = usersResponse.getData();
-    followersFlow->addContents(usersData);
-}
-
-void UserPage::gotError(QNetworkReply *reply, QNetworkReply::NetworkError error)
-{
-    qDebug() << error;
-    reply->deleteLater();
 }

@@ -47,44 +47,44 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="143"/>
+        <location filename="pages/albumpage.ui" line="141"/>
         <source>play-circle Слушать</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="170"/>
+        <location filename="pages/albumpage.ui" line="168"/>
         <source>heart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="200"/>
+        <location filename="pages/albumpage.ui" line="198"/>
         <source>share-square</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="220"/>
+        <location filename="pages/albumpage.ui" line="218"/>
         <source>ellipsis-h</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="257"/>
-        <location filename="pages/albumpage.ui" line="340"/>
+        <location filename="pages/albumpage.ui" line="255"/>
+        <location filename="pages/albumpage.ui" line="338"/>
         <source>angle-right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="274"/>
+        <location filename="pages/albumpage.ui" line="272"/>
         <source>Дискография</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="310"/>
-        <location filename="pages/albumpage.ui" line="393"/>
+        <location filename="pages/albumpage.ui" line="308"/>
+        <location filename="pages/albumpage.ui" line="391"/>
         <source>angle-left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/albumpage.ui" line="357"/>
+        <location filename="pages/albumpage.ui" line="355"/>
         <source>Похожие исполнители</source>
         <translation type="unfinished"></translation>
     </message>
@@ -494,42 +494,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/userpage.ui" line="128"/>
+        <location filename="pages/userpage.ui" line="129"/>
         <source>Любимые треки</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/userpage.ui" line="138"/>
+        <location filename="pages/userpage.ui" line="139"/>
         <source>Плейлисты</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/userpage.ui" line="162"/>
+        <location filename="pages/userpage.ui" line="163"/>
         <source>Альбомы</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/userpage.ui" line="186"/>
+        <location filename="pages/userpage.ui" line="187"/>
         <source>Исполнители</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/userpage.ui" line="210"/>
+        <location filename="pages/userpage.ui" line="211"/>
         <source>Подкасты</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/userpage.ui" line="234"/>
+        <location filename="pages/userpage.ui" line="235"/>
         <source>Миксы</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/userpage.ui" line="258"/>
+        <location filename="pages/userpage.ui" line="259"/>
         <source>Подписки</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pages/userpage.ui" line="282"/>
+        <location filename="pages/userpage.ui" line="283"/>
         <source>Подписчики</source>
         <translation type="unfinished"></translation>
     </message>

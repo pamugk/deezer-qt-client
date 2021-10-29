@@ -99,6 +99,11 @@ public:
         }
     }
 
+    void addElement(T& element)
+    {
+        addWidget(instantiateItem(element));
+    }
+
     void clearAll()
     {
         while (items.count() > 0)

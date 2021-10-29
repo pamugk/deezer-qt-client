@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
+  <layout class="QGridLayout" name="userPageLayout">
    <item row="0" column="1" colspan="2">
     <widget class="QLabel" name="nameLabel">
      <property name="font">
@@ -97,13 +97,13 @@
    <item row="4" column="0" colspan="4">
     <widget class="QTabWidget" name="infoTabsWidget">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="overviewTab">
       <attribute name="title">
        <string>Обзор</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="overviewTabLayout">
        <item>
         <widget class="QScrollArea" name="overviewScrollArea">
          <property name="widgetResizable">
@@ -114,10 +114,11 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>372</width>
-            <height>146</height>
+            <width>368</width>
+            <height>152</height>
            </rect>
           </property>
+          <layout class="QVBoxLayout" name="overviewContentsLayout"/>
          </widget>
         </widget>
        </item>
@@ -127,7 +128,7 @@
       <attribute name="title">
        <string>Любимые треки</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="tracksTabLayout">
        <item>
         <widget class="QTableView" name="tracksTableView"/>
        </item>
@@ -137,7 +138,7 @@
       <attribute name="title">
        <string>Плейлисты</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="playlistsTabLayout">
        <item>
         <widget class="QScrollArea" name="playlistsScrollArea">
          <property name="widgetResizable">
@@ -148,8 +149,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>372</width>
-            <height>146</height>
+            <width>368</width>
+            <height>152</height>
            </rect>
           </property>
          </widget>
@@ -161,7 +162,7 @@
       <attribute name="title">
        <string>Альбомы</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="albumsTabLayout">
        <item>
         <widget class="QScrollArea" name="albumsScrollArea">
          <property name="widgetResizable">
@@ -172,8 +173,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>372</width>
-            <height>146</height>
+            <width>368</width>
+            <height>152</height>
            </rect>
           </property>
          </widget>
@@ -185,7 +186,7 @@
       <attribute name="title">
        <string>Исполнители</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
+      <layout class="QVBoxLayout" name="artistsTabLayout">
        <item>
         <widget class="QScrollArea" name="artistsScrollArea">
          <property name="widgetResizable">
@@ -196,8 +197,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>372</width>
-            <height>146</height>
+            <width>368</width>
+            <height>152</height>
            </rect>
           </property>
          </widget>
@@ -209,7 +210,7 @@
       <attribute name="title">
        <string>Подкасты</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
+      <layout class="QVBoxLayout" name="podcastsTabLayout">
        <item>
         <widget class="QScrollArea" name="podcastsScrollArea">
          <property name="widgetResizable">
@@ -220,8 +221,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>372</width>
-            <height>146</height>
+            <width>368</width>
+            <height>152</height>
            </rect>
           </property>
          </widget>
@@ -233,7 +234,7 @@
       <attribute name="title">
        <string>Миксы</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
+      <layout class="QVBoxLayout" name="radiosTabLayout">
        <item>
         <widget class="QScrollArea" name="radiosScrollArea">
          <property name="widgetResizable">
@@ -244,8 +245,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>372</width>
-            <height>146</height>
+            <width>368</width>
+            <height>152</height>
            </rect>
           </property>
          </widget>
@@ -257,7 +258,7 @@
       <attribute name="title">
        <string>Подписки</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
+      <layout class="QVBoxLayout" name="followingTabLayout">
        <item>
         <widget class="QScrollArea" name="followingScrollArea">
          <property name="widgetResizable">
@@ -268,8 +269,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>372</width>
-            <height>146</height>
+            <width>368</width>
+            <height>152</height>
            </rect>
           </property>
          </widget>
@@ -281,7 +282,7 @@
       <attribute name="title">
        <string>Подписчики</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_9">
+      <layout class="QVBoxLayout" name="followersTabLayout">
        <item>
         <widget class="QScrollArea" name="followersScrollArea">
          <property name="widgetResizable">
@@ -292,8 +293,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>372</width>
-            <height>146</height>
+            <width>368</width>
+            <height>152</height>
            </rect>
           </property>
          </widget>

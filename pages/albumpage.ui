@@ -131,8 +131,6 @@
        <property name="font">
         <font>
          <family>Font Awesome 5 Free</family>
-         <weight>50</weight>
-         <bold>false</bold>
         </font>
        </property>
        <property name="styleSheet">
