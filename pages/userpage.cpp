@@ -38,7 +38,7 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
             auto top5PlaylistsLayout = new PlaylistFlow(deezerApiInstance, top5PlaylistList);
             connect(top5PlaylistsLayout, &PlaylistFlow::clickedItem, this, &UserPage::playlistClicked);
             for (int i = 0; i < 5 && i < playlistsData.size(); i ++) {
-                auto playlist = playlistsData.at(0);
+                auto playlist = playlistsData.at(i);
                 top5PlaylistsLayout->addElement(playlist);
             }
             top5PlaylistList->setLayout(top5PlaylistsLayout);
@@ -76,7 +76,7 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
             auto top5AlbumsLayout = new AlbumFlow(deezerApiInstance, top5AlbumList);
             connect(top5AlbumsLayout, &AlbumFlow::clickedItem, this, &UserPage::albumClicked);
             for (int i = 0; i < 5 && i < albums.size(); i ++) {
-                auto album = albums.at(0);
+                auto album = albums.at(i);
                 top5AlbumsLayout->addElement(album);
             }
             top5AlbumList->setLayout(top5AlbumsLayout);
@@ -114,7 +114,7 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
             auto top5ArtistsLayout = new ArtistFlow(deezerApiInstance, top5ArtistList);
             connect(top5ArtistsLayout, &ArtistFlow::clickedItem, this, &UserPage::artistClicked);
             for (int i = 0; i < 5 && i < artists.size(); i ++) {
-                auto artist = artists.at(0);
+                auto artist = artists.at(i);
                 top5ArtistsLayout->addElement(artist);
             }
             top5ArtistList->setLayout(top5ArtistsLayout);
@@ -152,7 +152,7 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
             auto top5RadiosLayout = new RadioFlow(deezerApiInstance, top5RadioList);
             connect(top5RadiosLayout, &RadioFlow::clickedItem, this, &UserPage::radioClicked);
             for (int i = 0; i < 5 && i < radios.size(); i ++) {
-                auto radio = radios.at(0);
+                auto radio = radios.at(i);
                 top5RadiosLayout->addElement(radio);
             }
             top5RadioList->setLayout(top5RadiosLayout);
@@ -191,7 +191,7 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
             auto top5FollowingsLayout = new UserFlow(deezerApiInstance, top5FollowingsList);
             connect(top5FollowingsLayout, &UserFlow::clickedItem, this, &UserPage::userClicked);
             for (int i = 0; i < 5 && i < followingsData.size(); i ++) {
-                auto user = followingsData.at(0);
+                auto user = followingsData.at(i);
                 top5FollowingsLayout->addElement(user);
             }
             top5FollowingsList->setLayout(top5FollowingsLayout);
@@ -232,7 +232,7 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
             auto top5FollowingsLayout = new UserFlow(deezerApiInstance, top5FollowingsList);
             connect(top5FollowingsLayout, &UserFlow::clickedItem, this, &UserPage::userClicked);
             for (int i = 0; i < 5 && i < followersData.size(); i ++) {
-                auto user = followersData.at(0);
+                auto user = followersData.at(i);
                 top5FollowingsLayout->addElement(user);
             }
             top5FollowingsList->setLayout(top5FollowingsLayout);

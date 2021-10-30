@@ -108,8 +108,8 @@ void SearchPage::fetchedAlbums(QNetworkReply *reply)
         auto top5AlbumList = new QWidget(ui->overviewContents);
         auto top5AlbumsLayout = new AlbumFlow(deezerApiInstance, top5AlbumList);
         connect(top5AlbumsLayout, &AlbumFlow::clickedItem, this, &SearchPage::albumClicked);
-        for (int i = 0; i < 5 && i < albumsData.size(); i ++) {
-            auto album = albumsData.at(0);
+        for (int i = 0; i < 5 && i < albumsData.size(); i++) {
+            auto album = albumsData.at(i);
             top5AlbumsLayout->addElement(album);
         }
         top5AlbumList->setLayout(top5AlbumsLayout);
@@ -133,8 +133,8 @@ void SearchPage::fetchedArtists(QNetworkReply *reply)
         auto top5ArtistList = new QWidget(ui->overviewContents);
         auto top5ArtistsLayout = new ArtistFlow(deezerApiInstance, top5ArtistList);
         connect(top5ArtistsLayout, &ArtistFlow::clickedItem, this, &SearchPage::artistClicked);
-        for (int i = 0; i < 5 && i < artistsData.size(); i ++) {
-            auto artist = artistsData.at(0);
+        for (int i = 0; i < 5 && i < artistsData.size(); i++) {
+            auto artist = artistsData.at(i);
             top5ArtistsLayout->addElement(artist);
         }
         top5ArtistList->setLayout(top5ArtistsLayout);
@@ -158,8 +158,8 @@ void SearchPage::fetchedPlaylists(QNetworkReply *reply)
         auto top5PlaylistList = new QWidget(ui->overviewContents);
         auto top5PlaylistsLayout = new PlaylistFlow(deezerApiInstance, top5PlaylistList);
         connect(top5PlaylistsLayout, &PlaylistFlow::clickedItem, this, &SearchPage::playlistClicked);
-        for (int i = 0; i < 5 && i < playlistsData.size(); i ++) {
-            auto playlist = playlistsData.at(0);
+        for (int i = 0; i < 5 && i < playlistsData.size(); i++) {
+            auto playlist = playlistsData.at(i);
             top5PlaylistsLayout->addElement(playlist);
         }
         top5PlaylistList->setLayout(top5PlaylistsLayout);
@@ -183,8 +183,8 @@ void SearchPage::fetchedRadio(QNetworkReply *reply)
         auto top5RadioList = new QWidget(ui->overviewContents);
         auto top5RadiosLayout = new RadioFlow(deezerApiInstance, top5RadioList);
         connect(top5RadiosLayout, &RadioFlow::clickedItem, this, &SearchPage::radioClicked);
-        for (int i = 0; i < 5 && i < radiosData.size(); i ++) {
-            auto radio = radiosData.at(0);
+        for (int i = 0; i < 5 && i < radiosData.size(); i++) {
+            auto radio = radiosData.at(i);
             top5RadiosLayout->addElement(radio);
         }
         top5RadioList->setLayout(top5RadiosLayout);
@@ -207,8 +207,8 @@ void SearchPage::fetchedTracks(QNetworkReply *reply)
         ui->overviewContentsLayout->addWidget(new QLabel("Треки", ui->overviewContents));
         auto top5TracksTable = new QTableView(ui->overviewContents);
         auto top5TracksModel = new SearchTracksModel(deezerApiInstance, top5TracksTable);
-        for (int i = 0; i < 5 && i < tracksData.size(); i ++) {
-            auto track = tracksData.at(0);
+        for (int i = 0; i < 5 && i < tracksData.size(); i++) {
+            auto track = tracksData.at(i);
             top5TracksModel->addData(track);
         }
         top5TracksTable->setModel(top5TracksModel);
@@ -232,8 +232,8 @@ void SearchPage::fetchedUsers(QNetworkReply *reply)
         auto top5UserList = new QWidget(ui->overviewContents);
         auto top5UsersLayout = new UserFlow(deezerApiInstance, top5UserList);
         connect(top5UsersLayout, &UserFlow::clickedItem, this, &SearchPage::userClicked);
-        for (int i = 0; i < 5 && i < usersData.size(); i ++) {
-            auto user = usersData.at(0);
+        for (int i = 0; i < 5 && i < usersData.size(); i++) {
+            auto user = usersData.at(i);
             top5UsersLayout->addElement(user);
         }
         top5UserList->setLayout(top5UsersLayout);

@@ -8,15 +8,12 @@ ArtistPage::ArtistPage(api::Deezer *apiInstance, api::Artist &artist, QWidget *p
 {
     ui->setupUi(this);
 
+    ui->top5TracksLabel->setVisible(false);
+    ui->top5TracksTableView->setVisible(false);
+
     while (ui->infoTabsWidget->count() > 1) {
         ui->infoTabsWidget->removeTab(1);
     }
-
-    top5TracksModel = new SearchTracksModel(apiInstance, ui->top5TracksTableView);
-    ui->top5TracksTableView->setModel(top5TracksModel);
-
-    popularTracksModel = new SearchTracksModel(apiInstance, ui->popularTracksTableView);
-    ui->popularTracksTableView->setModel(popularTracksModel);
 
     if (!artist.pictureMedium.isEmpty())
     {
@@ -50,16 +47,13 @@ ArtistPage::ArtistPage(api::Deezer *apiInstance, api::Artist &artist, QWidget *p
     {
         if (popularTracksReply->error() == QNetworkReply::NetworkError::NoError)
         {
+            popularTracksModel = new SearchTracksModel(apiInstance, ui->popularTracksTableView);
+            ui->popularTracksTableView->setModel(popularTracksModel);
             auto popularTracksJson = api::tryReadResponse(popularTracksReply).object();
             auto popularTracks = api::deserializePartialResponseTrack(popularTracksJson);
             popularTracksReply->deleteLater();
 
-            for (int i = 0; i < 5 && i < popularTracks.getData().length(); i++) {
-                top5TracksModel->addData(popularTracks.getData().at(i));
-            }
-
             popularTracksModel->addData(popularTracks.getData());
-
             ui->infoTabsWidget->addTab(ui->tracksTab, QString("Популярные треки"));
         }
     });
@@ -83,6 +77,26 @@ ArtistPage::ArtistPage(api::Deezer *apiInstance, api::Artist &artist, QWidget *p
             ui->discographyFlow->setLayout(albumFlow);
 
             ui->infoTabsWidget->addTab(ui->discographyTab, QString("Дискография"));
+        }
+    });
+
+    auto top5TracksReply = apiInstance->getArtistTop(artist.id);
+    connect(top5TracksReply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error)
+    {
+        top5TracksReply->deleteLater();
+    });
+    connect(top5TracksReply, &QNetworkReply::finished, [=]
+    {
+        if (top5TracksReply->error() == QNetworkReply::NetworkError::NoError)
+        {
+            top5TracksModel = new SearchTracksModel(apiInstance, ui->top5TracksTableView);
+            ui->top5TracksTableView->setModel(top5TracksModel);
+            auto top5TracksJson = api::tryReadResponse(top5TracksReply).object();
+            auto top5Tracks = api::deserializeResponseTrack(top5TracksJson);
+            top5TracksReply->deleteLater();
+            top5TracksModel->addData(top5Tracks);
+            ui->top5TracksLabel->setVisible(true);
+            ui->top5TracksTableView->setVisible(true);
         }
     });
 
