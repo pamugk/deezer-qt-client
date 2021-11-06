@@ -1,4 +1,8 @@
 #include "deezer.h"
+#include "util/serialization.h"
+
+#include <QtGui>
+#include <QtNetworkAuth>
 
 namespace api {
 
@@ -24,30 +28,73 @@ namespace api {
     const QString Deezer::RECOMMENDATIONS = "recommendations";
     const QString Deezer::TRACKS = "tracks";
 
-    Deezer::Deezer()
+    Deezer::Deezer(QString appId, QString apiSecret, QVector<Permissions> permissions, QObject *parent): QObject(parent)
     {
-        networkManager = new QNetworkAccessManager(this);
+        oauth2Api = new QOAuth2AuthorizationCodeFlow(this);
+        auto replyHandler = new QOAuthHttpServerReplyHandler(8080, this);
+        replyHandler->setCallbackPath("/callback");
+        oauth2Api->setReplyHandler(replyHandler);
+        oauth2Api->setAuthorizationUrl(QUrl("https://connect.deezer.com/oauth/auth.php"));
+        oauth2Api->setAccessTokenUrl(QUrl("https://connect.deezer.com/oauth/access_token.php"));
+        auto permissionsScope = buildScope(permissions);
+        oauth2Api->setScope(permissionsScope);
+
+        oauth2Api->setModifyParametersFunction(QAbstractOAuth::ModifyParametersFunction(
+            [appId, apiSecret, permissionsScope](QAbstractOAuth::Stage stage, QMap<QString, QVariant> *parameters)
+            {
+                switch (stage)
+                {
+                case QAbstractOAuth::Stage::RequestingTemporaryCredentials:
+                    break;
+                case QAbstractOAuth::Stage::RequestingAuthorization:
+                    {
+                        parameters->insert("app_id", appId);
+                        parameters->insert("redirect_uri", "http://localhost:8080/calback");
+                        parameters->insert("perms", permissionsScope);
+                        break;
+                    }
+                case QAbstractOAuth::Stage::RequestingAccessToken:
+                case QAbstractOAuth::Stage::RefreshingAccessToken:
+                    {
+                        parameters->insert("app_id", appId);
+                        parameters->insert("secret", apiSecret);
+                        break;
+                    }
+                }
+        }));
+
+        connect(oauth2Api, &QOAuth2AuthorizationCodeFlow::statusChanged, this, &Deezer::authenticationStatusChanged);
+        connect(oauth2Api, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, &QDesktopServices::openUrl);
     }
 
-    Deezer::~Deezer()
+    void Deezer::authenticate()
     {
-        delete networkManager;
+        oauth2Api->grant();
     }
 
-    QNetworkRequest Deezer::buildPartialRequest(const QString &urlStr, int index, int limit)
+    void Deezer::authenticationStatusChanged(QAbstractOAuth::Status status)
+    {
+        if (status == QAbstractOAuth::Status::Granted)
+        {
+            emit authenticated();
+        }
+    }
+
+    QUrl Deezer::buildPartialUrl(const QString &urlStr, int index, int limit)
     {
         QUrlQuery urlParams;
 
         urlParams.addQueryItem("index", QString::number(index));
         urlParams.addQueryItem("limit", QString::number(limit));
+        urlParams.addQueryItem("output", "xml");
 
         QUrl url(urlStr);
         url.setQuery(urlParams);
 
-        return QNetworkRequest(url);
+        return url;
     }
 
-    QNetworkRequest Deezer::buildSearchRequest(const QString &urlStr, const QString &query, int index, int limit, bool strict, SearchOrder order)
+    QUrl Deezer::buildSearchUrl(const QString &urlStr, const QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         QUrlQuery urlParams;
 
@@ -55,6 +102,7 @@ namespace api {
         urlParams.addQueryItem("strict", strict ? "on" : "off");
         urlParams.addQueryItem("index", QString::number(index));
         urlParams.addQueryItem("limit", QString::number(limit));
+        urlParams.addQueryItem("output", "xml");
 
         if (order != SearchOrder::NONE)
         {
@@ -64,453 +112,398 @@ namespace api {
         QUrl url(urlStr);
         url.setQuery(urlParams);
 
-        return QNetworkRequest(url);
+        return url;
     }
 
-    QNetworkReply* Deezer::getAnything(QUrl &url)
+    QString Deezer::buildScope(QVector<Permissions> permissions)
     {
-        return networkManager->get(QNetworkRequest(url));
+        if (permissions.size() == 0)
+        {
+            return "";
+        }
+
+        QString scope = serialize(permissions.at(0));
+        for (int i = 1; i < permissions.size(); i++)
+        {
+            scope.append(QString(",%1").arg(serialize(permissions.at(i))));
+        }
+
+        return scope;
     }
 
-   QNetworkReply *Deezer::getAlbum(long id)
+    QUrl buildUrl(const QString &urlStr)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id));
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        QUrlQuery urlParams;
+        urlParams.addQueryItem("output", "xml");
+
+        QUrl url(urlStr);
+        url.setQuery(urlParams);
+
+        return url;
+    }
+
+    QNetworkReply *Deezer::getAnything(QUrl &url)
+    {
+        return oauth2Api->get(url);
+    }
+
+    QNetworkReply *Deezer::getAlbum(long id)
+    {
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id))));
     }
 
     QNetworkReply *Deezer::getAlbumFans(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id), Deezer::FANS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getAlbumTracks(long id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id), Deezer::TRACKS);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id), Deezer::TRACKS)));
     }
 
     QNetworkReply *Deezer::getArtist(long id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id));
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id))));
     }
 
     QNetworkReply *Deezer::getArtistTop(long id)
     {
-        const QString url = QString("%1/%2/%3/top").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id));
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3/top").arg(Deezer::DEEZER_API_HOST, Deezer::ALBUM, QString::number(id))));
     }
 
     QNetworkReply *Deezer::getArtistAlbums(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id), Deezer::ALBUMS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getArtistFans(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id), Deezer::FANS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getArtistRelated(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/related").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id));
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getArtistPlaylists(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::ARTIST, QString::number(id), Deezer::PLAYLISTS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getChartAlbums(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::ALBUMS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getChartArtists(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::ARTISTS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getChartPlaylists(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::PLAYLISTS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getChartPodcasts(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/podcasts").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id));
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getChartTracks(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id), Deezer::TRACKS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getEditorialCharts(long id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::EDITORIAL, QString::number(id), Deezer::CHARTS);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
-
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::EDITORIAL, QString::number(id), Deezer::CHARTS)));
     }
 
     QNetworkReply *Deezer::getEditorialReleases(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/releases").arg(Deezer::DEEZER_API_HOST, Deezer::CHART, QString::number(id));
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getEditorialSelection(long id)
     {
-        const QString url = QString("%1/%2/%3/selection").arg(Deezer::DEEZER_API_HOST, Deezer::EDITORIAL, QString::number(id));
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3/selection").arg(Deezer::DEEZER_API_HOST, Deezer::EDITORIAL, QString::number(id))));
     }
 
     QNetworkReply *Deezer::getGenre(long id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id));
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id))));
     }
 
     QNetworkReply *Deezer::getGenreArtists(long id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id), Deezer::ARTISTS);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id), Deezer::ARTISTS)));
     }
 
     QNetworkReply *Deezer::getGenreRadios(long id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id), Deezer::RADIOS);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::GENRE, QString::number(id), Deezer::RADIOS)));
     }
 
     QNetworkReply *Deezer::getInfos()
     {
-        const QString url = QString("%1/infos").arg(Deezer::DEEZER_API_HOST);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/infos").arg(Deezer::DEEZER_API_HOST)));
     }
 
     QNetworkReply *Deezer::getPlaylist(long id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id));
-        QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id))));
     }
 
     QNetworkReply *Deezer::getPlaylistFans(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::FANS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getPlaylistRadio(long id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::TRACKS);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::TRACKS)));
     }
 
     QNetworkReply *Deezer::getPlaylistTracks(long id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::RADIO);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::PLAYLIST, QString::number(id), Deezer::RADIO)));
     }
 
     QNetworkReply *Deezer::getRadio()
     {
-        const QString url = QString("%1/%2").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO)));
     }
 
     QNetworkReply *Deezer::getRadio(long id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO, QString::number(id));
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO, QString::number(id))));
     }
 
     QNetworkReply *Deezer::getRadioGenres()
     {
-        const QString url = QString("%1/%2/genres").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/genres").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO)));
     }
 
     QNetworkReply *Deezer::getRadioTop(int index = 0, int limit = 25)
     {
         const QString url = QString("%1/%2/top").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getRadioTracks(long id)
     {
-        const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO, QString::number(id), Deezer::TRACKS);
-        QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO, QString::number(id), Deezer::TRACKS)));
     }
 
     QNetworkReply *Deezer::getRadioLists(int index = 0, int limit = 25)
     {
         const QString url = QString("%1/%2/lists").arg(Deezer::DEEZER_API_HOST, Deezer::RADIO);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getTrack(long id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::TRACK, QString::number(id));
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::TRACK, QString::number(id))));
     }
 
     QNetworkReply *Deezer::getUser(long id)
     {
-        const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id))));
     }
 
     QNetworkReply *Deezer::getUserChartsAlbums(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::CHARTS, Deezer::ALBUMS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserChartsPlaylists(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::CHARTS, Deezer::PLAYLISTS);
-        QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserChartsTracks(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::CHARTS, Deezer::TRACKS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserFavoriteAlbums(long id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::ALBUMS);
-        const QNetworkRequest request = buildPartialRequest(url, 0, 25);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, 0, 25));
     }
 
     QNetworkReply *Deezer::getUserFavoriteArtists(long id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::ARTISTS);
-        const QNetworkRequest request = buildPartialRequest(url, 0, 25);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, 0, 25));
     }
 
     QNetworkReply *Deezer::getUserFavoriteRadios(long id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RADIOS);
-        QNetworkRequest request = buildPartialRequest(url, 0, 25);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, 0, 25));
     }
 
     QNetworkReply *Deezer::getUserFavoriteTracks(long id)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::TRACKS);
-        const QNetworkRequest request = buildPartialRequest(url, 0, 25);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, 0, 25));
     }
 
     QNetworkReply *Deezer::getUserFolders()
     {
-        const QString url = QString("%1/%2/me/folders").arg(Deezer::DEEZER_API_HOST, Deezer::USER);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/me/folders").arg(Deezer::DEEZER_API_HOST, Deezer::USER)));
     }
 
     QNetworkReply *Deezer::getUserFollowings(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/followings").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserFollowers(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/followers").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserFlow(long id)
     {
-        const QString url = QString("%1/%2/%3/flow").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/%3/flow").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id))));
     }
 
     QNetworkReply *Deezer::getUserHistory(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/history").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserOptions()
     {
-        const QString url = QString("%1/%2/me/permissions").arg(Deezer::DEEZER_API_HOST,Deezer:: USER);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/me/permissions").arg(Deezer::DEEZER_API_HOST,Deezer:: USER)));
     }
 
     QNetworkReply *Deezer::getUserPermissions()
     {
-        const QString url = QString("%1/%2/me/permissions").arg(Deezer::DEEZER_API_HOST,Deezer:: USER);
-        const QNetworkRequest request(url);
-        return networkManager->get(request);
+        return oauth2Api->get(buildUrl(QString("%1/%2/me/permissions").arg(Deezer::DEEZER_API_HOST,Deezer:: USER)));
     }
 
     QNetworkReply *Deezer::getUserPersonalSongs(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/personal_songs").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id));
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserPlaylists(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::PLAYLISTS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserRecommendedAlbums(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::ALBUMS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserRecommendedArtists(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::ARTISTS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserRecommendedPlaylists(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::PLAYLISTS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserRecommendedRadios(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::RADIOS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserRecommendedReleases(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/releases").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
     }
 
     QNetworkReply *Deezer::getUserRecommendedTracks(long id, int index, int limit)
     {
         const QString url = QString("%1/%2/%3/%4/%5").arg(Deezer::DEEZER_API_HOST, Deezer::USER, QString::number(id), Deezer::RECOMMENDATIONS, Deezer::TRACKS);
-        const QNetworkRequest request = buildPartialRequest(url, index, limit);
-        return networkManager->get(request);
+        return oauth2Api->get(buildPartialUrl(url, index, limit));
+    }
+
+    void Deezer::logout()
+    {
+        oauth2Api->setToken(nullptr);
     }
 
     QNetworkReply *Deezer::search(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH );
-        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-        return networkManager->get(request);
+        return oauth2Api->get(buildSearchUrl(url, query, index, limit, strict, order));
     }
 
     QNetworkReply *Deezer::search(AdvancedSearchQuery query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH);
-        QNetworkRequest request = buildSearchRequest(url, query.toString(), index, limit, strict, order);
-        return networkManager->get(request);
+        return oauth2Api->get(buildSearchUrl(url, query.toString(), index, limit, strict, order));
     }
 
     QNetworkReply *Deezer::searchAlbums(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::ALBUM);
-        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-        return networkManager->get(request);
+        return oauth2Api->get(buildSearchUrl(url, query, index, limit, strict, order));
     }
 
     QNetworkReply *Deezer::searchArtists(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::ARTIST);
-        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-        return networkManager->get(request);
+        return oauth2Api->get(buildSearchUrl(url, query, index, limit, strict, order));
     }
 
     QNetworkReply *Deezer::searchPlaylists(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::PLAYLIST);
-        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-        return networkManager->get(request);
+        return oauth2Api->get(buildSearchUrl(url, query, index, limit, strict, order));
     }
 
     QNetworkReply *Deezer::searchRadio(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::RADIO);
-        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-        return networkManager->get(request);
+        return oauth2Api->get(buildSearchUrl(url, query, index, limit, strict, order));
     }
 
     QNetworkReply *Deezer::searchTracks(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::TRACK);
-        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-        return networkManager->get(request);
+        return oauth2Api->get(buildSearchUrl(url, query, index, limit, strict, order));
     }
 
     QNetworkReply *Deezer::searchUsers(QString &query, int index, int limit, bool strict, SearchOrder order)
     {
         const QString url = QString("%1/%2/%3").arg(Deezer::DEEZER_API_HOST, Deezer::SEARCH, Deezer::USER);
-        const QNetworkRequest request = buildSearchRequest(url, query, index, limit, strict, order);
-        return networkManager->get(request);
+        return oauth2Api->get(buildSearchUrl(url, query, index, limit, strict, order));
     }
 }

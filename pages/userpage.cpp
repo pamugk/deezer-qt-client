@@ -1,5 +1,6 @@
 #include "userpage.h"
 #include "ui_userpage.h"
+#include "../api/util/xml_serialization.h"
 
 UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
     QWidget(parent),
@@ -23,10 +24,10 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
     {
         if (playlistsReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto playlistsJson = api::tryReadResponse(playlistsReply).object();
-            auto playlists = api::deserializePartialResponsePlaylist(playlistsJson);
+            auto playlistsResponse = api::tryReadXmlResponse(playlistsReply);
+            auto playlists = api::deserializePartialResponsePlaylist(playlistsResponse);
+            delete playlistsResponse;
             auto playlistsData = playlists.getData();
-            playlistsReply->deleteLater();
 
             if (playlists.getTotal() == 0)
             {
@@ -62,9 +63,9 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
     {
         if (albumsReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto albumsJson = api::tryReadResponse(albumsReply).object();
-            auto albums = api::deserializeResponseAlbum(albumsJson);
-            albumsReply->deleteLater();
+            auto albumsResponse = api::tryReadXmlResponse(albumsReply);
+            auto albums = api::deserializeResponseAlbum(albumsResponse);
+            delete albumsResponse;
 
             if (albums.size() == 0)
             {
@@ -100,9 +101,9 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
     {
         if (artistsReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto artistsJson = api::tryReadResponse(artistsReply).object();
-            auto artists = api::deserializeResponseArtist(artistsJson);
-            artistsReply->deleteLater();
+            auto artistsResponse = api::tryReadXmlResponse(artistsReply);
+            auto artists = api::deserializeResponseArtist(artistsResponse);
+            delete artistsResponse;
 
             if (artists.size() == 0)
             {
@@ -138,9 +139,9 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
     {
         if (radiosReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto radiosJson = api::tryReadResponse(radiosReply).object();
-            auto radios = api::deserializeResponseRadio(radiosJson);
-            radiosReply->deleteLater();
+            auto radiosResponse = api::tryReadXmlResponse(radiosReply);
+            auto radios = api::deserializeResponseRadio(radiosResponse);
+            delete radiosResponse;
 
             if (radios.size() == 0)
             {
@@ -176,10 +177,10 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
     {
         if (followingsReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto followingsJson = api::tryReadResponse(followingsReply).object();
-            auto followings = api::deserializePartialResponseUser(followingsJson);
+            auto followingsResponse = api::tryReadXmlResponse(followingsReply);
+            auto followings = api::deserializePartialResponseUser(followingsResponse);
+            delete followingsResponse;
             auto followingsData = followings.getData();
-            followingsReply->deleteLater();
 
             if (followings.getTotal() == 0)
             {
@@ -217,10 +218,10 @@ UserPage::UserPage(api::Deezer *apiInstance, api::User& user, QWidget *parent) :
     {
         if (followersReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto followersJson = api::tryReadResponse(followersReply).object();
-            auto followers = api::deserializePartialResponseUser(followersJson);
+            auto followersResponse = api::tryReadXmlResponse(followersReply);
+            auto followers = api::deserializePartialResponseUser(followersResponse);
+            delete followersResponse;
             auto followersData = followers.getData();
-            followersReply->deleteLater();
 
             if (followers.getTotal() == 0)
             {

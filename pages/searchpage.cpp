@@ -1,5 +1,6 @@
 #include "searchpage.h"
 #include "ui_searchpage.h"
+#include "../api/util/xml_serialization.h"
 
 SearchPage::SearchPage(api::Deezer * deezerApiInstance, QWidget *parent) :
     QTabWidget(parent),
@@ -97,11 +98,12 @@ void SearchPage::clear()
 
 void SearchPage::fetchedAlbums(QNetworkReply *reply)
 {
-    auto albumsJson = api::tryReadResponse(reply).object();
-    auto albumsResponse = api::deserializePartialResponseAlbum(albumsJson);
-    if (albumsResponse.getTotal() > 0)
+    auto albumsResponse = api::tryReadXmlResponse(reply);
+    auto albums = api::deserializePartialResponseAlbum(albumsResponse);
+    delete albumsResponse;
+    if (albums.getTotal() > 0)
     {
-        QVector<api::Album> albumsData = albumsResponse.getData();
+        QVector<api::Album> albumsData = albums.getData();
         addTab(ui->albumTab, QString("Альбомы"));
         ui->overviewContentsLayout->addWidget(new QLabel("Альбомы", ui->overviewContents));
 
@@ -115,18 +117,19 @@ void SearchPage::fetchedAlbums(QNetworkReply *reply)
         top5AlbumList->setLayout(top5AlbumsLayout);
         ui->overviewContentsLayout->addWidget(top5AlbumList);
 
-        ui->albumLabel->setText(QString("Альбомов: %1").arg(QString::number(albumsResponse.getTotal())));
+        ui->albumLabel->setText(QString("Альбомов: %1").arg(QString::number(albums.getTotal())));
         albumFlow->addContents(albumsData);
     }
 }
 
 void SearchPage::fetchedArtists(QNetworkReply *reply)
 {
-    auto artistsJson = api::tryReadResponse(reply).object();
-    auto artistsResponse = api::deserializePartialResponseArtist(artistsJson);
-    if (artistsResponse.getTotal() > 0)
+    auto artistsResponse = api::tryReadXmlResponse(reply);
+    auto artists = api::deserializePartialResponseArtist(artistsResponse);
+    delete artistsResponse;
+    if (artists.getTotal() > 0)
     {
-        QVector<api::Artist> artistsData = artistsResponse.getData();
+        QVector<api::Artist> artistsData = artists.getData();
         addTab(ui->artistTab, QString("Исполнители"));
         ui->overviewContentsLayout->addWidget(new QLabel("Исполнители", ui->overviewContents));
 
@@ -140,18 +143,19 @@ void SearchPage::fetchedArtists(QNetworkReply *reply)
         top5ArtistList->setLayout(top5ArtistsLayout);
         ui->overviewContentsLayout->addWidget(top5ArtistList);
 
-        ui->artistLabel->setText(QString("Исполнителей: %1").arg(QString::number(artistsResponse.getTotal())));
+        ui->artistLabel->setText(QString("Исполнителей: %1").arg(QString::number(artists.getTotal())));
         artistFlow->addContents(artistsData);
     }
 }
 
 void SearchPage::fetchedPlaylists(QNetworkReply *reply)
 {
-    auto playlistsJson = api::tryReadResponse(reply).object();
-    auto playlistsResponse = api::deserializePartialResponsePlaylist(playlistsJson);
-    if (playlistsResponse.getTotal() > 0)
+    auto playlistsResponse = api::tryReadXmlResponse(reply);
+    auto playlists = api::deserializePartialResponsePlaylist(playlistsResponse);
+    delete playlistsResponse;
+    if (playlists.getTotal() > 0)
     {
-        QVector<api::Playlist> playlistsData = playlistsResponse.getData();
+        QVector<api::Playlist> playlistsData = playlists.getData();
         addTab(ui->playlistTab, QString("Плейлисты"));
         ui->overviewContentsLayout->addWidget(new QLabel("Плейлисты", ui->overviewContents));
 
@@ -165,18 +169,19 @@ void SearchPage::fetchedPlaylists(QNetworkReply *reply)
         top5PlaylistList->setLayout(top5PlaylistsLayout);
         ui->overviewContentsLayout->addWidget(top5PlaylistList);
 
-        ui->playlistLabel->setText(QString("Плейлистов: %1").arg(QString::number(playlistsResponse.getTotal())));
+        ui->playlistLabel->setText(QString("Плейлистов: %1").arg(QString::number(playlists.getTotal())));
         playlistFlow->addContents(playlistsData);
     }
 }
 
 void SearchPage::fetchedRadio(QNetworkReply *reply)
 {
-    auto radioJson = api::tryReadResponse(reply).object();
-    auto radioResponse = api::deserializePartialResponseRadio(radioJson);
-    if (radioResponse.getTotal() > 0)
+    auto radioResponse = api::tryReadXmlResponse(reply);
+    auto radios = api::deserializePartialResponseRadio(radioResponse);
+    delete radioResponse;
+    if (radios.getTotal() > 0)
     {
-        QVector<api::Radio> radiosData = radioResponse.getData();
+        QVector<api::Radio> radiosData = radios.getData();
         addTab(ui->mixTab, QString("Миксы"));
         ui->overviewContentsLayout->addWidget(new QLabel("Миксы", ui->overviewContents));
 
@@ -190,18 +195,19 @@ void SearchPage::fetchedRadio(QNetworkReply *reply)
         top5RadioList->setLayout(top5RadiosLayout);
         ui->overviewContentsLayout->addWidget(top5RadioList);
 
-        ui->mixLabel->setText(QString("Миксов: %1").arg(QString::number(radioResponse.getTotal())));
+        ui->mixLabel->setText(QString("Миксов: %1").arg(QString::number(radios.getTotal())));
         radioFlow->addContents(radiosData);
     }
 }
 
 void SearchPage::fetchedTracks(QNetworkReply *reply)
 {
-    auto tracksJson = api::tryReadResponse(reply).object();
-    auto tracksResponse = api::deserializePartialResponseTrack(tracksJson);
-    if (tracksResponse.getTotal() > 0)
+    auto tracksResponse = api::tryReadXmlResponse(reply);
+    auto tracks = api::deserializePartialResponseTrack(tracksResponse);
+    delete tracksResponse;
+    if (tracks.getTotal() > 0)
     {
-        QVector<api::Track> tracksData = tracksResponse.getData();
+        QVector<api::Track> tracksData = tracks.getData();
         addTab(ui->trackTab, QString("Треки"));
 
         ui->overviewContentsLayout->addWidget(new QLabel("Треки", ui->overviewContents));
@@ -214,18 +220,19 @@ void SearchPage::fetchedTracks(QNetworkReply *reply)
         top5TracksTable->setModel(top5TracksModel);
         ui->overviewContentsLayout->addWidget(top5TracksTable);
 
-        ui->trackLabel->setText(QString("Треков: %1").arg(QString::number(tracksResponse.getTotal())));
+        ui->trackLabel->setText(QString("Треков: %1").arg(QString::number(tracks.getTotal())));
         searchTracksModel->addData(tracksData);
     }
 }
 
 void SearchPage::fetchedUsers(QNetworkReply *reply)
 {
-    auto usersJson = api::tryReadResponse(reply).object();
-    auto usersResponse = api::deserializePartialResponseUser(usersJson);
-    if (usersResponse.getTotal() > 0)
+    auto usersResponse = api::tryReadXmlResponse(reply);
+    auto users = api::deserializePartialResponseUser(usersResponse);
+    delete usersResponse;
+    if (users.getTotal() > 0)
     {
-        QVector<api::User> usersData = usersResponse.getData();
+        QVector<api::User> usersData = users.getData();
         addTab(ui->userTab, QString("Профили"));
         ui->overviewContentsLayout->addWidget(new QLabel("Профили", ui->overviewContents));
 
@@ -239,7 +246,7 @@ void SearchPage::fetchedUsers(QNetworkReply *reply)
         top5UserList->setLayout(top5UsersLayout);
         ui->overviewContentsLayout->addWidget(top5UserList);
 
-        ui->userLabel->setText(QString("Профилей: %1").arg(QString::number(usersResponse.getTotal())));
+        ui->userLabel->setText(QString("Профилей: %1").arg(QString::number(users.getTotal())));
 
         userFlow->addContents(usersData);
     }

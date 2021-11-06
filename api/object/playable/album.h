@@ -66,7 +66,7 @@ namespace api {
          * \brief The album's first genre id (You should use the genre list instead).
          * NB : -1 for not found
          */
-        int genreId;
+        long genreId;
         /*!
          * \brief List of genre object
          */

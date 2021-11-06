@@ -1,4 +1,5 @@
 #include "../api/object/playable/album.h"
+#include "../api/util/xml_serialization.h"
 
 #include "albumpage.h"
 #include "ui_albumpage.h"
@@ -42,9 +43,9 @@ AlbumPage::AlbumPage(api::Deezer *apiInstance, api::Album &album, QWidget *paren
     {
         if (discographyReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto discographyJson = api::tryReadResponse(discographyReply).object();
-            auto discography = api::deserializePartialResponseAlbum(discographyJson);
-            discographyReply->deleteLater();
+            auto discographyResponse = api::tryReadXmlResponse(discographyReply);
+            auto discography = api::deserializePartialResponseAlbum(discographyResponse);
+            delete discographyResponse;
 
             discographyCarousel = new AlbumCarousel(apiInstance, ui->discographyCarouselContents);
             discographyCarousel->addData(discography.getData());
@@ -61,9 +62,9 @@ AlbumPage::AlbumPage(api::Deezer *apiInstance, api::Album &album, QWidget *paren
     {
         if (relatedArtistsReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto relatedArtistsJson = api::tryReadResponse(relatedArtistsReply).object();
-            auto relatedArtists = api::deserializePartialResponseArtist(relatedArtistsJson);
-            relatedArtistsReply->deleteLater();
+            auto relatedArtistsResponse = api::tryReadXmlResponse(relatedArtistsReply);
+            auto relatedArtists = api::deserializePartialResponseArtist(relatedArtistsResponse);
+            delete relatedArtistsResponse;
 
             relatedArtistsCarousel = new ArtistCarousel(apiInstance, ui->relatedArtistsCarouselContents);
             relatedArtistsCarousel->addData(relatedArtists.getData());

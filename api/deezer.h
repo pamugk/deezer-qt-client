@@ -1,8 +1,6 @@
 #ifndef DEEZER_H
 #define DEEZER_H
 
-#include "util/json_serialization.h"
-
 #include "object/compilation/chart.h"
 #include "object/compilation/editorial.h"
 
@@ -20,6 +18,7 @@
 
 #include "object/service/infos.h"
 #include "object/service/options.h"
+#include "object/service/permissions.h"
 
 #include "object/user/folder.h"
 #include "object/user/user.h"
@@ -28,8 +27,8 @@
 #include <QString>
 #include <QVector>
 
-#include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork>
+#include <QOAuth2AuthorizationCodeFlow>
 
 namespace api
 {
@@ -38,8 +37,9 @@ namespace api
         Q_OBJECT
 
     public:
-        Deezer();
-        virtual ~Deezer();
+        Deezer(QString, QString, QVector<Permissions>, QObject*);
+
+        void authenticate();
 
         QNetworkReply *getAnything(QUrl&);
 
@@ -436,6 +436,8 @@ namespace api
          */
         QNetworkReply *getUserRecommendedTracks(long id, int index = 0, int limit = 25);
 
+        void logout();
+
         QNetworkReply *search(QString& query, int index = 0, int limit = 25, bool strict = false,
                                             SearchOrder order = SearchOrder::NONE);
 
@@ -459,6 +461,13 @@ namespace api
 
         QNetworkReply *searchUsers(QString& query, int index = 0, int limit = 25, bool strict = false,
                                                 SearchOrder order = SearchOrder::NONE);
+
+    signals:
+        void authenticated();
+
+    private slots:
+        void authenticationStatusChanged(QAbstractOAuth::Status);
+
     private:
         static const QString DEEZER_API_HOST;
 
@@ -482,10 +491,11 @@ namespace api
         static const QString RECOMMENDATIONS;
         static const QString TRACKS;
 
-        QNetworkAccessManager* networkManager;
+        QOAuth2AuthorizationCodeFlow *oauth2Api;
 
-        QNetworkRequest buildPartialRequest(const QString &urlStr, int index, int limit);
-        QNetworkRequest buildSearchRequest(const QString &urlStr, const QString &query, int index, int limit, bool strict, api::SearchOrder order);
+        QUrl buildPartialUrl(const QString &urlStr, int index, int limit);
+        QUrl buildSearchUrl(const QString &urlStr, const QString &query, int index, int limit, bool strict, api::SearchOrder order);
+        QString buildScope(QVector<Permissions>);
     };
 }
 

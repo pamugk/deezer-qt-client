@@ -1,5 +1,6 @@
 #include "playlistpage.h"
 #include "ui_playlistpage.h"
+#include "../api/util/xml_serialization.h"
 
 PlaylistPage::PlaylistPage(api::Deezer *apiInstance, api::Playlist &playlist, QWidget *parent) :
     QWidget(parent),
@@ -68,18 +69,18 @@ PlaylistPage::PlaylistPage(api::Deezer *apiInstance, api::Playlist &playlist, QW
     if (!playlist.tracks.isEmpty()) {
         playlistTracksModel->addData(playlist.tracks);
     } else {
-        auto playlistTracksResponse = apiInstance->getPlaylistTracks(playlist.id);
-        connect(playlistTracksResponse, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error)
+        auto playlistTracksReply = apiInstance->getPlaylistTracks(playlist.id);
+        connect(playlistTracksReply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error)
         {
-            playlistTracksResponse->deleteLater();
+            playlistTracksReply->deleteLater();
         });
-        connect(playlistTracksResponse, &QNetworkReply::finished, [=]
+        connect(playlistTracksReply, &QNetworkReply::finished, [=]
         {
-            if (playlistTracksResponse->error() == QNetworkReply::NetworkError::NoError)
+            if (playlistTracksReply->error() == QNetworkReply::NetworkError::NoError)
             {
-                auto playlistTracksJson = api::tryReadResponse(playlistTracksResponse).object();
-                auto playlistTracks = api::deserializePartialResponseTrack(playlistTracksJson);
-                playlistTracksResponse->deleteLater();
+                auto playlistTracksResponse = api::tryReadXmlResponse(playlistTracksReply);
+                auto playlistTracks = api::deserializePartialResponseTrack(playlistTracksResponse);
+                delete playlistTracksResponse;
                 playlistTracksModel->addData(playlistTracks.getData());
             }
         });

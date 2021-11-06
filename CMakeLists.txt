@@ -24,8 +24,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools Network REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools Network REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools Network NetworkAuth Gui REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools Network NetworkAuth Gui REQUIRED)
 
 set(TS_FILES deezer-qt-client_ru_RU.ts)
 
@@ -35,7 +35,12 @@ set(PROJECT_SOURCES
 
         api/deezer.cpp api/deezer.h
 
+        api/exception/deezer_exception.h api/exception/deezer_exception.cpp
+        api/exception/oauth_exception.h api/exception/oauth_exception.cpp
+
         api/util/json_serialization.h api/util/json_serialization.cpp
+        api/util/serialization.h api/util/serialization.cpp
+        api/util/xml_serialization.h api/util/xml_serialization.cpp
 
         api/object/compilation/chart.cpp api/object/compilation/chart.h
         api/object/compilation/editorial.cpp api/object/compilation/editorial.h
@@ -56,6 +61,7 @@ set(PROJECT_SOURCES
         api/object/service/infos.cpp api/object/service/infos.h
         api/object/service/offer.cpp api/object/service/offer.h
         api/object/service/options.cpp api/object/service/options.h
+        api/object/service/permissions.h
 
         api/object/user/folder.cpp api/object/user/folder.h
         api/object/user/user.cpp api/object/user/user.h
@@ -114,4 +120,4 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(deezer-qt-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network)
+target_link_libraries(deezer-qt-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::NetworkAuth Qt${QT_VERSION_MAJOR}::Gui)

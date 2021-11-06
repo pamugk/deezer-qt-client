@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include "api/util/xml_serialization.h"
+
 QSystemTrayIcon *createTrayIcon();
 
 MainWindow::MainWindow(QWidget *parent)
@@ -15,7 +17,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     trayIcon = createTrayIcon();
 
-    deezerApiInstance = new api::Deezer();
+    QVector<api::Permissions> permissions;
+    permissions.append(api::Permissions::BASIC_ACCESS),
+    permissions.append(api::Permissions::DELETE_LIBRARY),
+    permissions.append(api::Permissions::EMAIL),
+    permissions.append(api::Permissions::LISTENING_HISTORY),
+    permissions.append(api::Permissions::MANAGE_COMMUNITY),
+    permissions.append(api::Permissions::MANAGE_LIBRARY),
+    permissions.append(api::Permissions::OFFLINE_ACCESS);
+    deezerApiInstance = new api::Deezer("", "", permissions, this);
+    connect(deezerApiInstance, &api::Deezer::authenticated, this, &MainWindow::onAuthentication);
 
     currentPage = initializeMainPage();
     ui->windowLayout->addWidget(currentPage, 1, 1);
@@ -29,8 +40,6 @@ MainWindow::~MainWindow()
     {
         delete trayIcon;
     }
-
-    delete deezerApiInstance;
 }
 
 QSystemTrayIcon *createTrayIcon()
@@ -118,6 +127,12 @@ UserPage *MainWindow::initializeUserPage(api::User& user)
     return userPage;
 }
 
+void MainWindow::onAuthentication()
+{
+    ui->signInButton->setHidden(true);
+    ui->userButton->setHidden(false);
+}
+
 void MainWindow::onError(QNetworkReply *reply, QNetworkReply::NetworkError error)
 {
     qDebug() << error;
@@ -132,9 +147,9 @@ void MainWindow::MainWindow::onRedirectToAlbum(long id) {
 
 void MainWindow::onRedirectedToAlbum(QNetworkReply *reply)
 {
-    auto albumJson = api::tryReadResponse(reply).object();
+    auto albumResponse = api::tryReadXmlResponse(reply);
     api::Album album;
-    api::deserializeAlbum(albumJson, album);
+    api::deserializeAlbum(albumResponse, album);
     switchPage(initializeAlbumPage(album));
 }
 
@@ -146,9 +161,9 @@ void MainWindow::onRedirectToArtist(long id) {
 
 void MainWindow::onRedirectedToArtist(QNetworkReply *reply)
 {
-    auto artistJson = api::tryReadResponse(reply).object();
+    auto artistResponse = api::tryReadXmlResponse(reply);
     api::Artist artist;
-    api::deserializeArtist(artistJson, artist);
+    api::deserializeArtist(artistResponse, artist);
     switchPage(initializeArtistPage(artist));
 }
 
@@ -161,9 +176,9 @@ void MainWindow::onRedirectToPlaylist(long id)
 
 void MainWindow::onRedirectedToPlaylist(QNetworkReply *reply)
 {
-    auto playlistJson = api::tryReadResponse(reply).object();
+    auto playlistResponse = api::tryReadXmlResponse(reply);
     api::Playlist playlist;
-    api::deserializePlaylist(playlistJson, playlist);
+    api::deserializePlaylist(playlistResponse, playlist);
     switchPage(initializePlaylistPage(playlist));
 }
 
@@ -225,6 +240,11 @@ void MainWindow::on_clearSearchButton_clicked()
 void MainWindow::on_searchButton_clicked()
 {
     startSearch();
+}
+
+void MainWindow::on_signInButton_clicked()
+{
+    deezerApiInstance->authenticate();
 }
 
 void MainWindow::startSearch()

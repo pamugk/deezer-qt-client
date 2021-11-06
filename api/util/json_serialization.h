@@ -46,9 +46,7 @@ namespace api
     QVector<Radio> deserializeResponseRadio(QJsonObject&);
     QVector<Track> deserializeResponseTrack(QJsonObject&);
 
-    QString serialize(SearchOrder);
-
-    QJsonDocument tryReadResponse(QNetworkReply*);
+    QJsonDocument tryReadJsonResponse(QNetworkReply*);
 
     template<typename T>
     PartialSearchResponse<T> deserializePartialResponse(QJsonObject &jsonObj, QJsonArray &jsonData)

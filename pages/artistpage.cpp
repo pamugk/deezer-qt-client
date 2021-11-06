@@ -1,5 +1,6 @@
 #include "artistpage.h"
 #include "ui_artistpage.h"
+#include "../api/util/xml_serialization.h"
 
 ArtistPage::ArtistPage(api::Deezer *apiInstance, api::Artist &artist, QWidget *parent) :
     QWidget(parent),
@@ -49,9 +50,9 @@ ArtistPage::ArtistPage(api::Deezer *apiInstance, api::Artist &artist, QWidget *p
         {
             popularTracksModel = new SearchTracksModel(apiInstance, ui->popularTracksTableView);
             ui->popularTracksTableView->setModel(popularTracksModel);
-            auto popularTracksJson = api::tryReadResponse(popularTracksReply).object();
-            auto popularTracks = api::deserializePartialResponseTrack(popularTracksJson);
-            popularTracksReply->deleteLater();
+            auto popularTracksResponse = api::tryReadXmlResponse(popularTracksReply);
+            auto popularTracks = api::deserializePartialResponseTrack(popularTracksResponse);
+            delete popularTracksResponse;
 
             popularTracksModel->addData(popularTracks.getData());
             ui->infoTabsWidget->addTab(ui->tracksTab, QString("Популярные треки"));
@@ -67,9 +68,9 @@ ArtistPage::ArtistPage(api::Deezer *apiInstance, api::Artist &artist, QWidget *p
     {
         if (albumsReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto albumsJson = api::tryReadResponse(albumsReply).object();
-            auto albums = api::deserializePartialResponseAlbum(albumsJson);
-            albumsReply->deleteLater();
+            auto albumsResponse = api::tryReadXmlResponse(albumsReply);
+            auto albums = api::deserializePartialResponseAlbum(albumsResponse);
+            delete albumsResponse;
 
             albumFlow = new AlbumFlow(apiInstance, ui->discographyFlow);
             albumFlow->addContents(albums.getData());
@@ -91,9 +92,9 @@ ArtistPage::ArtistPage(api::Deezer *apiInstance, api::Artist &artist, QWidget *p
         {
             top5TracksModel = new SearchTracksModel(apiInstance, ui->top5TracksTableView);
             ui->top5TracksTableView->setModel(top5TracksModel);
-            auto top5TracksJson = api::tryReadResponse(top5TracksReply).object();
-            auto top5Tracks = api::deserializeResponseTrack(top5TracksJson);
-            top5TracksReply->deleteLater();
+            auto top5TracksResponse = api::tryReadXmlResponse(top5TracksReply);
+            auto top5Tracks = api::deserializeResponseTrack(top5TracksResponse);
+            delete top5TracksResponse;
             top5TracksModel->addData(top5Tracks);
             ui->top5TracksLabel->setVisible(true);
             ui->top5TracksTableView->setVisible(true);
@@ -109,9 +110,9 @@ ArtistPage::ArtistPage(api::Deezer *apiInstance, api::Artist &artist, QWidget *p
     {
         if (relatedArtistsReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto relatedArtistsJson = api::tryReadResponse(relatedArtistsReply).object();
-            auto relatedArtists = api::deserializePartialResponseArtist(relatedArtistsJson);
-            relatedArtistsReply->deleteLater();
+            auto relatedArtistsResponse = api::tryReadXmlResponse(relatedArtistsReply);
+            auto relatedArtists = api::deserializePartialResponseArtist(relatedArtistsResponse);
+            delete relatedArtistsResponse;
 
             relatedArtistsFlow = new ArtistFlow(apiInstance, ui->relatedArtistsFlow);
             relatedArtistsFlow->addContents(relatedArtists.getData());
@@ -131,9 +132,9 @@ ArtistPage::ArtistPage(api::Deezer *apiInstance, api::Artist &artist, QWidget *p
     {
         if (playlistsReply->error() == QNetworkReply::NetworkError::NoError)
         {
-            auto playlistsJson = api::tryReadResponse(playlistsReply).object();
-            auto playlists = api::deserializePartialResponsePlaylist(playlistsJson);
-            playlistsReply->deleteLater();
+            auto playlistsResponse = api::tryReadXmlResponse(playlistsReply);
+            auto playlists = api::deserializePartialResponsePlaylist(playlistsResponse);
+            delete playlistsResponse;
 
             playlistFlow = new PlaylistFlow(apiInstance, ui->playlistsFlow);
             playlistFlow->addContents(playlists.getData());
@@ -161,16 +162,16 @@ void ArtistPage::gotError(QNetworkReply *reply, QNetworkReply::NetworkError erro
 
 void ArtistPage::fetchedRelatedArtists(QNetworkReply *reply)
 {
-    auto artistsJson = api::tryReadResponse(reply).object();
-    auto artistsResponse = api::deserializePartialResponseArtist(artistsJson);
-    QVector<api::Artist> artistsData = artistsResponse.getData();
+    auto artistsResponse = api::tryReadXmlResponse(reply);
+    auto artists = api::deserializePartialResponseArtist(artistsResponse);
+    QVector<api::Artist> artistsData = artists.getData();
     relatedArtistsFlow->addContents(artistsData);
 }
 
 void ArtistPage::fetchedPlaylists(QNetworkReply *reply)
 {
-    auto playlistsJson = api::tryReadResponse(reply).object();
-    auto playlistsResponse = api::deserializePartialResponsePlaylist(playlistsJson);
-    QVector<api::Playlist> playlistsData = playlistsResponse.getData();
+    auto playlistsResponse = api::tryReadXmlResponse(reply);
+    auto playlists = api::deserializePartialResponsePlaylist(playlistsResponse);
+    QVector<api::Playlist> playlistsData = playlists.getData();
     playlistFlow->addContents(playlistsData);
 }

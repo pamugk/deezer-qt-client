@@ -21,6 +21,8 @@ public:
     ~MainWindow();
 
 private slots:
+    void onAuthentication();
+
     void onRedirectToAlbum(long id);
 
     void onRedirectToArtist(long id);
@@ -40,6 +42,8 @@ private slots:
     void on_searchLineEdit_editingFinished();
 
     void on_searchButton_clicked();
+
+    void on_signInButton_clicked();
 
 private:
     QSystemTrayIcon *trayIcon;
