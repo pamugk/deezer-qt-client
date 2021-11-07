@@ -64,6 +64,28 @@ namespace api
             case QXmlStreamReader::StartElement:
             {
                 currentElement = responseReader->name();
+                if (currentElement == "genres")
+                {
+                    albumOut.genres = deserializeResponseGenre(responseReader);
+                }
+                else if (currentElement == "alternative")
+                {
+                    albumOut.alternative = QSharedPointer<Album>(new Album());
+                    deserializeAlbum(responseReader, *albumOut.alternative, "alternative");
+                }
+                else if (currentElement == "contributors")
+                {
+                    albumOut.contributors = deserializeResponseArtist(responseReader);
+                }
+                else if (currentElement == "artist")
+                {
+                    albumOut.artist = QSharedPointer<Artist>(new Artist());
+                    deserializeArtist(responseReader, *albumOut.artist);
+                }
+                else if (currentElement == "tracks")
+                {
+                    albumOut.tracks = deserializeResponseTrack(responseReader);
+                }
                 break;
             }
             case QXmlStreamReader::Characters:
@@ -119,10 +141,6 @@ namespace api
                 {
                     albumOut.genreId = responseReader->text().toLong();
                 }
-                else if (currentElement == "genres")
-                {
-                    albumOut.genres = deserializeResponseGenre(responseReader);
-                }
 
                 else if (currentElement == "nb_tracks")
                 {
@@ -153,11 +171,6 @@ namespace api
                 {
                     albumOut.available = responseReader->text().toInt() == 1;
                 }
-                else if (currentElement == "alternative")
-                {
-                    albumOut.alternative = QSharedPointer<Album>(new Album());
-                    deserializeAlbum(responseReader, *albumOut.alternative, "alternative");
-                }
 
                 else if (currentElement == "tracklist")
                 {
@@ -180,19 +193,6 @@ namespace api
                 else if (currentElement == "position")
                 {
                     albumOut.position = responseReader->text().toInt();
-                }
-                else if (currentElement == "contributors")
-                {
-                    albumOut.contributors = deserializeResponseArtist(responseReader);
-                }
-                else if (currentElement == "artist")
-                {
-                    albumOut.artist = QSharedPointer<Artist>(new Artist());
-                    deserializeArtist(responseReader, *albumOut.artist);
-                }
-                else if (currentElement == "tracks")
-                {
-                    albumOut.tracks = deserializeResponseTrack(responseReader);
                 }
                 break;
             }
@@ -361,6 +361,10 @@ namespace api
             case QXmlStreamReader::StartElement:
             {
                 currentElement = responseReader->name();
+                if (currentElement == "creator")
+                {
+                    deserializeUser(responseReader, *playlistOut.creator, "creator");
+                }
                 break;
             }
             case QXmlStreamReader::Characters:
@@ -445,10 +449,6 @@ namespace api
                 else if (currentElement == "checksum")
                 {
                     playlistOut.checksum = responseReader->text().toString();
-                }
-                else if (currentElement == "creator")
-                {
-                    deserializeUser(responseReader, *playlistOut.creator, "creator");
                 }
                 else if (currentElement == "tracks")
                 {
@@ -643,6 +643,54 @@ namespace api
             case QXmlStreamReader::StartElement:
             {
                 currentElement = responseReader->name();
+                if (currentElement == "available_countries")
+                {
+                    bool parsedCountries = false;
+                        while (!responseReader->atEnd() && !parsedCountries)
+                        {
+                            switch (responseReader->readNext())
+                            {
+                            case QXmlStreamReader::StartElement:
+                            {
+                                currentElement = responseReader->name();
+                                break;
+                            }
+                            case QXmlStreamReader::Characters:
+                            {
+                                if (currentElement == "item")
+                                {
+                                    trackOut.availableCountries.append(responseReader->text().toString());
+                                }
+                                break;
+                            }
+                            case QXmlStreamReader::EndElement:
+                            {
+                                if (responseReader->name() == "available_countries")
+                                {
+                                    parsedCountries = true;
+                                }
+                                break;
+                            }
+                            default:
+                                break;
+                        }
+                    }
+                }
+                else if (currentElement == "alternative")
+                {
+                    trackOut.alternative = QSharedPointer<Track>(new Track());
+                    deserializeTrack(responseReader, *trackOut.alternative, "alternative");
+                }
+                else if (currentElement == "artist")
+                {
+                    trackOut.artist = QSharedPointer<Artist>(new Artist());
+                    deserializeArtist(responseReader, *trackOut.artist);
+                }
+                else if (currentElement == "album")
+                {
+                    trackOut.album = QSharedPointer<Album>(new Album());
+                    deserializeAlbum(responseReader, *trackOut.album);
+                }
                 break;
             }
             case QXmlStreamReader::Characters:
@@ -733,56 +781,6 @@ namespace api
                 {
                     trackOut.gain = responseReader->text().toDouble();
                 }
-                else if (currentElement == "available_countries")
-                {
-                    trackOut.availableCountries = QVector<QString>();
-                    bool parsedCountries = false;
-                    while (!responseReader->atEnd() && !parsedCountries)
-                    {
-                        switch (responseReader->readNext())
-                        {
-                        case QXmlStreamReader::StartElement:
-                        {
-                            currentElement = responseReader->name();
-                            break;
-                        }
-                        case QXmlStreamReader::Characters:
-                        {
-                            if (currentElement == "item")
-                            {
-                                trackOut.availableCountries.append(responseReader->text().toString());
-                            }
-                            break;
-                        }
-                        case QXmlStreamReader::EndElement:
-                        {
-                            if (responseReader->name() == "available_countries")
-                            {
-                                parsedCountries = true;
-                            }
-                            break;
-                        }
-                        default:
-                            break;
-                        }
-                    }
-                }
-                else if (currentElement == "alternative")
-                {
-                    trackOut.alternative = QSharedPointer<Track>(new Track());
-                    deserializeTrack(responseReader, *trackOut.alternative, "alternative");
-                }
-
-                else if (currentElement == "artist")
-                {
-                    trackOut.artist = QSharedPointer<Artist>(new Artist());
-                    deserializeArtist(responseReader, *trackOut.artist);
-                }
-                else if (currentElement == "album")
-                {
-                    trackOut.album = QSharedPointer<Album>(new Album());
-                    deserializeAlbum(responseReader, *trackOut.album);
-                }
                 break;
             }
             case QXmlStreamReader::EndElement:
@@ -808,6 +806,40 @@ namespace api
             case QXmlStreamReader::StartElement:
             {
                 currentElement = responseReader->name();
+                if (currentElement == "explicit_content_levels_available")
+                {
+                    userOut.explicitContentLevelsAvailable = QVector<EContentExplicity>();
+                    bool parsedCountries = false;
+                    while (!responseReader->atEnd() && !parsedCountries)
+                    {
+                        switch (responseReader->readNext())
+                        {
+                        case QXmlStreamReader::StartElement:
+                        {
+                            currentElement = responseReader->name();
+                            break;
+                        }
+                        case QXmlStreamReader::Characters:
+                        {
+                            if (currentElement == "item")
+                            {
+                                 userOut.explicitContentLevelsAvailable.append(EContentExplicity(responseReader->text().toInt()));
+                            }
+                            break;
+                        }
+                        case QXmlStreamReader::EndElement:
+                        {
+                            if (responseReader->name() == "available_countries")
+                            {
+                                parsedCountries = true;
+                            }
+                            break;
+                        }
+                        default:
+                            break;
+                        }
+                    }
+                }
                 break;
             }
             case QXmlStreamReader::Characters:
@@ -888,40 +920,6 @@ namespace api
                 else if (currentElement == "explicit_content_level")
                 {
                     userOut.explicitContentLevel = EContentExplicity(responseReader->text().toInt());
-                }
-                else if (currentElement == "explicit_content_levels_available")
-                {
-                    userOut.explicitContentLevelsAvailable = QVector<EContentExplicity>();
-                    bool parsedCountries = false;
-                    while (!responseReader->atEnd() && !parsedCountries)
-                    {
-                        switch (responseReader->readNext())
-                        {
-                        case QXmlStreamReader::StartElement:
-                        {
-                            currentElement = responseReader->name();
-                            break;
-                        }
-                        case QXmlStreamReader::Characters:
-                        {
-                            if (currentElement == "item")
-                            {
-                                 userOut.explicitContentLevelsAvailable.append(EContentExplicity(responseReader->text().toInt()));
-                            }
-                            break;
-                        }
-                        case QXmlStreamReader::EndElement:
-                        {
-                            if (responseReader->name() == "available_countries")
-                            {
-                                parsedCountries = true;
-                            }
-                            break;
-                        }
-                        default:
-                            break;
-                        }
-                    }
                 }
 
                 else if (currentElement == "tracklist")
