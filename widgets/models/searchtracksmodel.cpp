@@ -56,7 +56,7 @@ QVariant getTrackColumnValue(api::Track &track, int column) {
             return track.artist.isNull() ? "" : track.artist->name;
         }
         case 2: {
-            return track.album ? "" : track.album->title;
+            return track.album.isNull() ? "" : track.album->title;
         }
         case 3: {
             return track.duration.hour() > 0 ? track.duration.toString(Qt::TextDate) : track.duration.toString("mm:ss");
